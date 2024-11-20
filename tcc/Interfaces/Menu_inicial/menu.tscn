@@ -1,0 +1,78 @@
+[gd_scene load_steps=3 format=3 uid="uid://dskfafe1j24gy"]
+
+[ext_resource type="Script" path="res://Interfaces/Menu_inicial/scripts_interface_inicial/menu_inicial.gd" id="1_5euyt"]
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_d1bn2"]
+
+[node name="Interface_Inicial" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_5euyt")
+
+[node name="background_interface" type="TextureRect" parent="."]
+modulate = Color(0, 0, 0, 1)
+layout_mode = 2
+offset_right = 1152.0
+offset_bottom = 648.0
+texture = SubResource("ViewportTexture_d1bn2")
+expand_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="VBoxContainer" type="HBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 4
+theme_override_constants/separation = 10
+
+[node name="play" type="Button" parent="MarginContainer/VBoxContainer/VBoxContainer"]
+layout_mode = 2
+text = "Começar Jogo"
+
+[node name="config" type="Button" parent="MarginContainer/VBoxContainer/VBoxContainer"]
+layout_mode = 2
+text = "Configurações"
+
+[node name="quit" type="Button" parent="MarginContainer/VBoxContainer/VBoxContainer"]
+layout_mode = 2
+text = "Sair"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -54.5
+offset_right = 54.5
+offset_bottom = 23.0
+grow_horizontal = 2
+size_flags_horizontal = 4
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 4
+
+[node name="nome_jogo" type="Label" parent="HBoxContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+text = "Nome do Jogo"
+
+[connection signal="pressed" from="MarginContainer/VBoxContainer/VBoxContainer/play" to="." method="_on_play_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/VBoxContainer/config" to="." method="_on_config_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/VBoxContainer/quit" to="." method="_on_quit_pressed"]
