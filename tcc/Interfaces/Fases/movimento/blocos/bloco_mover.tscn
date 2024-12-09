@@ -1,0 +1,44 @@
+[gd_scene load_steps=3 format=3 uid="uid://c46rljv54qqp2"]
+
+[ext_resource type="Script" path="res://Interfaces/Fases/movimento/blocos/bloco_mover.gd" id="1_ucj1n"]
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_5jqdd"]
+
+[node name="BlocoMover" type="Control"]
+layout_mode = 3
+anchor_right = 0.175
+anchor_bottom = 0.225
+offset_right = 0.399994
+offset_bottom = 0.199997
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 2
+size_flags_vertical = 2
+script = ExtResource("1_ucj1n")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+modulate = Color(0.869174, 0.963967, 7.70092e-07, 1)
+self_modulate = Color(0.709968, 0.767877, 0, 1)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("ViewportTexture_5jqdd")
+expand_mode = 2
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -11.5
+offset_right = 20.0
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "Mover a direita"

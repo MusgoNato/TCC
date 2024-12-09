@@ -1,3 +1,82 @@
-[gd_scene format=3 uid="uid://ci5dje82j6hi2"]
+[gd_scene load_steps=4 format=3 uid="uid://ci5dje82j6hi2"]
 
-[node name="Fase1Movimento" type="Node2D"]
+[ext_resource type="PackedScene" uid="uid://c46rljv54qqp2" path="res://Interfaces/Fases/movimento/blocos/bloco_mover.tscn" id="1_qi06a"]
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_bkmd0"]
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_8c8tc"]
+
+[node name="Fase1Movimento" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TextureRect" type="TextureRect" parent="."]
+self_modulate = Color(0, 0, 0, 1)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("ViewportTexture_bkmd0")
+expand_mode = 2
+
+[node name="blocos-disponiveis" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_top = -160.0
+offset_right = 419.0
+offset_bottom = 160.0
+grow_vertical = 2
+
+[node name="TextureRect" type="TextureRect" parent="blocos-disponiveis"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("ViewportTexture_8c8tc")
+expand_mode = 2
+
+[node name="BlocoMover" parent="blocos-disponiveis" instance=ExtResource("1_qi06a")]
+layout_mode = 1
+anchor_right = 0.289
+anchor_bottom = 0.278
+offset_right = -0.0910034
+offset_bottom = 0.0399933
+
+[node name="AreaMontagem" type="Control" parent="."]
+layout_mode = 1
+anchor_left = 0.643
+anchor_top = 0.266
+anchor_right = 0.989
+anchor_bottom = 0.749
+offset_left = 411.264
+offset_top = 151.632
+offset_right = 12.672
+offset_bottom = -161.352
+grow_horizontal = 0
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="AreaMontagem"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="TextureRect" type="TextureRect" parent="AreaMontagem"]
+layout_mode = 1
+anchors_preset = 9
+anchor_bottom = 1.0
+offset_left = -414.0
+offset_top = -155.0
+offset_bottom = 163.0
+grow_vertical = 2
+texture = SubResource("ViewportTexture_8c8tc")
+expand_mode = 2
