@@ -6,4 +6,4 @@ func _on_label_pressed() -> void:
 
 
 func _on_btn_movimento_pressed() -> void:
-	get_tree().change_scene_to_file("res://Interfaces/Fases/movimento/fase_1_movimento.tscn")
+	get_tree().change_scene_to_file("res://Interfaces/Fases/1-movimento/Fase_1.tscn")

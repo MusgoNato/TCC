@@ -39,3 +39,7 @@ func _process(delta: float) -> void:
 		global_position = original_position
 		texture_rect.modulate = Color(1, 1, 1, 1)
 		dragging = false 
+
+
+func _on_button_pressed() -> void:
+	get_tree().change_scene_to_file("res://Interfaces/Menu_fases/View_fases.tscn")

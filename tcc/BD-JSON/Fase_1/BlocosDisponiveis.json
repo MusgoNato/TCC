@@ -1,0 +1,24 @@
+{
+	"blocos": [
+		{
+			"id": 1,
+			"nome": "Seguir em frente",
+			"icone": "res://icon.svg"
+		},
+		{
+			"id": 2,
+			"nome": "Virar à direita",
+			"icone": "res://icon.svg"
+		},
+		{
+			"id": 3,
+			"nome": "Virar à esquerda",
+			"icone": "res://icon.svg"
+		},
+		{
+			"id": 1,
+			"nome": "Voltar atrás",
+			"icone": "res://icon.svg"
+		}
+	]
+}
