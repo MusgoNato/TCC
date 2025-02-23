@@ -1,6 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://ci5dje82j6hi2"]
-
-[sub_resource type="GDScript" id="GDScript_nro13"]
-
-[node name="Fase1Movimento" type="Node2D"]
-script = SubResource("GDScript_nro13")
