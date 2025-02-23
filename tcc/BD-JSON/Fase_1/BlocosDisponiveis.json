@@ -14,11 +14,6 @@
 			"id": 3,
 			"nome": "Virar à esquerda",
 			"icone": "res://icon.svg"
-		},
-		{
-			"id": 1,
-			"nome": "Voltar atrás",
-			"icone": "res://icon.svg"
 		}
 	]
 }

@@ -1,8 +1,10 @@
-[gd_scene load_steps=3 format=3 uid="uid://37rpbmyfbcar"]
+[gd_scene load_steps=4 format=3 uid="uid://37rpbmyfbcar"]
 
 [ext_resource type="Script" path="res://Interfaces/Fases/Movimento/Scripts/MainScene.gd" id="1_4ujho"]
 
 [sub_resource type="CanvasTexture" id="CanvasTexture_3dhot"]
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_xygss"]
 
 [node name="MainScene" type="Control"]
 layout_mode = 3
@@ -31,11 +33,34 @@ anchor_bottom = 0.367
 offset_top = -117.816
 offset_right = 304.0
 offset_bottom = 118.184
-grow_horizontal = 2
 grow_vertical = 2
 
-[node name="GridAreaBlocosDisponiveis" type="GridContainer" parent="AreaBlocosDisponiveis"]
+[node name="ScrollContainer" type="ScrollContainer" parent="AreaBlocosDisponiveis"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="GridAreaBlocosDisponiveis" type="GridContainer" parent="AreaBlocosDisponiveis/ScrollContainer"]
 layout_mode = 2
 tooltip_text = "
 "
-columns = 2
+columns = 4
+
+[node name="GridAreaBlocosMontagem" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -260.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="TextureRect" type="TextureRect" parent="GridAreaBlocosMontagem"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("CanvasTexture_xygss")
