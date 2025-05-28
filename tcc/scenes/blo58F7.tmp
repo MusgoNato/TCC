@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=3 uid="uid://jwoyehpgc3l6"]
+
+[ext_resource type="Texture2D" uid="uid://bx3gkv7vh3b8x" path="res://assets/icon.svg" id="1_0cr2r"]
+[ext_resource type="Script" path="res://scripts/bloco.gd" id="2_tw5hp"]
+
+[node name="bloco" type="TextureRect"]
+offset_right = 128.0
+offset_bottom = 128.0
+texture = ExtResource("1_0cr2r")
+script = ExtResource("2_tw5hp")
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0

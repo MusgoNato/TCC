@@ -1,0 +1,22 @@
+[gd_scene load_steps=3 format=3 uid="uid://jwoyehpgc3l6"]
+
+[ext_resource type="Texture2D" uid="uid://bx3gkv7vh3b8x" path="res://assets/icon.svg" id="1_0cr2r"]
+[ext_resource type="Script" path="res://scripts/bloco.gd" id="2_tw5hp"]
+
+[node name="Bloco" type="TextureRect"]
+anchors_preset = -1
+anchor_right = 0.111
+anchor_bottom = 0.198
+offset_right = -127.872
+offset_bottom = -128.304
+texture = ExtResource("1_0cr2r")
+
+[node name="bloco" type="Panel" parent="."]
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("2_tw5hp")
