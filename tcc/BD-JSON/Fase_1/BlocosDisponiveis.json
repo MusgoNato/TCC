@@ -2,17 +2,22 @@
 	"blocos": [
 		{
 			"id": 1,
-			"nome": "Seguir em frente",
+			"nome": "Cima",
 			"icone": "res://icon.svg"
 		},
 		{
 			"id": 2,
-			"nome": "Virar à direita",
+			"nome": "Baixo",
 			"icone": "res://icon.svg"
 		},
 		{
 			"id": 3,
-			"nome": "Virar à esquerda",
+			"nome": "Esquerda",
+			"icone": "res://icon.svg"
+		},
+		{
+			"id": 4,
+			"nome": "Direita",
 			"icone": "res://icon.svg"
 		}
 	]

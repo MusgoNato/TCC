@@ -1,34 +1,34 @@
 extends Control
 
 var data = null
-@onready var AreaBlocosDisponiveis = $AreaBlocosDisponiveis/GridAreaBlocosDisponiveis
-
+@onready var paleta: GridContainer = $Paleta/ScrollContainer/BlocosDisponiveis
+const BLOCO_CENA := preload("res://Interfaces/Fases/Movimento/scenes/bloco.tscn")
 
 func _ready() -> void:
 	var arquivoJson = FileAccess.open("res://BD-JSON/Fase_1/BlocosDisponiveis.json", FileAccess.READ)
 	var conteudoEmString = arquivoJson.get_as_text()
 	var ConteudoJsonEmDicionario = JSON.parse_string(conteudoEmString)
 	data = ConteudoJsonEmDicionario
-	
+	print(data)
 	inserirBlocosEmAreaDisponivel(data)
-	
-func inserirBlocosEmAreaDisponivel(data):
-	for bloco in data['blocos']:
-		var botao = TextureButton.new()
-		# Adiciono as informações do bloco ao botao
-		botao.texture_normal = load(bloco['icone'])				
-		botao.tooltip_text = bloco['nome']
-		botao.custom_minimum_size = Vector2(100, 100)
-		
-		# Conecta o sinal de clique a uma função personalizada
-		botao.set_script(preload("res://Interfaces/Fases/Movimento/Scripts/bloco.gd"))
-		
-		# Adiciono o botao (bloco) a area de blocos disponiveis na fase		
-		AreaBlocosDisponiveis.add_child(botao)
-		
-		# Espero 1 frame para carregamento do layout e pegar a posição inicial do bloco		
-		await get_tree().process_frame
-		await get_tree().process_frame
-		botao.set_meta("posicao_inicial", botao.global_position)
 
-	
+#
+func inserirBlocosEmAreaDisponivel(data):
+	for item in data:
+		var bloco = BLOCO_CENA.instantiate()
+		if bloco is Bloco:
+			push_error("Instancia invalida do bloco")
+			continue
+			
+		if item.has("name"):
+			bloco.name = item["name"]
+		if item.has("id"):
+			bloco.set_meta("_ID", item["id"])
+		if item.has("image"):
+			var image = load(item["image"])
+			if image:
+				bloco.texture = image
+			else:
+				printerr("Erro ao carregar a imagem : ", item["image"])
+		bloco.estaNaAreaDisponivel = true
+		paleta.add_child(bloco)

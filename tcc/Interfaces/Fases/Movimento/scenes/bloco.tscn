@@ -1,0 +1,22 @@
+[gd_scene load_steps=3 format=3 uid="uid://bwig6cf2fe5v5"]
+
+[ext_resource type="Texture2D" uid="uid://d4mybykrp2n1k" path="res://icon.svg" id="1_ipohq"]
+[ext_resource type="Script" path="res://Interfaces/Fases/Movimento/scenes/bloco.gd" id="2_o7hex"]
+
+[node name="bloco" type="TextureRect"]
+anchors_preset = -1
+anchor_right = 0.111
+anchor_bottom = 0.198
+offset_right = 0.127998
+offset_bottom = -0.304001
+texture = ExtResource("1_ipohq")
+script = ExtResource("2_o7hex")
+
+[node name="label" type="Label" parent="."]
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2

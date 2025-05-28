@@ -1,24 +1,20 @@
-extends TextureButton
+extends Sprite2D
 
-var posicaoInicial: Vector2 
-var arrastando = false
-var deslocamento: Vector2
+var draggin = false
+var of = Vector2(0,0)
 
-func _ready() -> void:
-	posicaoInicial = global_position
+var snap = 50
 
-func _gui_input(event: InputEvent) -> void:
-	if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
-		arrastando = true
-		deslocamento = get_global_mouse_position() - global_position
-	elif event is InputEventMouseButton and not event.pressed:
-		arrastando = false		
-
+# Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
-	if arrastando:
-		global_position = get_global_mouse_position() - deslocamento
-	else:
-		global_position = get_meta("posicao_inicial", global_position)
+	if draggin:
+		position = get_global_mouse_position() - of
+
+func _on_button_button_down() -> void:
+	draggin = true
+	of = get_global_mouse_position() - global_position
 
 
-		
+func _on_button_button_up() -> void:
+	draggin = false
+	
