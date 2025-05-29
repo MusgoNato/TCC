@@ -1,0 +1,26 @@
+[
+  	{
+		"name": "Bloco_Cima",
+		"id": 0,
+		"image": "res://assets/pixelkeys/arrow/blue/arrowBlue1.png",
+		"tipo": "cima"
+  	},
+  	{
+		"name": "Bloco_Baixo",
+		"id": 1,
+		"image": "res://assets/pixelkeys/arrow/blue/arrowBlue2.png",
+		"tipo": "baixo"
+  	},
+	{
+		"name": "Bloco_Esquerda",
+		"id": 2,
+		"image": "res://assets/pixelkeys/arrow/blue/arrowBlue3.png",
+		"tipo": "esquerda"
+	},
+	{
+		"name": "Bloco_Direita",
+		"id": 3,
+		"image": "res://assets/pixelkeys/arrow/blue/arrowBlue4.png",
+		"tipo": "direita"
+	},
+]

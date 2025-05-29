@@ -1,0 +1,131 @@
+[gd_scene load_steps=9 format=3 uid="uid://cphmefdh7pdgk"]
+
+[ext_resource type="PackedScene" uid="uid://8nclo878o3vn" path="res://scenes/bloco.tscn" id="1_4884w"]
+[ext_resource type="Script" path="res://scripts/json_manager.gd" id="1_nn3lx"]
+[ext_resource type="Script" path="res://scripts/montagem.gd" id="2_jmnhl"]
+[ext_resource type="Script" path="res://scripts/painel_manager.gd" id="3_mlko0"]
+[ext_resource type="Script" path="res://scripts/descarte.gd" id="3_xdbv0"]
+[ext_resource type="Script" path="res://scripts/info_debug.gd" id="6_jkxey"]
+[ext_resource type="PackedScene" uid="uid://bd7qbxfsxp6jx" path="res://scenes/mensagens.tscn" id="7_hdb4d"]
+[ext_resource type="Script" path="res://scripts/percurso_manager.gd" id="7_qtexj"]
+
+[node name="main" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+
+[node name="RunManager" type="Node" parent="."]
+
+[node name="Debug" type="Node" parent="."]
+script = ExtResource("6_jkxey")
+
+[node name="JsonManager" type="Node" parent="."]
+script = ExtResource("1_nn3lx")
+
+[node name="PaineisManager" type="Node" parent="."]
+script = ExtResource("3_mlko0")
+
+[node name="Descarte" type="Panel" parent="PaineisManager"]
+anchors_preset = -1
+anchor_top = 0.476
+anchor_bottom = 0.476
+offset_top = -52.72
+offset_right = 121.0
+offset_bottom = 54.28
+grow_vertical = 2
+script = ExtResource("3_xdbv0")
+
+[node name="LayerPaleta" type="CanvasLayer" parent="PaineisManager"]
+
+[node name="PainelDisponivel" type="Panel" parent="PaineisManager/LayerPaleta"]
+offset_right = 200.0
+offset_bottom = 200.0
+
+[node name="ScrollContainer" type="ScrollContainer" parent="PaineisManager/LayerPaleta/PainelDisponivel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Paleta" type="GridContainer" parent="PaineisManager/LayerPaleta/PainelDisponivel/ScrollContainer"]
+layout_mode = 2
+columns = 3
+
+[node name="LayerMontagem" type="CanvasLayer" parent="PaineisManager"]
+
+[node name="MontagemBackground" type="Panel" parent="PaineisManager/LayerMontagem"]
+anchors_preset = -1
+anchor_top = 0.619
+anchor_right = 1.0
+anchor_bottom = 0.71
+offset_top = -0.112
+offset_right = 2.0
+offset_bottom = -0.0799561
+grow_horizontal = 2
+grow_vertical = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="Montagem" type="HBoxContainer" parent="PaineisManager/LayerMontagem/MontagemBackground"]
+modulate = Color(0.838897, 0.838897, 0.838897, 1)
+self_modulate = Color(0.868985, 0.868985, 0.868985, 1)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("2_jmnhl")
+
+[node name="Mensagem" parent="." instance=ExtResource("7_hdb4d")]
+visible = false
+layout_mode = 1
+
+[node name="PercursoManager" type="Node" parent="."]
+script = ExtResource("7_qtexj")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="PercursoManager"]
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="PercursoManager/CanvasLayer"]
+clip_contents = true
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -320.0
+offset_right = 320.0
+offset_bottom = 320.0
+grow_horizontal = 2
+
+[node name="SubViewport" type="SubViewport" parent="PercursoManager/CanvasLayer/SubViewportContainer"]
+disable_3d = true
+handle_input_locally = false
+size = Vector2i(640, 320)
+render_target_update_mode = 4
+
+[node name="Modelos" type="Node" parent="."]
+
+[node name="bloco" parent="Modelos" instance=ExtResource("1_4884w")]
+visible = false
+offset_left = -1.0
+offset_top = -2.0
+offset_right = 127.0
+offset_bottom = 126.0
+
+[node name="FPSLayer" type="CanvasLayer" parent="."]
+
+[node name="FPS" type="Label" parent="FPSLayer"]
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -20.0
+offset_top = -23.0
+offset_right = 20.0
+grow_horizontal = 2
+grow_vertical = 0
