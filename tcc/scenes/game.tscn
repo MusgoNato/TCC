@@ -1,13 +1,13 @@
 [gd_scene load_steps=9 format=3 uid="uid://cphmefdh7pdgk"]
 
 [ext_resource type="PackedScene" uid="uid://8nclo878o3vn" path="res://scenes/bloco.tscn" id="1_4884w"]
-[ext_resource type="Script" path="res://scripts/json_manager.gd" id="1_nn3lx"]
-[ext_resource type="Script" path="res://scripts/montagem.gd" id="2_jmnhl"]
-[ext_resource type="Script" path="res://scripts/painel_manager.gd" id="3_mlko0"]
-[ext_resource type="Script" path="res://scripts/descarte.gd" id="3_xdbv0"]
-[ext_resource type="Script" path="res://scripts/info_debug.gd" id="6_jkxey"]
+[ext_resource type="Script" uid="uid://dti8vcdhy4bcj" path="res://scripts/json_manager.gd" id="1_nn3lx"]
+[ext_resource type="Script" uid="uid://y3i0glttfn6q" path="res://scripts/montagem.gd" id="2_jmnhl"]
+[ext_resource type="Script" uid="uid://drdqle48vjap4" path="res://scripts/painel_manager.gd" id="3_mlko0"]
+[ext_resource type="Script" uid="uid://bwxpvbvf86tte" path="res://scripts/descarte.gd" id="3_xdbv0"]
+[ext_resource type="Script" uid="uid://chh41sctvmt1w" path="res://scripts/info_debug.gd" id="6_jkxey"]
 [ext_resource type="PackedScene" uid="uid://bd7qbxfsxp6jx" path="res://scenes/mensagens.tscn" id="7_hdb4d"]
-[ext_resource type="Script" path="res://scripts/percurso_manager.gd" id="7_qtexj"]
+[ext_resource type="Script" uid="uid://bkiifbfeg3guh" path="res://scripts/percurso_manager.gd" id="7_qtexj"]
 
 [node name="main" type="Control"]
 layout_mode = 3
@@ -17,8 +17,6 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 4
-
-[node name="RunManager" type="Node" parent="."]
 
 [node name="Debug" type="Node" parent="."]
 script = ExtResource("6_jkxey")
@@ -38,6 +36,23 @@ offset_right = 121.0
 offset_bottom = 54.28
 grow_vertical = 2
 script = ExtResource("3_xdbv0")
+
+[node name="Label" type="Label" parent="PaineisManager/Descarte"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -34.5
+offset_top = -11.5
+offset_right = 34.5
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 64
+text = "X"
+horizontal_alignment = 1
 
 [node name="LayerPaleta" type="CanvasLayer" parent="PaineisManager"]
 
@@ -89,9 +104,9 @@ layout_mode = 1
 [node name="PercursoManager" type="Node" parent="."]
 script = ExtResource("7_qtexj")
 
-[node name="CanvasLayer" type="CanvasLayer" parent="PercursoManager"]
+[node name="PercursoLayer" type="CanvasLayer" parent="PercursoManager"]
 
-[node name="SubViewportContainer" type="SubViewportContainer" parent="PercursoManager/CanvasLayer"]
+[node name="SubViewportContainer" type="SubViewportContainer" parent="PercursoManager/PercursoLayer"]
 clip_contents = true
 anchors_preset = 5
 anchor_left = 0.5
@@ -101,7 +116,7 @@ offset_right = 320.0
 offset_bottom = 320.0
 grow_horizontal = 2
 
-[node name="SubViewport" type="SubViewport" parent="PercursoManager/CanvasLayer/SubViewportContainer"]
+[node name="SubViewport" type="SubViewport" parent="PercursoManager/PercursoLayer/SubViewportContainer"]
 disable_3d = true
 handle_input_locally = false
 size = Vector2i(640, 320)
@@ -129,3 +144,20 @@ offset_top = -23.0
 offset_right = 20.0
 grow_horizontal = 2
 grow_vertical = 0
+
+[node name="Executar" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -4.0
+offset_top = -4.0
+offset_right = 4.0
+offset_bottom = 4.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Executar"
+
+[connection signal="button_down" from="Executar" to="PercursoManager" method="_on_executar_button_down"]

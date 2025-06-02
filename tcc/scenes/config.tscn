@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://boxsmuuffeogh"]
 
-[ext_resource type="Script" path="res://scripts/config.gd" id="1_msvii"]
+[ext_resource type="Script" uid="uid://dv0spcwh3ew1i" path="res://scripts/config.gd" id="1_msvii"]
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_x3jjj"]
 

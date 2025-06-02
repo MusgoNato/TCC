@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://dskfafe1j24gy"]
 
-[ext_resource type="Script" path="res://scripts/menu_inicial.gd" id="1_5euyt"]
+[ext_resource type="Script" uid="uid://bxm17xerd1omb" path="res://scripts/menu_inicial.gd" id="1_5euyt"]
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_d1bn2"]
 

@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://8nclo878o3vn"]
 
 [ext_resource type="Texture2D" uid="uid://2ar7y4xqltag" path="res://assets/icon.svg" id="1_0cr2r"]
-[ext_resource type="Script" path="res://scripts/bloco.gd" id="2_tw5hp"]
+[ext_resource type="Script" uid="uid://53nvpqntfqy0" path="res://scripts/bloco.gd" id="2_tw5hp"]
 
 [node name="bloco" type="TextureRect"]
 offset_right = 128.0

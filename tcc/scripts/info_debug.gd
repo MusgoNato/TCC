@@ -2,7 +2,7 @@ class_name Debug extends Node
 
 @onready var montagem: Montagem = $"../PaineisManager/LayerMontagem/MontagemBackground/Montagem"
 @onready var json_manager: JsonManager = $"../JsonManager"
-@onready var fps: Label = $"../CanvasLayer/FPS"
+@onready var fps: Label = $"../FPSLayer/FPS"
 var blocos = null
 
 func _ready() -> void:

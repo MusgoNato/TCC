@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://c57qcdq27nifu"]
 
-[ext_resource type="Script" path="res://scripts/view_fases.gd" id="1_f16q7"]
+[ext_resource type="Script" uid="uid://clbxgwt7eq7jg" path="res://scripts/view_fases.gd" id="1_f16q7"]
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_tn05k"]
 

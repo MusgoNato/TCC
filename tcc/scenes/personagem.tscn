@@ -1,0 +1,33 @@
+[gd_scene load_steps=5 format=3 uid="uid://nj7nqkgjt3e7"]
+
+[ext_resource type="Texture2D" uid="uid://dbm5vb53omui2" path="res://assets/spritesheets/1 idle.png" id="1_t2tgb"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wtnic"]
+atlas = ExtResource("1_t2tgb")
+region = Rect2(32, 16, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_bss74"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wtnic")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_en60c"]
+size = Vector2(12.25, 13.25)
+
+[node name="Jogador" type="CharacterBody2D"]
+
+[node name="Animacao" type="AnimatedSprite2D" parent="."]
+position = Vector2(1.5, -0.5)
+scale = Vector2(4, 4)
+sprite_frames = SubResource("SpriteFrames_bss74")
+
+[node name="Colisor" type="CollisionShape2D" parent="."]
+position = Vector2(1.5, 5.5)
+scale = Vector2(4, 4)
+shape = SubResource("RectangleShape2D_en60c")
