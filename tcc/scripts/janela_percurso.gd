@@ -15,9 +15,8 @@ func _ready():
 
 func _on_envia_blocos_percurso(blocos):
 	if processando_blocos:
-		print("Ja esta processando blocos")
 		return
-			
+					
 	processando_blocos = true
 	
 	for bloco in blocos:
