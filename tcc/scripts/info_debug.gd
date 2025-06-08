@@ -17,3 +17,7 @@ func _input(event: InputEvent) -> void:
 func _process(delta: float) -> void:	
 	delta = delta
 	$"../FPSLayer/FPS".text = str(Engine.get_frames_per_second()) 
+	
+	# Recarrega a cena atual
+	if Input.is_action_just_pressed("reload"):
+		get_tree().reload_current_scene()

@@ -17,17 +17,14 @@ animations = [{
 "speed": 5.0
 }]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_en60c"]
-size = Vector2(12.25, 13.25)
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_t2tgb"]
+size = Vector2(24, 26)
 
 [node name="Jogador" type="CharacterBody2D"]
 
 [node name="Animacao" type="AnimatedSprite2D" parent="."]
-position = Vector2(1.5, -0.5)
-scale = Vector2(4, 4)
+scale = Vector2(2, 2)
 sprite_frames = SubResource("SpriteFrames_bss74")
 
 [node name="Colisor" type="CollisionShape2D" parent="."]
-position = Vector2(1.5, 5.5)
-scale = Vector2(4, 4)
-shape = SubResource("RectangleShape2D_en60c")
+shape = SubResource("RectangleShape2D_t2tgb")
