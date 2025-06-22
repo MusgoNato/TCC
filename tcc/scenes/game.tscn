@@ -1,5 +1,6 @@
-[gd_scene load_steps=9 format=3 uid="uid://cphmefdh7pdgk"]
+[gd_scene load_steps=10 format=3 uid="uid://cphmefdh7pdgk"]
 
+[ext_resource type="Script" uid="uid://bak0dsf3rkvof" path="res://scripts/fase.gd" id="1_0tnpc"]
 [ext_resource type="PackedScene" uid="uid://8nclo878o3vn" path="res://scenes/bloco.tscn" id="1_4884w"]
 [ext_resource type="Script" uid="uid://dti8vcdhy4bcj" path="res://scripts/json_manager.gd" id="1_nn3lx"]
 [ext_resource type="Script" uid="uid://y3i0glttfn6q" path="res://scripts/montagem.gd" id="2_jmnhl"]
@@ -17,6 +18,37 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 4
+script = ExtResource("1_0tnpc")
+
+[node name="LayerInstrucoes" type="CanvasLayer" parent="."]
+layer = 2
+
+[node name="Panel" type="Panel" parent="LayerInstrucoes"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TextoInstrucoesIniciais" type="RichTextLabel" parent="LayerInstrucoes/Panel"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.284781
+anchor_top = 0.370611
+anchor_right = 0.70975
+anchor_bottom = 0.712722
+offset_left = 0.47998
+offset_top = 0.159973
+offset_right = -0.480042
+offset_bottom = -0.160004
+grow_horizontal = 2
+grow_vertical = 2
+scroll_active = false
+horizontal_alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="TimerInstrucoes" type="Timer" parent="LayerInstrucoes"]
+one_shot = true
 
 [node name="Debug" type="Node" parent="."]
 script = ExtResource("6_jkxey")
@@ -176,4 +208,5 @@ grow_horizontal = 2
 grow_vertical = 2
 text = "Executar"
 
+[connection signal="timeout" from="LayerInstrucoes/TimerInstrucoes" to="." method="_on_timer_instrucoes_timeout"]
 [connection signal="button_down" from="BotaoUI/Executar" to="PercursoManager" method="_on_executar_button_down"]
