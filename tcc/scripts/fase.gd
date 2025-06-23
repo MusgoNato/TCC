@@ -6,7 +6,7 @@ extends Control
 @onready var timer_instrucoes: Timer = $LayerInstrucoes/TimerInstrucoes
 
 var etapa_atual: int = 0
-const TEMPO_INSTRUCOES: int =  3
+const TEMPO_INSTRUCOES: int = 1
 
 var instrucoes = [
 	"Bem-vindo à fase de movimento!",
