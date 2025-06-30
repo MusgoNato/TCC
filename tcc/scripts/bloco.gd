@@ -1,12 +1,12 @@
 class_name Bloco extends TextureRect
 
-var estaNaAreaDisponivel = true
-var arrastando = false
+var estaNaAreaDisponivel: bool = true
+var arrastando: bool = false
 var of = Vector2(0,0)
 
 # Essas variaveis serao carregadas dinamicamente atraves do json
-var bloco_id = -1
-var tipo = ""
+var bloco_id: int = -1
+var tipo: String = ""
 
 # Carrega a cena em uma variavel
 @export var blocoPadrao = preload("res://scenes/bloco.tscn")

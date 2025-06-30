@@ -9,98 +9,48 @@ var destino := Vector2i(0, 0)
 var processando_blocos: bool = false
 var tile_size: Vector2
 
+# Verificacao para o checkpoint
+var checkpoints: Array[Vector2i] = []
+var ultimo_checkpoint_tile: Vector2i
+var cont_chekpoints: int = 0
+
 # O tamanho do tile é 32x32
 # Para que seja centralizado o movimento do jogador de acordo com o tile, y
-const OFFSET_TILE_CENTRALIZADO = 16
-const TAM_TILE_MUNDO = 32
-const POSICAO_X_INICIAL_JOGADOR = TAM_TILE_MUNDO * 6
+const OFFSET_TILE_CENTRALIZADO: int = 16
+const TAM_TILE_MUNDO: int = 32
+const POSICAO_X_INICIAL_JOGADOR: int = TAM_TILE_MUNDO * 6
+const QUANT_CHECKPOINT: int = 2
 
 func _ready():
 	player.position = Vector2.ZERO
 	
 	# Tamanho do tile map layer como um todo
 	tile_size = Vector2(tile_map_layer.tile_set.tile_size)
-	#print("Tile size: ", tile_size)
 
 	# Pega o tamanho como um retangulo
 	var used = tile_map_layer.get_used_rect()
-	#print("Used rect: ", used)
-	#print("Used rect position: ", used.position)
-	#print("Used rect size: ", used.size)
-	#print("Used rect end: ", used.end)
 
 	# Calcula a linha do meio do tile map layer (Posicao inicial do personagem)
 	var linha_meio = used.position.y + int(used.size.y / 2)
 	celula_tile = Vector2i(0, linha_meio-1) # -1 para encaixar 5 corretamente
-	#print("Starting tile: ", celula_tile)
 
 	# Calcula a posicao com base no tile map layer, canto superior direito
 	var tile_position = tile_map_layer.map_to_local(celula_tile)
-	#print("Tile position (top-left): ", tile_position)
 
 	# Calculo do centro do tile
 	tile_position.x -= OFFSET_TILE_CENTRALIZADO
 	tile_position.y += OFFSET_TILE_CENTRALIZADO
 
-	var centro = tile_position + (tile_size / 2)
-	#print("Calculated center: ", centro)
-	
 	# Centraliza a posicao do jogador ao centro do tile
-	player.position = centro
-	#print("Player position: ", player.position)
-
-func _process(delta: float) -> void:
-	delta = delta
-	pass
+	var centro = tile_position + (tile_size / 2)
 	
-	## Handle input for static movement
-	#var direction := Vector2i.ZERO
-	#if Input.is_action_just_pressed("rigth"):  # Fixed typo from "rigth"
-		#player.animation_player.flip_h = false
-		#direction = Vector2i(1, 0)
-		#player.animation_player.play("dir")
-	#elif Input.is_action_just_pressed("left"):
-		#direction = Vector2i(-1, 0)
-		#player.animation_player.flip_h = true
-		#player.animation_player.play("esq")
-	#elif Input.is_action_just_pressed("up"):
-		#direction = Vector2i(0, -1)
-		#player.animation_player.play("up")
-	#elif Input.is_action_just_pressed("down"):
-		#direction = Vector2i(0, 1)
-		#player.animation_player.play("down")
-	#
-	#if direction != Vector2i.ZERO:
-		## Calculate new tile position
-		#var new_tile = celula_tile + direction
-		#
-		## Check if the new tile is within the tile map bounds
-		#var used_rect = tile_map_layer.get_used_rect()
-		## Limites da tela do percurso
-		#var is_valid = (new_tile.x >= used_rect.position.x and
-						#new_tile.x < used_rect.position.x + used_rect.size.x and
-						#new_tile.y >= used_rect.position.y - 1 and
-						#new_tile.y < used_rect.position.y - 1 + used_rect.size.y)
-		##print("Attempting move to: ", new_tile, " Valid: ", is_valid)
-		#
-		#if is_valid:
-			#celula_tile = new_tile
-			#
-			## Calcula a posicao global para o tile
-			#var nova_pos = tile_map_layer.map_to_local(celula_tile)
-			#nova_pos += tile_size / 2
-			#nova_pos.x -= OFFSET_TILE_CENTRALIZADO
-			#nova_pos.y += OFFSET_TILE_CENTRALIZADO
-			##print("Moving to tile: ", celula_tile, " World position: ", nova_pos)
-#
-			## Move o jogador
-			#var tween = create_tween()
-			#tween.tween_property(player, "position", nova_pos, 0.2)
-			#await tween.finished
-			#
-		#else:
-			#print("Move blocked: Tile ", new_tile, " is outside used_rect: ", used_rect)
-			
+	# Definindo posicao inicial do jogador e checkpoint inicial
+	player.position = centro
+	ultimo_checkpoint_tile = celula_tile
+	
+	# Definicao dos checkpoints com base na fase
+	configurar_checkpoints(1)
+	
 func _on_envia_blocos_percurso(blocos):
 	blocos = blocos
 	if blocos.is_empty() or processando_blocos:
@@ -128,7 +78,7 @@ func _on_envia_blocos_percurso(blocos):
 				player.animation_player.play("down")
 			"_":
 				print("Direcao invalida")
-				continue	
+				continue
 	
 		var novo_tile = celula_tile + direcao
 
@@ -154,9 +104,38 @@ func _on_envia_blocos_percurso(blocos):
 			print("Movimento ignorado, fora dos limites: ", novo_tile)
 
 	processando_blocos = false
+	
 	var posicao_jogador_celula = tile_map_layer.local_to_map(player.position)
-	var tile_checkpoint = tile_map_layer.get_cell_tile_data(posicao_jogador_celula)
-	print("Tile checkpoint: ", tile_checkpoint)
-	print(tile_checkpoint.get_custom_data("checkpoint"))
-	if tile_checkpoint != null and tile_checkpoint.get_custom_data("checkpoint"):
-		print("Checkpoint alcançado!")
+	if not verificar_checkpoint_alcancado(posicao_jogador_celula):
+		print("Nenhum checkpoint alcançado, reiniciando...")
+		await get_tree().create_timer(0.5).timeout
+		reiniciar_para_ultimo_checkpoint()
+		
+func configurar_checkpoints(fase: int):
+	checkpoints.clear()
+	match fase:
+		1:
+			checkpoints.append(Vector2i(4, 4))
+		_:
+			print("Fase sem configuração")
+
+func verificar_checkpoint_alcancado(tile: Vector2i) -> bool:
+	var tile_data = tile_map_layer.get_cell_tile_data(tile)
+	if tile_data != null and tile_data.get_custom_data("checkpoint"):
+		if not checkpoints.has(tile):
+			checkpoints.append(tile)
+		ultimo_checkpoint_tile.x = tile.x
+		ultimo_checkpoint_tile.y = tile.y - 1
+		cont_chekpoints += 1
+		print("Checkpoint alcançado! Total: ", cont_chekpoints)
+		return true
+	return false
+	
+func reiniciar_para_ultimo_checkpoint():
+	celula_tile = ultimo_checkpoint_tile
+	print(ultimo_checkpoint_tile)
+	var pos = tile_map_layer.map_to_local(celula_tile) + tile_size / 2
+	pos.x -= OFFSET_TILE_CENTRALIZADO
+	pos.y += OFFSET_TILE_CENTRALIZADO
+	player.position = pos
+	print("Reiniciado no checkpoint: ", celula_tile)

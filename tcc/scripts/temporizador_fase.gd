@@ -10,7 +10,7 @@ extends Node
 @onready var texto: Label = $Pause_FimJogo/LayerPause_FimJogo/Pause_Fim_de_Jogo/VBoxContainer/HBoxContainer/Texto
 
 # Tempo de cada fase (8 = 8 segundos, 300 = 5 minutos), valor esta em segundos
-var tempo_restante: int = 8
+var tempo_restante: int = 300
 
 func _ready():
 	# Inicia o timer para contar a cada 1 segundo
