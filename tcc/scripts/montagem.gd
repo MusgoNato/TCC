@@ -1,6 +1,6 @@
 class_name Montagem extends HBoxContainer
 
-const MAX_BLOCOS = 10
+const MAX_BLOCOS = 3
 
 # Por mais que apareca como aviso na pilha de erros, tem de ser declarado para que se consiga conectar os sinais
 signal mensagem_solicitada(texto: String)

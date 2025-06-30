@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://cphmefdh7pdgk"]
+[gd_scene load_steps=12 format=3 uid="uid://cphmefdh7pdgk"]
 
 [ext_resource type="Script" uid="uid://bak0dsf3rkvof" path="res://scripts/fase.gd" id="1_0tnpc"]
 [ext_resource type="PackedScene" uid="uid://8nclo878o3vn" path="res://scenes/bloco.tscn" id="1_4884w"]
@@ -9,6 +9,8 @@
 [ext_resource type="Script" uid="uid://chh41sctvmt1w" path="res://scripts/info_debug.gd" id="6_jkxey"]
 [ext_resource type="PackedScene" uid="uid://bd7qbxfsxp6jx" path="res://scenes/mensagens.tscn" id="7_hdb4d"]
 [ext_resource type="Script" uid="uid://bkiifbfeg3guh" path="res://scripts/percurso_manager.gd" id="7_qtexj"]
+[ext_resource type="Script" uid="uid://c6cew0ftwnxdr" path="res://scripts/temporizador_fase.gd" id="10_vtaks"]
+[ext_resource type="Script" uid="uid://c8vsdikofay10" path="res://scripts/pause_fim_jogo.gd" id="11_kvpfn"]
 
 [node name="main" type="Control"]
 layout_mode = 3
@@ -55,6 +57,14 @@ script = ExtResource("6_jkxey")
 
 [node name="JsonManager" type="Node" parent="."]
 script = ExtResource("1_nn3lx")
+
+[node name="Mensagem" parent="." instance=ExtResource("7_hdb4d")]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.92
+anchor_bottom = 0.05
+offset_left = -0.599976
+offset_bottom = 0.0
 
 [node name="PaineisManager" type="Node" parent="."]
 script = ExtResource("3_mlko0")
@@ -128,10 +138,6 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("2_jmnhl")
-
-[node name="Mensagem" parent="." instance=ExtResource("7_hdb4d")]
-visible = false
-layout_mode = 1
 
 [node name="PercursoManager" type="Node" parent="."]
 script = ExtResource("7_qtexj")
@@ -208,5 +214,70 @@ grow_horizontal = 2
 grow_vertical = 2
 text = "Executar"
 
+[node name="TemporizadorFase" type="Node" parent="."]
+script = ExtResource("10_vtaks")
+
+[node name="Pause_FimJogo" type="Node" parent="TemporizadorFase"]
+process_mode = 3
+script = ExtResource("11_kvpfn")
+
+[node name="LayerPause_FimJogo" type="CanvasLayer" parent="TemporizadorFase/Pause_FimJogo"]
+process_mode = 3
+layer = 3
+visible = false
+
+[node name="Pause_Fim_de_Jogo" type="Panel" parent="TemporizadorFase/Pause_FimJogo/LayerPause_FimJogo"]
+self_modulate = Color(0, 0, 0, 1)
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="TemporizadorFase/Pause_FimJogo/LayerPause_FimJogo/Pause_Fim_de_Jogo"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -173.0
+offset_top = -20.0
+offset_right = 173.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="TemporizadorFase/Pause_FimJogo/LayerPause_FimJogo/Pause_Fim_de_Jogo/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+theme_override_constants/separation = 100
+
+[node name="Btn_reiniciarFase" type="Button" parent="TemporizadorFase/Pause_FimJogo/LayerPause_FimJogo/Pause_Fim_de_Jogo/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "Reiniciar a fase"
+
+[node name="Texto" type="Label" parent="TemporizadorFase/Pause_FimJogo/LayerPause_FimJogo/Pause_Fim_de_Jogo/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+
+[node name="Btn_MenuPrincipal" type="Button" parent="TemporizadorFase/Pause_FimJogo/LayerPause_FimJogo/Pause_Fim_de_Jogo/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "Menu principal"
+
+[node name="Label" type="Label" parent="TemporizadorFase"]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = 310.0
+offset_right = 350.0
+offset_bottom = 23.0
+grow_horizontal = 2
+
+[node name="Timer" type="Timer" parent="TemporizadorFase"]
+autostart = true
+
 [connection signal="timeout" from="LayerInstrucoes/TimerInstrucoes" to="." method="_on_timer_instrucoes_timeout"]
 [connection signal="button_down" from="BotaoUI/Executar" to="PercursoManager" method="_on_executar_button_down"]
+[connection signal="button_down" from="TemporizadorFase/Pause_FimJogo/LayerPause_FimJogo/Pause_Fim_de_Jogo/VBoxContainer/HBoxContainer/Btn_reiniciarFase" to="TemporizadorFase/Pause_FimJogo" method="_on_btn_reiniciar_fase_button_down"]
+[connection signal="button_down" from="TemporizadorFase/Pause_FimJogo/LayerPause_FimJogo/Pause_Fim_de_Jogo/VBoxContainer/HBoxContainer/Btn_MenuPrincipal" to="TemporizadorFase/Pause_FimJogo" method="_on_btn_menu_principal_button_down"]
+[connection signal="timeout" from="TemporizadorFase/Timer" to="TemporizadorFase" method="_on_timer_timeout"]

@@ -11,6 +11,7 @@ func _ready() -> void:
 
 # Exibe dicas, mensagens, avisos, erros, etc.
 func _on_mensagem_solicitada(texto: String):
+	print("Chegou aqui")
 	## Exibe qualquer mensagem solicitada por algum node durante o jogo
 	mensagem.text = texto
 	mensagem.visible = true

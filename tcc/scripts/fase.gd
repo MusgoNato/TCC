@@ -16,6 +16,7 @@ var instrucoes = [
 ]
 
 func _ready() -> void:
+	
 	timer_instrucoes.start(1.0)
 	mostrar_instrucao()
 

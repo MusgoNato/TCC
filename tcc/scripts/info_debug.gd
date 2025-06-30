@@ -11,12 +11,12 @@ func _ready() -> void:
 
 func _input(event: InputEvent) -> void:
 	# Saida rapida
-	if event.is_action_pressed('sair'):
+	if event.is_action_pressed("sair"):
 		get_tree().quit()
 		
 func _process(delta: float) -> void:	
 	delta = delta
-	fps.text = str(Engine.get_frames_per_second()) 
+	fps.text = str(Engine.get_frames_per_second())
 	
 	# Recarrega a cena atual
 	if Input.is_action_just_pressed("reload"):

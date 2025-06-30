@@ -12,6 +12,8 @@ var tile_size: Vector2
 # O tamanho do tile é 32x32
 # Para que seja centralizado o movimento do jogador de acordo com o tile, y
 const OFFSET_TILE_CENTRALIZADO = 16
+const TAM_TILE_MUNDO = 32
+const POSICAO_X_INICIAL_JOGADOR = TAM_TILE_MUNDO * 6
 
 func _ready():
 	player.position = Vector2.ZERO
@@ -102,6 +104,7 @@ func _process(delta: float) -> void:
 func _on_envia_blocos_percurso(blocos):
 	blocos = blocos
 	if blocos.is_empty() or processando_blocos:
+		print("Painel de montagem vazio!")
 		return
 		
 	processando_blocos = true
