@@ -8,8 +8,6 @@ var celula_tile := Vector2i(0, 0)
 var destino := Vector2i(0, 0)
 var processando_blocos: bool = false
 var tile_size: Vector2
-
-# Verificacao para o checkpoint
 var checkpoints: Array[Vector2i] = []
 var ultimo_checkpoint_tile: Vector2i
 var cont_chekpoints: int = 0
@@ -20,6 +18,8 @@ const OFFSET_TILE_CENTRALIZADO: int = 16
 const TAM_TILE_MUNDO: int = 32
 const POSICAO_X_INICIAL_JOGADOR: int = TAM_TILE_MUNDO * 6
 const QUANT_CHECKPOINT: int = 2
+
+signal checkpoint_alcancado(qtd_checkpoint: int)
 
 func _ready():
 	player.position = Vector2.ZERO
@@ -127,7 +127,8 @@ func verificar_checkpoint_alcancado(tile: Vector2i) -> bool:
 		ultimo_checkpoint_tile.x = tile.x
 		ultimo_checkpoint_tile.y = tile.y - 1
 		cont_chekpoints += 1
-		print("Checkpoint alcançado! Total: ", cont_chekpoints)
+		if cont_chekpoints >= QUANT_CHECKPOINT:
+			emit_signal("checkpoint_alcancado", cont_chekpoints)
 		return true
 	return false
 	

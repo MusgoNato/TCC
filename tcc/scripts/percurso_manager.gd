@@ -2,6 +2,7 @@ class_name Percurso_Manager extends Node
 
 @onready var montagem: Montagem = $"../PaineisManager/LayerMontagem/MontagemBackground/Montagem"
 @onready var sub_viewport: SubViewport = $PercursoLayer/SubViewportContainer/SubViewport
+@onready var pause_fim_jogo: Pause_FimJogo = $"../TemporizadorFase/Pause_FimJogo"
 
 signal envia_blocos_percurso(blocos)
 
@@ -11,6 +12,9 @@ func _ready() -> void:
 	
 	# Conecto o sinal para enviar os blocos ja montados
 	self.connect("envia_blocos_percurso", Callable(percurso, "_on_envia_blocos_percurso"))
+	
+	# Conecto o sinal para o percurso, para chamar a funcao resposavel por mostrar a interface de fim de jogo
+	percurso.connect("checkpoint_alcancado", Callable(pause_fim_jogo, "_on_checkpoint_alcancado"))
 
 func _on_executar_button_down() -> void:
 	### Emite um sinal que envia os blocos montados no painel de montagem para a janela de percurso
@@ -29,3 +33,4 @@ func serializar_bloco(bloco) -> Dictionary:
 	return {
 		"tipo": bloco.tipo, # Modificar + pra frente, colocando outras propriedades dos blocos
 	}
+	

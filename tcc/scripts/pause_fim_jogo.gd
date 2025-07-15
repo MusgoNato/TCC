@@ -6,13 +6,14 @@ extends Node
 
 var pausado : bool = false
 var FimDeJogo : bool = false
+var checkpoints_atingidos: bool = false
 
 # Inputs do teclado
 func _unhandled_input(event: InputEvent) -> void:
 	
-	# Bloquia pause do teclado caso o jogador tenha perdido, 
+	# Bloquia pause do teclado caso o jogador tenha perdido ou ganho a partida, 
 	# obrigando a ele reiniciar o jogo ou voltar ao menu principal
-	if FimDeJogo:
+	if FimDeJogo || checkpoints_atingidos:
 		return
 	if event.is_action_pressed("pausar"):
 		alternar_pause()
@@ -25,7 +26,13 @@ func alternar_pause():
 	if pausado:
 		texto.text = "Jogo Pausado"
 		
-		
+# Funcao para tornar visivel a tela de fim de jogo ao alcancar o checkpoint
+func _on_checkpoint_alcancado(qtd_checkpoint: int):
+	checkpoints_atingidos = true
+	layer_pause_fim_jogo.visible = true
+	texto.text = "Parabéns!, você completou a fase"
+	get_tree().paused = true
+	
 # Sinais dos botoes da interface de pause
 func _on_btn_reiniciar_fase_button_down() -> void:
 	get_tree().paused = false
