@@ -91,12 +91,12 @@ func _on_envia_blocos_percurso(blocos):
 
 		if dentro:
 			celula_tile = novo_tile
-
+			
 			var nova_pos = tile_map_layer.map_to_local(celula_tile) + tile_size / 2
 			
 			nova_pos.x -= OFFSET_TILE_CENTRALIZADO
 			nova_pos.y += OFFSET_TILE_CENTRALIZADO
-	
+			
 			var tween = create_tween()
 			tween.tween_property(player, "position", nova_pos, 0.2)
 			await tween.finished
@@ -127,6 +127,7 @@ func verificar_checkpoint_alcancado(tile: Vector2i) -> bool:
 		ultimo_checkpoint_tile.x = tile.x
 		ultimo_checkpoint_tile.y = tile.y - 1
 		cont_chekpoints += 1
+		print(cont_chekpoints, "a Checkpoint alcancado!!!")
 		if cont_chekpoints >= QUANT_CHECKPOINT:
 			emit_signal("checkpoint_alcancado", cont_chekpoints)
 		return true
