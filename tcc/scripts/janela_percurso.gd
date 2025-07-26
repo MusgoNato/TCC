@@ -11,6 +11,7 @@ var tile_size: Vector2
 var checkpoints: Array[Vector2i] = []
 var ultimo_checkpoint_tile: Vector2i
 var cont_chekpoints: int = 0
+var cont_blocos: int = 0
 
 # O tamanho do tile é 32x32
 # Para que seja centralizado o movimento do jogador de acordo com o tile, y
@@ -18,6 +19,7 @@ const OFFSET_TILE_CENTRALIZADO: int = 16
 const TAM_TILE_MUNDO: int = 32
 const POSICAO_X_INICIAL_JOGADOR: int = TAM_TILE_MUNDO * 6
 const QUANT_CHECKPOINT: int = 2
+const DIFERENCA_RELATIVA_MUNDO: int = 1
 
 signal checkpoint_alcancado(qtd_checkpoint: int)
 
@@ -58,8 +60,9 @@ func _on_envia_blocos_percurso(blocos):
 		return
 		
 	processando_blocos = true
-	
+	cont_blocos = 0
 	for bloco in blocos:
+		cont_blocos += 1 
 		var direcao = Vector2i.ZERO
 		match bloco.tipo:
 			"esquerda":
@@ -90,6 +93,20 @@ func _on_envia_blocos_percurso(blocos):
 					  novo_tile.y < bounds.end.y - 1)
 
 		if dentro:
+			
+			# Verificacao em tempo de execucao se o proximo movimento do jogador e o caminho correto ou nao
+			# A marcacao do custom data layer do tile map layer ira indicar qual tile e o caminho correto ou nao,
+			# assim posso verificar em tempo de execucao. A cosntante de diferenca e em relacao ao mundo 2d, pois
+			# a posicao do jogador e a posicao do mapa em tiles tem uma diferenca minima de 1 no eixo y. Sem essa diferenca
+			# mesmo que aparente que o jogador esta sobre um tile ele na verdade estara no tile errado no mundo.
+			var tile_data = tile_map_layer.get_cell_tile_data(Vector2i(novo_tile.x, novo_tile.y + DIFERENCA_RELATIVA_MUNDO))
+			if tile_data != null and tile_data.has_custom_data("valido"):
+				if not tile_data.get_custom_data("valido"):
+					print("PRÓXIMO CAMINHO INVALIDO [N : ", cont_blocos, " ]")
+					break
+				else:
+					print("CAMINHO VALIDO")
+				
 			celula_tile = novo_tile
 			
 			var nova_pos = tile_map_layer.map_to_local(celula_tile) + tile_size / 2
@@ -141,3 +158,4 @@ func reiniciar_para_ultimo_checkpoint():
 	pos.y += OFFSET_TILE_CENTRALIZADO
 	player.position = pos
 	print("Reiniciado no checkpoint: ", celula_tile)
+	

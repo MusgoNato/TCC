@@ -28,6 +28,7 @@ func alternar_pause():
 		
 # Funcao para tornar visivel a tela de fim de jogo ao alcancar o checkpoint
 func _on_checkpoint_alcancado(qtd_checkpoint: int):
+	qtd_checkpoint = qtd_checkpoint
 	checkpoints_atingidos = true
 	layer_pause_fim_jogo.visible = true
 	texto.text = "Parabéns!, você completou a fase"
