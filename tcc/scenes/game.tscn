@@ -9,8 +9,8 @@
 [ext_resource type="Script" uid="uid://chh41sctvmt1w" path="res://scripts/info_debug.gd" id="6_jkxey"]
 [ext_resource type="PackedScene" uid="uid://bd7qbxfsxp6jx" path="res://scenes/mensagens.tscn" id="7_hdb4d"]
 [ext_resource type="Script" uid="uid://bkiifbfeg3guh" path="res://scripts/percurso_manager.gd" id="7_qtexj"]
-[ext_resource type="Script" uid="uid://c6cew0ftwnxdr" path="res://scripts/temporizador_fase.gd" id="10_vtaks"]
-[ext_resource type="Script" uid="uid://c8vsdikofay10" path="res://scripts/pause_fim_jogo.gd" id="11_kvpfn"]
+[ext_resource type="Script" path="res://scripts/temporizador_fase.gd" id="10_vtaks"]
+[ext_resource type="Script" path="res://scripts/pause_fim_jogo.gd" id="11_kvpfn"]
 
 [node name="main" type="Control"]
 layout_mode = 3
