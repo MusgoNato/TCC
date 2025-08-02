@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://cphmefdh7pdgk"]
+[gd_scene load_steps=12 format=3 uid="uid://cphmefdh7pdgk"]
 
 [ext_resource type="Script" uid="uid://bak0dsf3rkvof" path="res://scripts/fase.gd" id="1_0tnpc"]
 [ext_resource type="PackedScene" uid="uid://8nclo878o3vn" path="res://scenes/bloco.tscn" id="1_4884w"]
@@ -7,7 +7,6 @@
 [ext_resource type="Script" uid="uid://drdqle48vjap4" path="res://scripts/painel_manager.gd" id="3_mlko0"]
 [ext_resource type="Script" uid="uid://bwxpvbvf86tte" path="res://scripts/descarte.gd" id="3_xdbv0"]
 [ext_resource type="Script" uid="uid://chh41sctvmt1w" path="res://scripts/info_debug.gd" id="6_jkxey"]
-[ext_resource type="PackedScene" uid="uid://bjgdurxs30poc" path="res://scenes/painel_montagem.tscn" id="7_dinhu"]
 [ext_resource type="PackedScene" uid="uid://bd7qbxfsxp6jx" path="res://scenes/mensagens.tscn" id="7_hdb4d"]
 [ext_resource type="Script" uid="uid://bkiifbfeg3guh" path="res://scripts/percurso_manager.gd" id="7_qtexj"]
 [ext_resource type="Script" path="res://scripts/temporizador_fase.gd" id="10_vtaks"]
@@ -117,30 +116,45 @@ columns = 3
 
 [node name="LayerMontagem" type="CanvasLayer" parent="PaineisManager"]
 
-[node name="PainelMontagem" parent="PaineisManager/LayerMontagem" instance=ExtResource("7_dinhu")]
-anchors_preset = -1
-anchor_top = 0.559667
-anchor_right = 0.999563
-anchor_bottom = 0.997611
-offset_top = 0.039978
-offset_right = -0.440186
-offset_bottom = -0.280151
-stretch = true
-metadata/_edit_use_anchors_ = true
+[node name="VBoxContainer" type="VBoxContainer" parent="PaineisManager/LayerMontagem"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 
-[node name="montagem" type="Panel" parent="PaineisManager/LayerMontagem"]
+[node name="PanelContainer" type="PanelContainer" parent="PaineisManager/LayerMontagem/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="PanelContainer2" type="PanelContainer" parent="PaineisManager/LayerMontagem/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="MontagemBackground" type="Panel" parent="PaineisManager/LayerMontagem"]
 visible = false
 anchors_preset = -1
-anchor_right = 1.72926
-anchor_bottom = 3.84713
-offset_left = 2.0
-offset_top = 406.0
+anchor_top = 0.619
+anchor_right = 1.0
+anchor_bottom = 0.71
+offset_top = -0.112
 offset_right = 2.0
-offset_bottom = 406.0
+offset_bottom = -0.0799561
+grow_horizontal = 2
+grow_vertical = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="Montagem" type="HBoxContainer" parent="PaineisManager/LayerMontagem/MontagemBackground"]
+visible = false
+modulate = Color(0.838897, 0.838897, 0.838897, 1)
+self_modulate = Color(0.868985, 0.868985, 0.868985, 1)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("2_jmnhl")
-metadata/_edit_use_anchors_ = true
 
 [node name="PercursoManager" type="Node" parent="."]
 script = ExtResource("7_qtexj")
@@ -295,8 +309,6 @@ grow_horizontal = 2
 autostart = true
 
 [connection signal="timeout" from="LayerInstrucoes/TimerInstrucoes" to="." method="_on_timer_instrucoes_timeout"]
-[connection signal="mouse_entered" from="PaineisManager/LayerMontagem/montagem" to="PaineisManager/LayerMontagem/montagem" method="_on_mouse_entered"]
-[connection signal="mouse_exited" from="PaineisManager/LayerMontagem/montagem" to="PaineisManager/LayerMontagem/montagem" method="_on_mouse_exited"]
 [connection signal="button_down" from="BotaoUI/Executar" to="PercursoManager" method="_on_executar_button_down"]
 [connection signal="button_down" from="TemporizadorFase/Pause_FimJogo/LayerPause_FimJogo/Pause_Fim_de_Jogo/VBoxContainer/HBoxContainer/Btn_reiniciarFase" to="TemporizadorFase/Pause_FimJogo" method="_on_btn_reiniciar_fase_button_down"]
 [connection signal="button_down" from="TemporizadorFase/Pause_FimJogo/LayerPause_FimJogo/Pause_Fim_de_Jogo/VBoxContainer/HBoxContainer/Btn_MenuPrincipal" to="TemporizadorFase/Pause_FimJogo" method="_on_btn_menu_principal_button_down"]

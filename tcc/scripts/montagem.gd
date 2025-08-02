@@ -1,64 +1,94 @@
-class_name Montagem extends HBoxContainer
+class_name Montagem
+extends Control
 
-# Para nao quebrar a area de montagem no maximo podem ser 13 blocos colocados
+# qtd maximo de blocos na fase
 const MAX_BLOCOS = 13
 
-# Por mais que apareca como aviso na pilha de erros, tem de ser declarado para que se consiga conectar os sinais
+# Simulacao de camera no control
+var zoom: int = 1.0
+var zoom_min: int = 0.3
+var zoom_max: int = 2.0
+var zoom_step: int = 0.1
+
+# Limite do scrool
+var limite_scroll_camera_min: Vector2 = Vector2(-10000, -10000)
+var limite_scroll_camera_max: Vector2 = Vector2(0, 0)
+
+# Arraste do painel
+var arrastando_painel := false
+var mouse_dentro := false
+var posicao_mouse_anterior := Vector2.ZERO
+
+# Conecta sinal para qualquer tipo de mensagem que precisar
 signal mensagem_solicitada(texto: String)
 
-# Retorna se pode ser solto ou nao o bloco (Aqui é a area da montagem como um todo)
 func _can_drop_data(at_position: Vector2, data: Variant) -> bool:
-	at_position = at_position
-	data = data
-	return true
+	return data is Bloco
 
-# Drop data somente acontece uma vez, quando é dropado
 func _drop_data(at_position: Vector2, data: Variant) -> void:
-	# Evitar warnings	
-	at_position = at_position
-	
 	if data is Bloco:
+		
+		# Nao deixa colocar um bloco na area de montagem caso nao seja na propria
+		# area de montagem ou ultrapasse a quantidade de blocos permitidos. Neste
+		# caso o pai de data e paleta de blocos.
 		if get_child_count() >= MAX_BLOCOS and data.get_parent() != self:
 			emit_signal("mensagem_solicitada", "Limite de blocos atingido!")
 			data.estaNaAreaDisponivel = false
 			return
-			
-		# Se o bloco estiver vindo da area de blocos disponiveis, adiciono a montagem		
+
+		# verifica se esta sendo colocado fora da paleta de blocos, neste caso
+		# o data tem pai paleta
 		if data.get_parent() != self:
 			add_child(data)
-
-		var global_pos = get_global_mouse_position()
-		var lista_filhos = get_children()
-
-		for i in lista_filhos.size():
-			var filho = lista_filhos[i]
-
-			# Ignora o próprio bloco
-			if filho == data:
-				continue
-
-			# Se o mouse está sobre outro bloco, pego o indice
-			# dentro dele na lista pra fazer a troca
-			if filho.get_global_rect().has_point(global_pos):
-				
-				# Troca a posicao dos blocos apos o drop estando na area de montagem				
-				var posicao_de_troca = i
-				var bloco_temp = get_child(posicao_de_troca)
-				var bloco_original = data.get_index()
-								
-				move_child(data, posicao_de_troca)
-				move_child(bloco_temp, bloco_original)
-				
-				break
-				
-		# Area de montagem agora
-		data.estaNaAreaDisponivel = false
 		
-		# Debug do bloco
+		data.global_position = get_global_mouse_position()
+		data.estaNaAreaDisponivel = false
+
 		print("\n\n-----INFO DO BLOCO-----\n\n")
 		print("NOME DO BLOCO: ", data.name, "\nID DO BLOCO: ", data.bloco_id, "\nIMAGEM DO BLOCO: ", data.texture.get_image(), "\nTIPO DO BLOCO: ", data.tipo, "\n")
 	else:
-		print("Blocos não são iguais")
+		print("Blocos não são válidos")
 
-	# Em modo remoto, os blocos que sao colocados tem nomes diferentes do original,
-	# pela propria Godot criar nomes unicos e nao mesclar os nos entre si
+
+func _gui_input(event: InputEvent) -> void:
+	
+	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_WHEEL_UP and mouse_dentro:
+		_aplicar_zoom(zoom + zoom_step, event.global_position)
+	elif event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_WHEEL_DOWN and mouse_dentro:
+		_aplicar_zoom(zoom - zoom_step, event.global_position)
+	
+	# Para o arraste do painel
+	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_RIGHT:
+		if event.pressed and mouse_dentro:
+			var deltaa = event.global_position - posicao_mouse_anterior
+			arrastando_painel = true
+			posicao_mouse_anterior = event.global_position
+		else:
+			arrastando_painel = false
+
+	elif event is InputEventMouseMotion and arrastando_painel:
+		var deltaa = event.global_position - posicao_mouse_anterior
+		position += deltaa
+		posicao_mouse_anterior = event.global_position
+
+# Gerencia a 'camera' que foi criada no painel de montagem 
+func _aplicar_zoom(novo_zoom: float, focal_point: Vector2) -> void:
+	var clamped_zoom = clamp(novo_zoom, zoom_min, zoom_max)
+	if clamped_zoom == zoom:
+		return
+
+	# Recalcula a posição para manter o ponto focal sob o mouse
+	var old_zoom := zoom
+	zoom = clamped_zoom
+	scale = Vector2(zoom, zoom)
+
+	# Corrige a posição para que o ponto do mouse continue onde estava
+	var local_focal := focal_point - global_position
+	var ajuste := local_focal * (1.0 - zoom / old_zoom)
+	position += ajuste
+
+func _on_mouse_entered() -> void:
+	mouse_dentro = true
+
+func _on_mouse_exited() -> void:
+	mouse_dentro = false

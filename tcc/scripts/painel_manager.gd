@@ -1,13 +1,13 @@
 extends Node
 
-@onready var montagem: Montagem = $LayerMontagem/MontagemBackground/Montagem
+@onready var montagem: Montagem = $LayerMontagem/montagem
 @onready var mensagem: Label = $"../Mensagem"
 
 # Configuração dos paineis
 func _ready() -> void:
-	montagem.add_theme_constant_override("separation", 32)	
-	montagem.connect("mensagem_solicitada", Callable(self, "_on_mensagem_solicitada")) 
-
+	#montagem.add_theme_constant_override("separation", 32)	
+	montagem.connect("mensagem_solicitada", Callable(self, "_on_mensagem_solicitada"))
+	
 # Exibe dicas, mensagens, avisos, erros, etc.
 func _on_mensagem_solicitada(texto: String):
 	## Exibe qualquer mensagem solicitada por algum node durante o jogo

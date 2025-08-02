@@ -1,6 +1,6 @@
 class_name Percurso_Manager extends Node
 
-@onready var montagem: Montagem = $"../PaineisManager/LayerMontagem/MontagemBackground/Montagem"
+@onready var montagem: Montagem = $"../PaineisManager/LayerMontagem/montagem"
 @onready var sub_viewport: SubViewport = $PercursoLayer/SubViewportContainer/SubViewport
 @onready var pause_fim_jogo: Pause_FimJogo = $"../TemporizadorFase/Pause_FimJogo"
 

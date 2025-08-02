@@ -1,6 +1,6 @@
 class_name Debug extends Node
 
-@onready var montagem: Montagem = $"../PaineisManager/LayerMontagem/MontagemBackground/Montagem"
+@onready var montagem: Montagem = $"../PaineisManager/LayerMontagem/montagem"
 @onready var json_manager: JsonManager = $"../JsonManager"
 @onready var fps: Label = $"../FPSLayer/FPS"
 var blocos = null
