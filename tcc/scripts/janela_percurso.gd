@@ -123,7 +123,8 @@ func _on_envia_blocos_percurso(blocos):
 	processando_blocos = false
 	
 	var posicao_jogador_celula = tile_map_layer.local_to_map(player.position)
-	if not verificar_checkpoint_alcancado(posicao_jogador_celula):
+	var novo_checkpoint_atingido = verificar_checkpoint_alcancado(posicao_jogador_celula)
+	if not novo_checkpoint_atingido:
 		print("Nenhum checkpoint alcançado, reiniciando...")
 		await get_tree().create_timer(0.5).timeout
 		reiniciar_para_ultimo_checkpoint()
@@ -139,14 +140,16 @@ func configurar_checkpoints(fase: int):
 func verificar_checkpoint_alcancado(tile: Vector2i) -> bool:
 	var tile_data = tile_map_layer.get_cell_tile_data(tile)
 	if tile_data != null and tile_data.get_custom_data("checkpoint"):
-		if not checkpoints.has(tile):
-			checkpoints.append(tile)
+		if checkpoints.has(tile):
+			return false	
+		checkpoints.append(tile)
 		ultimo_checkpoint_tile.x = tile.x
 		ultimo_checkpoint_tile.y = tile.y - 1
 		cont_chekpoints += 1
 		print(cont_chekpoints, "a Checkpoint alcancado!!!")
 		if cont_chekpoints >= QUANT_CHECKPOINT:
 			emit_signal("checkpoint_alcancado", cont_chekpoints)
+		
 		return true
 	return false
 	
