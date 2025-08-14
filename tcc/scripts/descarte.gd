@@ -9,6 +9,6 @@ func _drop_data(at_position: Vector2, data: Variant) -> void:
 	at_position = at_position
 	data = data
 	if data is Bloco:
-		if not data.estaNaAreaDisponivel:
+		if not data.estaNaPaleta:
 			print("BLOCO EXCLUIDO: ", data.name, "\nNOME: ", data.name, "\nID : ", data.bloco_id, "\nTIPO DO BLOCO : ", data.tipo)
 			data.queue_free()

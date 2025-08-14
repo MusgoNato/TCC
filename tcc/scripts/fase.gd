@@ -8,18 +8,15 @@ extends Control
 var etapa_atual: int = 0
 const TEMPO_INSTRUCOES: int = 1
 
-var instrucoes = [
-	"Bem-vindo à fase de movimento!",
-	"Arraste e solte os blocos disponiveis na area de montagem",
-	"Clique em executar para visualizar o percuso do personagem",
-	"Boa sorte!"
-]
+# Intruções carregadas do script global (O json, dados para pre-carregamento dos blocos funciona de forma diferente o acesso por indices, sendo o inicial 1 e nao 0 (EM STR)
+var instrucoes = SelecaoFaseManager.texto_instrucoes_iniciais[SelecaoFaseManager.fase_selecionada - 1]
 
 func _ready() -> void:
 	
 	timer_instrucoes.start(1.0)
 	mostrar_instrucao()
 
+## Função responsável por mostrar as intruções inicias para cada fase do jogo
 func mostrar_instrucao() -> void:
 	if etapa_atual < instrucoes.size():
 		texto_instrucoes.text = instrucoes[etapa_atual]
@@ -29,6 +26,7 @@ func mostrar_instrucao() -> void:
 	timer_instrucoes.start(TEMPO_INSTRUCOES)
 	etapa_atual += 1
 
+## Sinal de timer conectado para controlar o tempo das instruções iniciais da fase na tela
 func _on_timer_instrucoes_timeout() -> void:
 	if etapa_atual >= instrucoes.size():
 		layer_instrucoes.visible = false

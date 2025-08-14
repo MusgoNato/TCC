@@ -9,23 +9,30 @@ signal mensagem_solicitada(texto: String)
 # Retorna se pode ser solto ou nao o bloco (Aqui é a area da montagem como um todo)
 func _can_drop_data(at_position: Vector2, data: Variant) -> bool:
 	at_position = at_position
-	data = data
+	
+	if data.estaNaPaleta:
+		print("Esta na paleta? ", data.estaNaPaleta)
+	else: 
+		print("Esta na paleta? ", data.estaNaPaleta)		
 	return true
 
 # Drop data somente acontece uma vez, quando é dropado
 func _drop_data(at_position: Vector2, data: Variant) -> void:
 	# Evitar warnings	
 	at_position = at_position
-	
+
 	if data is Bloco:
 		if get_child_count() >= MAX_BLOCOS and data.get_parent() != self:
 			emit_signal("mensagem_solicitada", "Limite de blocos atingido!")
-			data.estaNaAreaDisponivel = false
+			data.estaNaPaleta = false
 			return
 			
 		# Se o bloco estiver vindo da area de blocos disponiveis, adiciono a montagem		
 		if data.get_parent() != self:
+			print("O pai do bloco eh este : ", data.get_parent())
 			add_child(data)
+		else:
+			print("O pai do bloco eh este : ", data.get_parent())
 
 		var global_pos = get_global_mouse_position()
 		var lista_filhos = get_children()
@@ -52,13 +59,15 @@ func _drop_data(at_position: Vector2, data: Variant) -> void:
 				break
 				
 		# Area de montagem agora
-		data.estaNaAreaDisponivel = false
+		data.estaNaPaleta = false
+		
+		print("Esta na paleta? ", data.estaNaPaleta)
 		
 		# Debug do bloco
 		print("\n\n-----INFO DO BLOCO-----\n\n")
-		print("NOME DO BLOCO: ", data.name, "\nID DO BLOCO: ", data.bloco_id, "\nIMAGEM DO BLOCO: ", data.texture.get_image(), "\nTIPO DO BLOCO: ", data.tipo, "\n")
+		print("NOME DO BLOCO: ", data.name, "\nID DO BLOCO: ", data.bloco_id, "\n", "\nTIPO DO BLOCO: ", data.tipo, "\n")
 	else:
-		print("Blocos não são iguais")
+		print("Blocos não eh do tipo BLOCO")
 
 	# Em modo remoto, os blocos que sao colocados tem nomes diferentes do original,
 	# pela propria Godot criar nomes unicos e nao mesclar os nos entre si

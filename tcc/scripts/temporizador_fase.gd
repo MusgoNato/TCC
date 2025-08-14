@@ -21,7 +21,7 @@ func _ready():
 	# Atualiza o label logo no início
 	atualizar_label()
 
-# Quando o tempo acabar, este sinal eh executado
+## Sinal conectado, quando o timer acabar esta função será executada, mostrando o texto de fim de jogo
 func _on_timer_timeout():
 	if tempo_restante > 0:
 		tempo_restante -= 1
@@ -30,11 +30,13 @@ func _on_timer_timeout():
 		timer.stop()
 		exibe_fimDejogo("Fim de jogo!")
 
+## Função responsável por atualizar o texto de tempo na tela
 func atualizar_label():
 	var minutos = tempo_restante / 60
 	var segundos = tempo_restante % 60
 	label.text = "%02d:%02d" % [minutos, segundos]
 	
+## Função responsável por exibir a mensagem de fim de jogo na tela
 func exibe_fimDejogo(mensagem: String):
 	
 	# Exibo a interface de fim de jogo

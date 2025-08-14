@@ -8,9 +8,8 @@ func _ready() -> void:
 	montagem.add_theme_constant_override("separation", 32)	
 	montagem.connect("mensagem_solicitada", Callable(self, "_on_mensagem_solicitada")) 
 
-# Exibe dicas, mensagens, avisos, erros, etc.
+## Função responável por exibir dicas, mensagens, avisos, erros, etc.
 func _on_mensagem_solicitada(texto: String):
-	## Exibe qualquer mensagem solicitada por algum node durante o jogo
 	mensagem.text = texto
 	mensagem.visible = true
 	var tween := create_tween()

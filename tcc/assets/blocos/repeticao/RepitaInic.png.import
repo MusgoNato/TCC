@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dif1s6a8i6ob4"
-path="res://.godot/imported/arrowBlue2.png-ba805c4bf919b1e12f26ef1b50df7639.ctex"
+uid="uid://nluf31ndlln5"
+path="res://.godot/imported/RepitaInic.png-d53bc6b785f14257a38605ef0c3bf53e.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/pixelkeys/arrow/blue/arrowBlue2.png"
-dest_files=["res://.godot/imported/arrowBlue2.png-ba805c4bf919b1e12f26ef1b50df7639.ctex"]
+source_file="res://assets/blocos/repeticao/RepitaInic.png"
+dest_files=["res://.godot/imported/RepitaInic.png-d53bc6b785f14257a38605ef0c3bf53e.ctex"]
 
 [params]
 

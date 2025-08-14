@@ -1,48 +1,51 @@
-class_name Bloco extends TextureRect
+class_name Bloco
+extends Control
 
-var estaNaAreaDisponivel: bool = true
+var estaNaPaleta: bool = true
 var arrastando: bool = false
-var of = Vector2(0,0)
-
-# Essas variaveis serao carregadas dinamicamente atraves do json
 var bloco_id: int = -1
 var tipo: String = ""
 
-# Carrega a cena em uma variavel
-@export var blocoPadrao = preload("res://scenes/bloco.tscn")
+@export var blocoPadrao = preload("res://scenes/bloco.tscn") # padrão fallback
 
-# Responsavel por fazer o sistema de arrasto do objeto
+func _ready() -> void:
+	
+	# Texto quando o mouse esta sobre o bloco
+	self.tooltip_text = self.tipo
+
 func _get_drag_data(at_position: Vector2) -> Variant:
-	# Evitar warnings	
 	at_position = at_position
 	
-	# Preview do bloco sendo arrastado	
-	var preview = TextureRect.new()
-	preview.texture = texture
-	preview.expand_mode = true
-	preview.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
-	preview.custom_minimum_size = custom_minimum_size
-	set_drag_preview(preview)
+	var preview_bloco = self.duplicate()
+	set_drag_preview(preview_bloco)
+	
+	if estaNaPaleta:
+		# Clona o próprio bloco
+		var novo_bloco = self.duplicate()
 		
-	if estaNaAreaDisponivel:
-		
-		# Atualizo as propriedades do bloco		
-		var novo_bloco = preload("res://scenes/bloco.tscn").instantiate()
-		novo_bloco.estaNaAreaDisponivel = false
-		novo_bloco.texture = self.texture
-		novo_bloco.name = self.name
+		novo_bloco.estaNaPaleta = false
+
+		# Copia valores principais
 		novo_bloco.tipo = self.tipo
 		novo_bloco.bloco_id = self.bloco_id
-		
-		novo_bloco.stretch_mode = self.stretch_mode
-		novo_bloco.expand_mode = self.expand_mode
+		novo_bloco.name = self.name
 		novo_bloco.custom_minimum_size = self.custom_minimum_size
-		
-		# Atualizo o label		
+
+		# Copia Texture (se houver)
+		if self.has_node("TexturaBloco") and novo_bloco.has_node("TexturaBloco"):
+			novo_bloco.get_node("TexturaBloco").texture = self.get_node("TexturaBloco").texture
+
+		# Copia Label (se houver)
 		if self.has_node("Label") and novo_bloco.has_node("Label"):
-			var original_label = self.get_node("Label")
-			var novo_label = novo_bloco.get_node("Label")
-			novo_label.text = original_label.text
+			novo_bloco.get_node("Label").text = self.get_node("Label").text
+
+		# Copia valor do SpinBox, se for um bloco de repetição
+		if self.has_node("VBoxContainer/SpinBox") and novo_bloco.has_node("VBoxContainer/SpinBox"):
+			var valor = self.get_node("VBoxContainer/SpinBox").value
+			novo_bloco.get_node("VBoxContainer/SpinBox").value = valor
+		
+		print("VINDO DA PALETA : PAI : ", novo_bloco.get_parent())
 		return novo_bloco
 	else:
+		
 		return self

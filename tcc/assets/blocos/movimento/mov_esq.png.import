@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://c75kwgrnk3ruo"
-path="res://.godot/imported/arrowBlue3.png-a7bd96b69e56de3299121d522ccadb12.ctex"
+path="res://.godot/imported/mov_esq.png-711f4e3d3ed903729d2985dd6145411a.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/pixelkeys/arrow/blue/arrowBlue3.png"
-dest_files=["res://.godot/imported/arrowBlue3.png-a7bd96b69e56de3299121d522ccadb12.ctex"]
+source_file="res://assets/blocos/movimento/mov_esq.png"
+dest_files=["res://.godot/imported/mov_esq.png-711f4e3d3ed903729d2985dd6145411a.ctex"]
 
 [params]
 

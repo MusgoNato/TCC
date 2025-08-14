@@ -1,0 +1,21 @@
+[gd_scene load_steps=3 format=3 uid="uid://8nclo878o3vn"]
+
+[ext_resource type="Texture2D" uid="uid://2ar7y4xqltag" path="res://assets/icon.svg" id="1_0cr2r"]
+[ext_resource type="Script" uid="uid://53nvpqntfqy0" path="res://scripts/bloco.gd" id="2_tw5hp"]
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("2_tw5hp")
+
+[node name="Bloco" type="TextureRect" parent="."]
+offset_right = 128.0
+offset_bottom = 128.0
+texture = ExtResource("1_0cr2r")
+
+[node name="Label" type="Label" parent="Bloco"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0

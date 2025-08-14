@@ -1,0 +1,24 @@
+[gd_scene load_steps=2 format=3 uid="uid://xk3r7c4k8gq1"]
+
+[ext_resource type="Script" uid="uid://d2fejmw5u8wri" path="res://scripts/bloco_repita.gd" id="1_6vo0p"]
+
+[node name="BlocoRepitaInic" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("1_6vo0p")
+metadata/_edit_use_anchors_ = true
+
+[node name="TexturaBloco" type="TextureRect" parent="."]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 1
+offset_right = 64.0
+offset_bottom = 64.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+offset_right = 86.0
+offset_bottom = 31.0
+
+[node name="SpinBox" type="SpinBox" parent="VBoxContainer"]
+layout_mode = 2
+mouse_filter = 2
