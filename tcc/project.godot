@@ -17,7 +17,7 @@ config/icon="res://assets/icon.svg"
 
 [autoload]
 
-SelecaoFaseManager="*res://scripts/selecaoFaseManager.gd"
+GlobalScript="*res://scripts/GlobalScript.gd"
 
 [display]
 

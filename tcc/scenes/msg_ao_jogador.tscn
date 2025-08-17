@@ -1,0 +1,17 @@
+[gd_scene load_steps=2 format=3 uid="uid://cyq68263nl36g"]
+
+[ext_resource type="Script" uid="uid://dx5hw73mq037r" path="res://scripts/exibicao_de_msg.gd" id="1_wefi5"]
+
+[node name="LayerMsgAoJogador" type="CanvasLayer"]
+layer = 0
+
+[node name="Mensagem" type="RichTextLabel" parent="."]
+anchors_preset = -1
+anchor_left = 0.763687
+anchor_right = 1.0
+anchor_bottom = 0.418111
+offset_left = 0.47998
+offset_bottom = -0.0400009
+grow_horizontal = 0
+script = ExtResource("1_wefi5")
+metadata/_edit_use_anchors_ = true

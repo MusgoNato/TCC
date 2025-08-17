@@ -14,7 +14,7 @@ var fase_selecao = "0"
 
 func _ready() -> void:
 	data = get_dados_blocos()
-	fase_selecao = str(SelecaoFaseManager.fase_selecionada)
+	fase_selecao = str(GlobalScript.fase_selecionada)
 	inserirBlocosEmAreaDisponivel(data, fase_selecao)
 
 ## Funcao responsavel por extrair informacoes do arquivo JSON para

@@ -4,6 +4,7 @@ class_name Percurso_Manager extends Node
 @onready var sub_viewport: SubViewport = $PercursoLayer/SubViewportContainer/SubViewport
 @onready var pause_fim_jogo: Pause_FimJogo = $"../TemporizadorFase/Pause_FimJogo"
 
+# Sinal criado para quando apertar o botao 'executar'
 signal envia_blocos_percurso(blocos)
 
 func _ready() -> void:
@@ -19,21 +20,8 @@ func _ready() -> void:
 ## Sinal conectado para emitir um sinal que envia os blocos montados no painel de montagem para a janela de percurso
 func _on_executar_button_down() -> void:
 	
-	#var blocos = []
-	
-	# Serializo cada bloco para evitar que o jogo 'quebre' em caso do jogador retirar blocos em tempo
-	# de processamento da execução do percurso do personagem
-	#for bloco in montagem.get_children():
-		#blocos.append(serializar_bloco(bloco))
 	var blocos = montagem.get_children()
 	
 	if !blocos.is_empty():
 		emit_signal("envia_blocos_percurso", blocos)	
 		
-#### Função responsável por serielizar cada bloco com suas respectivas propriedades
-#func serializar_bloco(bloco) -> Dictionary:
-	#
-	#return {
-		#"tipo": bloco.tipo, # Modificar + pra frente, colocando outras propriedades dos blocos
-	#}
-	

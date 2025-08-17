@@ -54,7 +54,7 @@ func _ready():
 	ultimo_checkpoint_tile = celula_tile
 	
 	# Definicao dos checkpoints com base na fase
-	configurar_checkpoints(SelecaoFaseManager.fase_selecionada)
+	configurar_checkpoints(GlobalScript.fase_selecionada)
 	
 ## Sinal conectado apos o envio dos blocos pelo botao de executar na interface da fase
 func _on_envia_blocos_percurso(blocos):
@@ -108,6 +108,7 @@ func executar_blocos_recursivamente(blocos_a_executar):
 			var indice_final_loop = encontrar_bloco_repita_fim(blocos_a_executar, indice_atual)
 			
 			if indice_final_loop == -1:
+				GlobalScript.enviar_mensagem_ao_jogador(GlobalScript.MSG_BLOCO_REPETICAO_SEM_FECHAMENTO)
 				print("Erro: Bloco de repetição sem fechamento correspondente")
 				break
 			
@@ -222,6 +223,7 @@ func verificar_checkpoint_alcancado(tile: Vector2i) -> bool:
 		ultimo_checkpoint_tile.y = tile.y - 1
 		cont_chekpoints += 1
 		print(cont_chekpoints, "a Checkpoint alcancado!!!")
+		GlobalScript.enviar_mensagem_ao_jogador(GlobalScript.MSG_CHECKPOINT_ALCANCADO)
 		if cont_chekpoints >= QUANT_CHECKPOINT:
 			emit_signal("checkpoint_alcancado", cont_chekpoints)
 		
@@ -237,4 +239,5 @@ func reiniciar_para_ultimo_checkpoint():
 	pos.y += OFFSET_TILE_CENTRALIZADO
 	player.position = pos
 	print("Reiniciado no checkpoint: ", celula_tile)
+	GlobalScript.enviar_mensagem_ao_jogador(GlobalScript.MSG_NENHUM_CHECKPOINT_ALCANCADO)
 	

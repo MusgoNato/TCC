@@ -9,7 +9,7 @@ var etapa_atual: int = 0
 const TEMPO_INSTRUCOES: int = 1
 
 # Intruções carregadas do script global (O json, dados para pre-carregamento dos blocos funciona de forma diferente o acesso por indices, sendo o inicial 1 e nao 0 (EM STR)
-var instrucoes = SelecaoFaseManager.texto_instrucoes_iniciais[SelecaoFaseManager.fase_selecionada - 1]
+var instrucoes = GlobalScript.texto_instrucoes_iniciais[GlobalScript.fase_selecionada - 1]
 
 func _ready() -> void:
 	

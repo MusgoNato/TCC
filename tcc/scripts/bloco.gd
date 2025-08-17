@@ -17,6 +17,7 @@ func _get_drag_data(at_position: Vector2) -> Variant:
 	at_position = at_position
 	
 	var preview_bloco = self.duplicate()
+	
 	set_drag_preview(preview_bloco)
 	
 	if estaNaPaleta:

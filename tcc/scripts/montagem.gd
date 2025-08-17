@@ -3,18 +3,22 @@ class_name Montagem extends HBoxContainer
 # Para nao quebrar a area de montagem no maximo podem ser 13 blocos colocados
 const MAX_BLOCOS = 13
 
-# Por mais que apareca como aviso na pilha de erros, tem de ser declarado para que se consiga conectar os sinais
-signal mensagem_solicitada(texto: String)
+func _ready() -> void:
+	self.add_theme_constant_override("separation", 32)
 
 # Retorna se pode ser solto ou nao o bloco (Aqui é a area da montagem como um todo)
 func _can_drop_data(at_position: Vector2, data: Variant) -> bool:
 	at_position = at_position
 	
-	if data.estaNaPaleta:
-		print("Esta na paleta? ", data.estaNaPaleta)
-	else: 
-		print("Esta na paleta? ", data.estaNaPaleta)		
-	return true
+	if data is Bloco:
+		if data.estaNaPaleta:
+			print("Esta na paleta? ", data.estaNaPaleta)
+		else: 
+			print("Esta na paleta? ", data.estaNaPaleta)		
+		return true
+	else:
+		print_debug("\n=>>Bloco nao e do tipo Bloco!!!!")
+		return false
 
 # Drop data somente acontece uma vez, quando é dropado
 func _drop_data(at_position: Vector2, data: Variant) -> void:
@@ -23,7 +27,7 @@ func _drop_data(at_position: Vector2, data: Variant) -> void:
 
 	if data is Bloco:
 		if get_child_count() >= MAX_BLOCOS and data.get_parent() != self:
-			emit_signal("mensagem_solicitada", "Limite de blocos atingido!")
+			GlobalScript.enviar_mensagem_ao_jogador(GlobalScript.MSG_LIMITE_BLOCOS_ATINGIDO)
 			data.estaNaPaleta = false
 			return
 			

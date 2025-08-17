@@ -1,6 +1,5 @@
 extends "res://scripts/bloco.gd"
 
-
 # Filhos dentro do bloco repita
 var filhos = []
 
@@ -14,4 +13,5 @@ func _ready() -> void:
 		spin_box.min_value = 1
 		spin_box.max_value = 10
 		
+		# Atualizacao em tempo real do bloco
 		spin_box.update_on_text_changed = true	
