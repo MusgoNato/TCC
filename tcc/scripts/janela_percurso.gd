@@ -3,8 +3,11 @@ extends Node2D
 
 @onready var tile_map_layer: TileMapLayer = $TileMapLayer
 @onready var player: Player = $player
+@onready var inimigo: Inimigo = $Inimigo
+@onready var temporizador_mov_inimigo: Timer = $TemporizadorMovInimigo
 
 var celula_tile := Vector2i(0, 0)
+var celula_tile_inimigo: Vector2i = Vector2i(0, 0)
 var destino := Vector2i(0, 0)
 var processando_blocos: bool = false
 var tile_size: Vector2
@@ -13,20 +16,32 @@ var ultimo_checkpoint_tile: Vector2i
 var cont_chekpoints: int = 0
 var cont_blocos: int = 0
 var continuar_executando: bool
+var cont_movimento_inimigo: int = 0
+var linha_meio_jogador: int = 0
+var linha_meio_inimigo: int = 0
+var direcao_inimigo: int = 1
+var existe_condicional: bool = false
 
 # O tamanho do tile é 32x32
 # Para que seja centralizado o movimento do jogador de acordo com o tile, y
 const OFFSET_TILE_CENTRALIZADO: int = 16
 const TAM_TILE_MUNDO: int = 32
 const POSICAO_X_INICIAL_JOGADOR: int = TAM_TILE_MUNDO * 6
+const POS_INICIAL_X_INIMIGO: int = 7
 const QUANT_CHECKPOINT: int = 2
 const DIFERENCA_RELATIVA_MUNDO: int = 1
-const POS_INICIAL_JOGADOR: Vector2i = Vector2i(4, 4) # Posicao inicial do jogador na fase
+const MOV_MAX_INIMIGO: int = 3
+const DIRECAO_DIREITA_INICIAL_INIMIGO: int = 1
+
+# Posicao inicial no mundo do jogador e inimigo
+const POS_INICIAL_JOGADOR: Vector2i = Vector2i(4, 4)
+const POS_INICIAL_INIMIGO: Vector2i = Vector2i(4, 4)
 
 ## Checkpoint alcancado
 signal checkpoint_alcancado(qtd_checkpoint: int)
 
 func _ready():
+	
 	player.position = Vector2.ZERO
 	
 	# Tamanho do tile map layer como um todo
@@ -36,9 +51,10 @@ func _ready():
 	var used = tile_map_layer.get_used_rect()
 
 	# Calcula a linha do meio do tile map layer (Posicao inicial do personagem)
-	var linha_meio = used.position.y + int(used.size.y / 2)
-	celula_tile = Vector2i(0, linha_meio-1) # -1 para encaixar 5 corretamente
-
+	linha_meio_jogador = used.position.y + int(used.size.y / 2)
+	celula_tile = Vector2i(0, linha_meio_jogador-1) # -1 para encaixar 5 corretamente
+	
+	# DEFINICAO DA POSICAO INICIAL DO JOGADOR NO MUNDO
 	# Calcula a posicao com base no tile map layer, canto superior direito
 	var tile_position = tile_map_layer.map_to_local(celula_tile)
 
@@ -51,10 +67,56 @@ func _ready():
 	
 	# Definindo posicao inicial do jogador e checkpoint inicial
 	player.position = centro
+		
+	# DEFINICAO DA POSICAO INICIAL DO INIMIGO NO MUNDO
+	# Calcula a linha do meio do tile map layer (Posicao inicial do inimigo)
+	inimigo.position = Vector2.ZERO
+	
+	# Temporizador do inimigo sempre começa ao iniciar a cena
+	temporizador_mov_inimigo.autostart = true
+	temporizador_mov_inimigo.start(1.0)
+	
+	linha_meio_inimigo = used.position.y + int(used.size.y/2)
+	celula_tile_inimigo = Vector2i(POS_INICIAL_X_INIMIGO, linha_meio_inimigo - 1)
+	var pos_inicial_inimigo_mundo = tile_map_layer.map_to_local(celula_tile_inimigo)
+	pos_inicial_inimigo_mundo.x -= OFFSET_TILE_CENTRALIZADO
+	pos_inicial_inimigo_mundo.y += OFFSET_TILE_CENTRALIZADO
+	var centro_inimigo = pos_inicial_inimigo_mundo + (tile_size / 2)
+	inimigo.position = centro_inimigo
+	
+	# Guarda o ultimo checkpoint do jogador
 	ultimo_checkpoint_tile = celula_tile
 	
 	# Definicao dos checkpoints com base na fase
 	configurar_checkpoints(GlobalScript.fase_selecionada)
+	
+
+## Funcao responsavel pela movimentacao do inimigo (Em desenvolvimento)
+func movimenta_inimigo():	
+	if cont_movimento_inimigo >= MOV_MAX_INIMIGO and direcao_inimigo == DIRECAO_DIREITA_INICIAL_INIMIGO:
+		# Se chegou ao limite da direita, inverte a direção para a esquerda
+		direcao_inimigo = -DIRECAO_DIREITA_INICIAL_INIMIGO
+		
+	elif cont_movimento_inimigo <= 0 and direcao_inimigo == -DIRECAO_DIREITA_INICIAL_INIMIGO:
+		# Se chegou ao limite da esquerda, inverte a direção para a direita
+		direcao_inimigo = DIRECAO_DIREITA_INICIAL_INIMIGO
+	
+	# Atualiza o contador de movimento com base na direção atual
+	if direcao_inimigo == DIRECAO_DIREITA_INICIAL_INIMIGO:
+		cont_movimento_inimigo += DIRECAO_DIREITA_INICIAL_INIMIGO
+	elif direcao_inimigo == -DIRECAO_DIREITA_INICIAL_INIMIGO:
+		cont_movimento_inimigo -= DIRECAO_DIREITA_INICIAL_INIMIGO
+		
+	# Movimenta o inimigo
+	inimigo.position.x += direcao_inimigo * TAM_TILE_MUNDO
+	
+	if direcao_inimigo == DIRECAO_DIREITA_INICIAL_INIMIGO:
+		inimigo.animation_player.flip_h = false
+		inimigo.animation_player.play("dir")
+	else:
+		inimigo.animation_player.flip_h = true
+		inimigo.animation_player.play("esq")
+
 	
 ## Sinal conectado apos o envio dos blocos pelo botao de executar na interface da fase
 func _on_envia_blocos_percurso(blocos):
@@ -81,6 +143,7 @@ func _on_envia_blocos_percurso(blocos):
 		await get_tree().create_timer(0.5).timeout
 		reiniciar_para_ultimo_checkpoint()
 	
+## Funcao responsavel por fazer uma copia dos blocos originais
 func get_copia_blocos(blocos_a_serem_copiados):
 	var blocos_copiados: Array = []
 	for blocos_node in blocos_a_serem_copiados:
@@ -131,6 +194,13 @@ func executar_blocos_recursivamente(blocos_a_executar):
 func executar_bloco_singular(bloco):
 	var direcao = Vector2i.ZERO
 	match bloco.tipo:
+		"condicional":
+			existe_condicional = true
+			if verificar_colisao_inimigo():
+				print("Jogador usou condicional e derrotou o inimigo!")
+				inimigo.visible = false
+				inimigo.process_mode = Node.PROCESS_MODE_DISABLED
+			return true
 		"esquerda":
 			direcao = Vector2i(-1, 0)
 			player.animation_player.flip_h = true
@@ -145,11 +215,11 @@ func executar_bloco_singular(bloco):
 		"baixo":
 			direcao = Vector2i(0, 1)
 			player.animation_player.play("down")
-		"_":
-			print("Direcao invalida")
+		_:
+			print("\tO tipo do bloco nao eh movimento! Tipo: ", bloco.tipo, "\n")
 			return false
-			
-	# Restante da sua lógica de movimento e verificação
+
+	# movimentação (igual ao que já tinha)
 	var novo_tile = celula_tile + direcao
 	var bounds = tile_map_layer.get_used_rect()
 	var dentro = (novo_tile.x >= bounds.position.x and
@@ -158,12 +228,9 @@ func executar_bloco_singular(bloco):
 				  novo_tile.y < bounds.end.y - 1)
 	if dentro:
 		var tile_data = tile_map_layer.get_cell_tile_data(Vector2i(novo_tile.x, novo_tile.y + DIFERENCA_RELATIVA_MUNDO))
-		if tile_data != null and tile_data.has_custom_data("valido"):
-			if not tile_data.get_custom_data("valido"):
-				print("PRÓXIMO CAMINHO INVALIDO")
-				return false
-			else:
-				print("CAMINHO VALIDO")
+		if tile_data != null and tile_data.has_custom_data("valido") and not tile_data.get_custom_data("valido"):
+			print("PRÓXIMO CAMINHO INVÁLIDO")
+			return false
 			
 		celula_tile = novo_tile
 		var nova_pos = tile_map_layer.map_to_local(celula_tile) + tile_size / 2
@@ -172,10 +239,26 @@ func executar_bloco_singular(bloco):
 		var tween = create_tween()
 		tween.tween_property(player, "position", nova_pos, 0.2)
 		await tween.finished
+		
+		# Verifico se o jogador colocou um bloco de condicao na montagem
+		# Essa verificacao eh necessaria pois verificara se o jogador colidiu com a posicao do inimigo
+		if !existe_condicional:
+			if verificar_colisao_inimigo():
+				print("Colidiu com o inimigo")
+				GlobalScript.enviar_mensagem_ao_jogador(GlobalScript.MSG_COLIDIU_INIMIGO)
+				return false
+		
 		return true
 
-	# Se nao estiver dentro dos limites do mundo
 	return false
+
+
+## Funcao responsavel por verificar a colisao com o inimigo
+func verificar_colisao_inimigo():
+	var posicao_jogador = tile_map_layer.local_to_map(player.global_position)
+	var posicao_inimigo = tile_map_layer.local_to_map(inimigo.global_position)
+	
+	return posicao_inimigo == posicao_jogador
 
 ## Funcao responsável por configurar os checkpoints da fase selecionada
 func configurar_checkpoints(fase: int):
@@ -187,12 +270,15 @@ func configurar_checkpoints(fase: int):
 		# Fase 2 (condições)
 		2:
 			checkpoints.append(POS_INICIAL_JOGADOR)	
+			inimigo.visible = true
 		# Fase 3 (repita)
 		3:
 			checkpoints.append(POS_INICIAL_JOGADOR)
+			inimigo.visible = true
 		# Fase 4 (funções)
 		4:
 			checkpoints.append(POS_INICIAL_JOGADOR)
+			inimigo.visible = true
 		_:
 			print("Fase sem configuração")
 
@@ -241,3 +327,8 @@ func reiniciar_para_ultimo_checkpoint():
 	print("Reiniciado no checkpoint: ", celula_tile)
 	GlobalScript.enviar_mensagem_ao_jogador(GlobalScript.MSG_NENHUM_CHECKPOINT_ALCANCADO)
 	
+
+## Sinal para chamar a função responsavel por movimentar o inimigo (Em desenvolvimento)
+func _on_temporizador_mov_inimigo_timeout() -> void:
+	pass
+	#movimenta_inimigo()

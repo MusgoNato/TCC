@@ -14,6 +14,8 @@ const MSG_BLOCO_DESCARTE: String = "Bloco descartado com [color=%s]sucesso[/colo
 const MSG_CHECKPOINT_ALCANCADO: String = "[color=%s]SUCESSO:[/color] Checkpoint Alcançado" % self.COR_SUCESSO
 const MSG_NENHUM_CHECKPOINT_ALCANCADO: String = "[color=%s]Volte e tente de novo![/color] O checkpoint não foi alcançado." % self.COR_DICA
 const MSG_LIMITE_BLOCOS_ATINGIDO: String = "[color=%s]Limite de blocos atingido![/color] Tente com menos blocos, você consegue!" % self.COR_DICA
+const MSG_COLIDIU_INIMIGO: String = "[color=%s]Colisão[/color]  com o inimigo" % self.COR_ERRO
+const MSG_INIMIGO_DERROTADO: String = "[color=%s]SUCESSO: Inimigo derrotado!" % self.COR_SUCESSO
 
 ## Vetor de instrucoes para cada fase
 var texto_instrucoes_iniciais: Array = [

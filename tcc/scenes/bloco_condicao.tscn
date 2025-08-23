@@ -1,0 +1,15 @@
+[gd_scene load_steps=2 format=3 uid="uid://byucem36egkaj"]
+
+[ext_resource type="Script" uid="uid://b0m63bdo5evur" path="res://scripts/bloco_condicao.gd" id="1_5iug0"]
+
+[node name="Bloco_Condicao" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 64.0
+offset_bottom = 64.0
+script = ExtResource("1_5iug0")
+
+[node name="TexturaBloco" type="TextureRect" parent="."]
+layout_mode = 0
+offset_right = 64.0
+offset_bottom = 64.0

@@ -1,4 +1,4 @@
-class_name Player
+class_name Inimigo
 extends CharacterBody2D
+
 @onready var animation_player: AnimatedSprite2D = $AnimationPlayer
-@onready var area_colisao: Area2D = $AreaColisao

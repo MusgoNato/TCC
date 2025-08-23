@@ -1,0 +1,119 @@
+[gd_scene load_steps=15 format=3 uid="uid://cdu7je7sapwn5"]
+
+[ext_resource type="Script" uid="uid://d08o2k564hv74" path="res://scripts/inimigo.gd" id="1_pt50e"]
+[ext_resource type="Texture2D" uid="uid://ckw70geh8o85p" path="res://assets/personagens/idle.png" id="2_21tsg"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ui621"]
+atlas = ExtResource("2_21tsg")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_adsyq"]
+atlas = ExtResource("2_21tsg")
+region = Rect2(0, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_61lki"]
+atlas = ExtResource("2_21tsg")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_21tsg"]
+atlas = ExtResource("2_21tsg")
+region = Rect2(32, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4er16"]
+atlas = ExtResource("2_21tsg")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jc2kt"]
+atlas = ExtResource("2_21tsg")
+region = Rect2(0, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4v6kx"]
+atlas = ExtResource("2_21tsg")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rmr57"]
+atlas = ExtResource("2_21tsg")
+region = Rect2(32, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0dgd2"]
+atlas = ExtResource("2_21tsg")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xc72h"]
+atlas = ExtResource("2_21tsg")
+region = Rect2(16, 16, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_pt50e"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ui621")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_adsyq")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_61lki")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_21tsg")
+}],
+"loop": true,
+"name": &"dir",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4er16")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jc2kt")
+}],
+"loop": true,
+"name": &"down",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4v6kx")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rmr57")
+}],
+"loop": true,
+"name": &"esq",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0dgd2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xc72h")
+}],
+"loop": true,
+"name": &"up",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_21tsg"]
+size = Vector2(28, 28)
+
+[node name="Inimigo" type="CharacterBody2D"]
+script = ExtResource("1_pt50e")
+
+[node name="AnimationPlayer" type="AnimatedSprite2D" parent="."]
+scale = Vector2(2, 2)
+sprite_frames = SubResource("SpriteFrames_pt50e")
+autoplay = "default"
+
+[node name="AreaColisao" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AreaColisao"]
+position = Vector2(0, 2)
+shape = SubResource("RectangleShape2D_21tsg")

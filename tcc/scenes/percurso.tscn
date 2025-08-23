@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=4 uid="uid://b644360tqy7y0"]
+[gd_scene load_steps=19 format=4 uid="uid://b644360tqy7y0"]
 
 [ext_resource type="Texture2D" uid="uid://c6nkpatyorwqo" path="res://assets/0x72_DungeonTilesetII_v1.7/frames/floor_1.png" id="1_bgrgv"]
 [ext_resource type="Script" uid="uid://depvfdns0nwhr" path="res://scripts/janela_percurso.gd" id="1_m6etg"]
@@ -9,6 +9,7 @@
 [ext_resource type="Texture2D" uid="uid://blvke07hanpye" path="res://assets/basic_tileset_and_assets_standard/terrain_tiles_v2.png" id="5_ih4mb"]
 [ext_resource type="Texture2D" uid="uid://cvafwnf7cgla0" path="res://assets/Pixel Art Top Down - Basic v1.2.0/Texture/TX Tileset Grass.png" id="7_11do8"]
 [ext_resource type="Texture2D" uid="uid://tnvfnjrpdu56" path="res://assets/Pixel Art Top Down - Basic v1.2.0/Texture/TX Props.png" id="8_11do8"]
+[ext_resource type="PackedScene" uid="uid://cdu7je7sapwn5" path="res://scenes/inimigo.tscn" id="10_t44x2"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_gh4wn"]
 texture = ExtResource("1_bgrgv")
@@ -1783,3 +1784,10 @@ tile_map_data = PackedByteArray("AAAAAAAAAwAKAAgAAAAAAAEAAwAKAAkAAAAAAAMAAwANAAc
 tile_set = SubResource("TileSet_dqsfb")
 
 [node name="player" parent="." instance=ExtResource("5_2rbpy")]
+
+[node name="Inimigo" parent="." instance=ExtResource("10_t44x2")]
+visible = false
+
+[node name="TemporizadorMovInimigo" type="Timer" parent="."]
+
+[connection signal="timeout" from="TemporizadorMovInimigo" to="." method="_on_temporizador_mov_inimigo_timeout"]

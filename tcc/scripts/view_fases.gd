@@ -12,7 +12,7 @@ func _on_btn_fase_1_pressed() -> void:
 # Entra na fase de condições	
 func _on_btn_condições_button_down() -> void:
 	GlobalScript.fase_selecionada = 2
-	pass
+	get_tree().change_scene_to_file("res://scenes/game.tscn")
 
 # Entra na fase de repetições
 func _on_btn_repetições_pressed() -> void:
@@ -22,4 +22,4 @@ func _on_btn_repetições_pressed() -> void:
 # Entra na fase de funções
 func _on_btn_funções_button_down() -> void:
 	GlobalScript.fase_selecionada = 4
-	pass # Replace with function body.
+	pass

@@ -1,9 +1,0 @@
-[gd_scene format=3 uid="uid://dlkpyb6qeahx6"]
-
-[node name="Mensagem" type="RichTextLabel"]
-anchors_preset = 1
-anchor_left = 1.0
-anchor_right = 1.0
-offset_left = -103.0
-offset_bottom = 36.0
-grow_horizontal = 0

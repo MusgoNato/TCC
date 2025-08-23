@@ -14,4 +14,4 @@ func _ready() -> void:
 		spin_box.max_value = 10
 		
 		# Atualizacao em tempo real do bloco
-		spin_box.update_on_text_changed = true	
+		spin_box.update_on_text_changed = true

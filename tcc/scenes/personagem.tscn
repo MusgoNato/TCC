@@ -3,9 +3,6 @@
 [ext_resource type="Texture2D" uid="uid://dbm5vb53omui2" path="res://assets/spritesheets/1 idle.png" id="1_t2tgb"]
 [ext_resource type="Script" uid="uid://cfvpgjhf42fx" path="res://scripts/player.gd" id="1_wtnic"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_t2tgb"]
-size = Vector2(24, 26)
-
 [sub_resource type="AtlasTexture" id="AtlasTexture_wtnic"]
 atlas = ExtResource("1_t2tgb")
 region = Rect2(32, 16, 16, 16)
@@ -97,13 +94,19 @@ animations = [{
 "speed": 5.0
 }]
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_bss74"]
+size = Vector2(24, 28)
+
 [node name="Jogador" type="CharacterBody2D"]
 script = ExtResource("1_wtnic")
-
-[node name="Colisor" type="CollisionShape2D" parent="."]
-shape = SubResource("RectangleShape2D_t2tgb")
 
 [node name="AnimationPlayer" type="AnimatedSprite2D" parent="."]
 scale = Vector2(2, 2)
 sprite_frames = SubResource("SpriteFrames_bss74")
-animation = &"esq"
+animation = &"dir"
+
+[node name="AreaColisao" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AreaColisao"]
+position = Vector2(0, 2)
+shape = SubResource("RectangleShape2D_bss74")
