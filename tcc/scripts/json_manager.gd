@@ -7,6 +7,7 @@ var bloco_modelo = preload("res://scenes/bloco.tscn")
 var bloco_repita_inic_modelo = preload("res://scenes/bloco_repita_inic.tscn")
 var bloco_repita_fim_modelo = preload("res://scenes/bloco_repita_fim.tscn")
 var bloco_condicao_modelo = preload("res://scenes/bloco_condicao.tscn")
+var bloco_funcao_modelo = preload("res://scenes/bloco_funcao.tscn")
 
 var fase_selecao: String = "0"
 @onready var paleta: GridContainer = $"../PaineisManager/LayerPaleta/PainelDisponivel/ScrollContainer/Paleta"
@@ -43,6 +44,9 @@ func inserirBlocosEmAreaDisponivel(dados: Variant, fase_atual: String):
 				
 			"condicional":
 				bloco = bloco_condicao_modelo.instantiate()
+				
+			"funcao":
+				bloco = bloco_funcao_modelo.instantiate()
 				
 		if bloco:
 			

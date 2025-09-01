@@ -4,14 +4,20 @@ extends Control
 @onready var layer_instrucoes: CanvasLayer = $LayerInstrucoes
 @onready var texto_instrucoes: RichTextLabel = $LayerInstrucoes/Panel/TextoInstrucoesIniciais
 @onready var timer_instrucoes: Timer = $LayerInstrucoes/TimerInstrucoes
+@onready var layer_funcao: CanvasLayer = $LayerFuncao
 
 var etapa_atual: int = 0
 const TEMPO_INSTRUCOES: int = 1
+const FASE_FUNCAO: int = 4
 
 # Intruções carregadas do script global (O json, dados para pre-carregamento dos blocos funciona de forma diferente o acesso por indices, sendo o inicial 1 e nao 0 (EM STR)
 var instrucoes = GlobalScript.texto_instrucoes_iniciais[GlobalScript.fase_selecionada - 1]
 
 func _ready() -> void:
+	
+	# Verificacao para tornar visivel a area de montagem da fase de funcao
+	if GlobalScript.fase_selecionada == FASE_FUNCAO:
+		layer_funcao.visible = true
 	
 	timer_instrucoes.start(1.0)
 	mostrar_instrucao()

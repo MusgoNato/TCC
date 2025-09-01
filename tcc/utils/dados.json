@@ -96,12 +96,57 @@
 			"id": 5,
 			"image": "res://assets/blocos/repeticao/RepitaFim.png",
 			"tipo": "repita_fim"
+		}
+	],
+	"4":
+	[
+		{
+			"name": "Bloco_Cima",
+			"id": 0,
+			"image": "res://assets/blocos/movimento/mov_cima.png",
+			"tipo": "cima"
+		},
+		{
+			"name": "Bloco_Baixo",
+			"id": 1,
+			"image": "res://assets/blocos/movimento/mov_baixo.png",
+			"tipo": "baixo"
+		},
+		{
+			"name": "Bloco_Esquerda",
+			"id": 2,
+			"image": "res://assets/blocos/movimento/mov_esq.png",
+			"tipo": "esquerda"
+		},
+		{
+			"name": "Bloco_Direita",
+			"id": 3,
+			"image": "res://assets/blocos/movimento/mov_dir.png",
+			"tipo": "direita"
+		},
+		{
+			"name": "Bloco_Repita_Inicio",
+			"id": 4,
+			"image": "res://assets/blocos/repeticao/RepitaInic.png",
+			"tipo": "repita_inicio"
+		},
+		{
+			"name": "Bloco_Repita_Fim",
+			"id": 5,
+			"image": "res://assets/blocos/repeticao/RepitaFim.png",
+			"tipo": "repita_fim"
 		},
 		{
 			"name": "Bloco_Condicao",
 			"id": 6,
 			"image": "res://assets/blocos/condicional/condicional.png",
 			"tipo": "condicional"
+		},
+		{
+			"name": "Bloco_Funcao",
+			"id": 7,
+			"image": "res://assets/blocos/repeticao/RepitaFim.png",
+			"tipo": "funcao"
 		}
-	]	
+	]
 }

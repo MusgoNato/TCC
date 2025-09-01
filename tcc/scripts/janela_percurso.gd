@@ -6,6 +6,7 @@ extends Node2D
 @onready var inimigo: Inimigo = $Inimigo
 @onready var temporizador_mov_inimigo: Timer = $TemporizadorMovInimigo
 
+
 var celula_tile := Vector2i(0, 0)
 var celula_tile_inimigo: Vector2i = Vector2i(0, 0)
 var destino := Vector2i(0, 0)
@@ -119,17 +120,17 @@ func movimenta_inimigo():
 
 	
 ## Sinal conectado apos o envio dos blocos pelo botao de executar na interface da fase
-func _on_envia_blocos_percurso(blocos):
+func _on_envia_blocos_percurso(blocos, blocos_internos_funcao):
 	if blocos.is_empty() or processando_blocos:
 		print("Painel de montagem vazio!")
 		return
 		
 	processando_blocos = true
-	
+	print(blocos_internos_funcao)
 	# Faz uma copia dos blocos originais, para evitar que o jogador interfira na leitura dos blocos
 	# caso seja retirado algum bloco da montagem em tempo de execucao
-	var blocos_data = get_copia_blocos(blocos)
-	
+	var blocos_data = criar_estrutura_blocos(blocos, blocos_internos_funcao)
+	print(blocos_data)
 	await executar_blocos_recursivamente(blocos_data)
 	
 	# Terminou de processar os blocos
@@ -144,18 +145,26 @@ func _on_envia_blocos_percurso(blocos):
 		reiniciar_para_ultimo_checkpoint()
 	
 ## Funcao responsavel por fazer uma copia dos blocos originais
-func get_copia_blocos(blocos_a_serem_copiados):
-	var blocos_copiados: Array = []
-	for blocos_node in blocos_a_serem_copiados:
+func criar_estrutura_blocos(blocos_a_serem_copiados, blocos_internos_funcao = []):
+	var estrutura: Array = []
+	for bloco_node in blocos_a_serem_copiados:
 		var data = {
-			"tipo": blocos_node.tipo
+			"tipo": bloco_node.tipo
 		}
-		if blocos_node.tipo == "repita_inicio":
-			data["repeticoes"] = blocos_node.get_node("VBoxContainer/SpinBox").value
+		if bloco_node.tipo == "repita_inicio":
+			data["repeticoes"] = bloco_node.get_node("VBoxContainer/SpinBox").value
 		
-		blocos_copiados.append(data)
+		# Se for um bloco de função, associe os blocos internos que foram passados
+		elif bloco_node.tipo == "funcao":
+			if !blocos_internos_funcao.is_empty():
+				
+				# Aqui, você usa a lista de blocos_internos_funcao que chegou como argumento
+				data["blocos_internos"] = criar_estrutura_blocos(blocos_internos_funcao)
+			else:
+				data["blocos_internos"] = []
+		estrutura.append(data)
 	
-	return blocos_copiados
+	return estrutura
 	
 ## Execução dos blocos recursivamente
 func executar_blocos_recursivamente(blocos_a_executar):
@@ -194,6 +203,16 @@ func executar_blocos_recursivamente(blocos_a_executar):
 func executar_bloco_singular(bloco):
 	var direcao = Vector2i.ZERO
 	match bloco.tipo:
+		"funcao":
+			if not bloco.has("blocos_internos") or bloco.blocos_internos.is_empty():
+				print("A funcao nao possui nenhum bloco")
+				return true
+			else:
+				var sucesso = await executar_blocos_recursivamente(bloco.blocos_internos)
+				if not sucesso:
+					print("Nao leu o bloco dentro da funcao")
+					return false
+			return true
 		"condicional":
 			existe_condicional = true
 			if verificar_colisao_inimigo():
@@ -215,9 +234,6 @@ func executar_bloco_singular(bloco):
 		"baixo":
 			direcao = Vector2i(0, 1)
 			player.animation_player.play("down")
-		_:
-			print("\tO tipo do bloco nao eh movimento! Tipo: ", bloco.tipo, "\n")
-			return false
 
 	# movimentação (igual ao que já tinha)
 	var novo_tile = celula_tile + direcao

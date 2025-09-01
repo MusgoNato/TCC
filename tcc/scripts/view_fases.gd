@@ -22,4 +22,4 @@ func _on_btn_repetições_pressed() -> void:
 # Entra na fase de funções
 func _on_btn_funções_button_down() -> void:
 	GlobalScript.fase_selecionada = 4
-	pass
+	get_tree().change_scene_to_file("res://scenes/game.tscn")

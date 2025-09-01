@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://cphmefdh7pdgk"]
+[gd_scene load_steps=11 format=3 uid="uid://cphmefdh7pdgk"]
 
 [ext_resource type="Script" uid="uid://bak0dsf3rkvof" path="res://scripts/fase.gd" id="1_0tnpc"]
 [ext_resource type="Script" uid="uid://dti8vcdhy4bcj" path="res://scripts/json_manager.gd" id="1_nn3lx"]
@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://cyq68263nl36g" path="res://scenes/msg_ao_jogador.tscn" id="4_0tnpc"]
 [ext_resource type="Script" uid="uid://chh41sctvmt1w" path="res://scripts/info_debug.gd" id="6_jkxey"]
 [ext_resource type="Script" uid="uid://bkiifbfeg3guh" path="res://scripts/percurso_manager.gd" id="7_qtexj"]
+[ext_resource type="Script" uid="uid://bv5d1nu82oc2y" path="res://scripts/montagem_funcao.gd" id="10_kvpfn"]
 [ext_resource type="Script" uid="uid://c6cew0ftwnxdr" path="res://scripts/temporizador_fase.gd" id="10_vtaks"]
 [ext_resource type="Script" path="res://scripts/pause_fim_jogo.gd" id="11_kvpfn"]
 
@@ -129,6 +130,30 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("2_jmnhl")
+
+[node name="LayerFuncao" type="CanvasLayer" parent="."]
+visible = false
+
+[node name="MontagemFuncaoBackground" type="Panel" parent="LayerFuncao"]
+anchors_preset = -1
+anchor_left = 0.001
+anchor_top = 0.619
+anchor_right = 0.99975
+anchor_bottom = 0.711
+offset_left = -1.28
+offset_top = 123.32
+offset_right = 0.319946
+offset_bottom = 123.08
+metadata/_edit_use_anchors_ = true
+
+[node name="MontagemFuncao" type="HBoxContainer" parent="LayerFuncao/MontagemFuncaoBackground"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("10_kvpfn")
 
 [node name="PercursoManager" type="Node" parent="."]
 script = ExtResource("7_qtexj")

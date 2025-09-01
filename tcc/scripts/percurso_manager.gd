@@ -3,9 +3,10 @@ class_name Percurso_Manager extends Node
 @onready var montagem: Montagem = $"../PaineisManager/LayerMontagem/MontagemBackground/Montagem"
 @onready var sub_viewport: SubViewport = $PercursoLayer/SubViewportContainer/SubViewport
 @onready var pause_fim_jogo: Pause_FimJogo = $"../TemporizadorFase/Pause_FimJogo"
+@onready var montagem_funcao: HBoxContainer = $"../LayerFuncao/MontagemFuncaoBackground/MontagemFuncao"
 
 # Sinal criado para quando apertar o botao 'executar'
-signal envia_blocos_percurso(blocos)
+signal envia_blocos_percurso(blocos, blocos_internos_funcao)
 
 func _ready() -> void:
 	var percurso = preload("res://scenes/percurso.tscn").instantiate()
@@ -21,7 +22,8 @@ func _ready() -> void:
 func _on_executar_button_down() -> void:
 	
 	var blocos = montagem.get_children()
+	var blocos_internos_funcao = montagem_funcao.get_children()
 	
 	if !blocos.is_empty():
-		emit_signal("envia_blocos_percurso", blocos)	
+		emit_signal("envia_blocos_percurso", blocos, blocos_internos_funcao)	
 		
