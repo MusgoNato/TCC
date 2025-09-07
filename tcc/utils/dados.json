@@ -96,6 +96,12 @@
 			"id": 5,
 			"image": "res://assets/blocos/repeticao/RepitaFim.png",
 			"tipo": "repita_fim"
+		},
+		{
+			"name": "Bloco_Condicao",
+			"id": 6,
+			"image": "res://assets/blocos/condicional/condicional.png",
+			"tipo": "condicional"
 		}
 	],
 	"4":

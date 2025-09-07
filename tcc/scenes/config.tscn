@@ -43,15 +43,16 @@ size_flags_horizontal = 4
 size_flags_vertical = 0
 theme_override_constants/separation = 20
 
-[node name="SOM" type="Label" parent="MarginContainer/HBoxContainer/VBoxContainer"]
+[node name="som" type="HSlider" parent="MarginContainer/HBoxContainer/VBoxContainer"]
 layout_mode = 2
-text = "Volume"
+value = 1.0
 
-[node name="BRILHO" type="Label" parent="MarginContainer/HBoxContainer/VBoxContainer"]
+[node name="brilho" type="HSlider" parent="MarginContainer/HBoxContainer/VBoxContainer"]
 layout_mode = 2
-text = "Brilho da tela"
+tooltip_text = "Brilho"
+value = 1.0
 
-[node name="ON_OF_DICAS" type="Label" parent="MarginContainer/HBoxContainer/VBoxContainer"]
+[node name="dicas" type="CheckButton" parent="MarginContainer/HBoxContainer/VBoxContainer"]
 layout_mode = 2
 text = "Desativar dicas"
 
@@ -64,4 +65,7 @@ offset_bottom = 40.0
 layout_mode = 2
 text = "voltar"
 
+[connection signal="value_changed" from="MarginContainer/HBoxContainer/VBoxContainer/som" to="." method="_on_som_value_changed"]
+[connection signal="value_changed" from="MarginContainer/HBoxContainer/VBoxContainer/brilho" to="." method="_on_brilho_value_changed"]
+[connection signal="pressed" from="MarginContainer/HBoxContainer/VBoxContainer/dicas" to="." method="_on_dicas_pressed"]
 [connection signal="pressed" from="HBoxContainer/btn_voltar_config" to="." method="_on_btn_voltar_config_pressed"]

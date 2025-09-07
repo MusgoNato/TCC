@@ -3,6 +3,9 @@ extends Node
 
 @onready var layer_pause_fim_jogo: CanvasLayer = $LayerPause_FimJogo
 @onready var texto: Label = $LayerPause_FimJogo/Pause_Fim_de_Jogo/VBoxContainer/HBoxContainer/Texto
+@onready var timer: Timer = $"../Timer"
+@onready var temporizador_fase: TemporizadorFase = $".."
+@onready var pontuacao: RichTextLabel = $LayerPause_FimJogo/Pause_Fim_de_Jogo/VBoxContainer/HBoxContainer2/pontuacao
 
 var pausado : bool = false
 var FimDeJogo : bool = false
@@ -31,7 +34,23 @@ func _on_checkpoint_alcancado(qtd_checkpoint: int):
 	qtd_checkpoint = qtd_checkpoint
 	checkpoints_atingidos = true
 	layer_pause_fim_jogo.visible = true
+	var estrelas_ganhas: int = 0
+	if temporizador_fase.tempo_restante >= GlobalScript.PONTUACAO_3_ESTRELAS:
+		estrelas_ganhas = 3
+	elif temporizador_fase.tempo_restante >= GlobalScript.PONTUACAO_2_ESTRELAS:
+		estrelas_ganhas = 2
+	elif temporizador_fase.tempo_restante >= GlobalScript.PONTUACAO_1_ESTRELA:
+		estrelas_ganhas = 1
+	else:
+		estrelas_ganhas = 0
+		
+	# Salva o progresso e pontuacao
+	SaveManager.salvar_pontuacao_fase(GlobalScript.fase_selecionada, estrelas_ganhas)
+	SaveManager.salvar_progresso(GlobalScript.fase_selecionada + 1)
+	
+	
 	texto.text = "Parabéns!, você completou a fase"
+	pontuacao.text += str(estrelas_ganhas)
 	get_tree().paused = true
 	
 # Sinais dos botoes da interface de pause

@@ -74,8 +74,8 @@ func _ready():
 	inimigo.position = Vector2.ZERO
 	
 	# Temporizador do inimigo sempre começa ao iniciar a cena
-	temporizador_mov_inimigo.autostart = true
-	temporizador_mov_inimigo.start(1.0)
+	#temporizador_mov_inimigo.autostart = true
+	#temporizador_mov_inimigo.start(1.0)
 	
 	linha_meio_inimigo = used.position.y + int(used.size.y/2)
 	celula_tile_inimigo = Vector2i(POS_INICIAL_X_INIMIGO, linha_meio_inimigo - 1)
@@ -271,6 +271,10 @@ func executar_bloco_singular(bloco):
 
 ## Funcao responsavel por verificar a colisao com o inimigo
 func verificar_colisao_inimigo():
+	# Antes de verificar a colisao do inimigo, verifica se ele existe dentro do percurso
+	if !inimigo.visible:
+		return false
+	
 	var posicao_jogador = tile_map_layer.local_to_map(player.global_position)
 	var posicao_inimigo = tile_map_layer.local_to_map(inimigo.global_position)
 	
@@ -283,6 +287,8 @@ func configurar_checkpoints(fase: int):
 		# Fase 1 (movimento)
 		1:
 			checkpoints.append(POS_INICIAL_JOGADOR)
+			inimigo.visible = false
+			inimigo.process_mode = Node.PROCESS_MODE_DISABLED
 		# Fase 2 (condições)
 		2:
 			checkpoints.append(POS_INICIAL_JOGADOR)	

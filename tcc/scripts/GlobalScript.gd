@@ -2,6 +2,8 @@ extends Node
 
 ## Variável global para verificação de qual fase foi selecionada
 var fase_selecionada: int = 0
+var dicas_ativas: bool = true
+var pontuacao_do_jogador: int = 0
 
 # Constantes para as cores da mensagem ao jogador
 const COR_ERRO: String = "red"
@@ -16,6 +18,11 @@ const MSG_NENHUM_CHECKPOINT_ALCANCADO: String = "[color=%s]Volte e tente de novo
 const MSG_LIMITE_BLOCOS_ATINGIDO: String = "[color=%s]Limite de blocos atingido![/color] Tente com menos blocos, você consegue!" % self.COR_DICA
 const MSG_COLIDIU_INIMIGO: String = "[color=%s]Colisão[/color]  com o inimigo" % self.COR_ERRO
 const MSG_INIMIGO_DERROTADO: String = "[color=%s]SUCESSO: Inimigo derrotado!" % self.COR_SUCESSO
+
+# Estrelas do jogador
+const PONTUACAO_3_ESTRELAS: int = 300 # 5 minutos em segundos
+const PONTUACAO_2_ESTRELAS: int = 120 # 2 minutos em segundos
+const PONTUACAO_1_ESTRELA: int = 1 # 1 segundo em segundos
 
 ## Vetor de instrucoes para cada fase
 var texto_instrucoes_iniciais: Array = [

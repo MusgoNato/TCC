@@ -52,7 +52,11 @@ theme_override_constants/separation = 20
 
 [node name="play" type="Button" parent="MarginContainer/VBoxContainer/VBoxContainer"]
 layout_mode = 2
-text = "Começar Jogo"
+text = "Novo jogo"
+
+[node name="carregar" type="Button" parent="MarginContainer/VBoxContainer/VBoxContainer"]
+layout_mode = 2
+text = "Carregar jogo"
 
 [node name="config" type="Button" parent="MarginContainer/VBoxContainer/VBoxContainer"]
 layout_mode = 2
@@ -84,5 +88,6 @@ size_flags_horizontal = 4
 text = "BLOCK CONSTRUCT"
 
 [connection signal="pressed" from="MarginContainer/VBoxContainer/VBoxContainer/play" to="." method="_on_play_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/VBoxContainer/carregar" to="." method="_on_carregar_pressed"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/VBoxContainer/config" to="." method="_on_config_pressed"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/VBoxContainer/quit" to="." method="_on_quit_pressed"]

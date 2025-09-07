@@ -9,7 +9,7 @@
 [ext_resource type="Script" uid="uid://bkiifbfeg3guh" path="res://scripts/percurso_manager.gd" id="7_qtexj"]
 [ext_resource type="Script" uid="uid://bv5d1nu82oc2y" path="res://scripts/montagem_funcao.gd" id="10_kvpfn"]
 [ext_resource type="Script" uid="uid://c6cew0ftwnxdr" path="res://scripts/temporizador_fase.gd" id="10_vtaks"]
-[ext_resource type="Script" path="res://scripts/pause_fim_jogo.gd" id="11_kvpfn"]
+[ext_resource type="Script" uid="uid://c8vsdikofay10" path="res://scripts/pause_fim_jogo.gd" id="11_kvpfn"]
 
 [node name="main" type="Control"]
 layout_mode = 3
@@ -261,10 +261,10 @@ size_flags_horizontal = 4
 size_flags_vertical = 4
 theme_override_constants/separation = 100
 
-[node name="Label" type="RichTextLabel" parent="TemporizadorFase/Pause_FimJogo/LayerPause_FimJogo/Pause_Fim_de_Jogo/VBoxContainer/HBoxContainer2"]
+[node name="pontuacao" type="RichTextLabel" parent="TemporizadorFase/Pause_FimJogo/LayerPause_FimJogo/Pause_Fim_de_Jogo/VBoxContainer/HBoxContainer2"]
 layout_mode = 2
 text = "Pontuação
-* * *"
+"
 fit_content = true
 scroll_active = false
 autowrap_mode = 0
