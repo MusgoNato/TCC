@@ -22,6 +22,8 @@ var linha_meio_jogador: int = 0
 var linha_meio_inimigo: int = 0
 var direcao_inimigo: int = 1
 var existe_condicional: bool = false
+var quant_checkpoint: int = GlobalScript.quant_checkpoints_fases[GlobalScript.fase_selecionada - 1]
+
 
 # O tamanho do tile é 32x32
 # Para que seja centralizado o movimento do jogador de acordo com o tile, y
@@ -29,7 +31,6 @@ const OFFSET_TILE_CENTRALIZADO: int = 16
 const TAM_TILE_MUNDO: int = 32
 const POSICAO_X_INICIAL_JOGADOR: int = TAM_TILE_MUNDO * 6
 const POS_INICIAL_X_INIMIGO: int = 7
-const QUANT_CHECKPOINT: int = 2
 const DIFERENCA_RELATIVA_MUNDO: int = 1
 const MOV_MAX_INIMIGO: int = 3
 const DIRECAO_DIREITA_INICIAL_INIMIGO: int = 1
@@ -332,7 +333,7 @@ func verificar_checkpoint_alcancado(tile: Vector2i) -> bool:
 		cont_chekpoints += 1
 		print(cont_chekpoints, "a Checkpoint alcancado!!!")
 		GlobalScript.enviar_mensagem_ao_jogador(GlobalScript.MSG_CHECKPOINT_ALCANCADO)
-		if cont_chekpoints >= QUANT_CHECKPOINT:
+		if cont_chekpoints >= quant_checkpoint:
 			emit_signal("checkpoint_alcancado", cont_chekpoints)
 		
 		return true

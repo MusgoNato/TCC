@@ -9,7 +9,17 @@ class_name Percurso_Manager extends Node
 signal envia_blocos_percurso(blocos, blocos_internos_funcao)
 
 func _ready() -> void:
-	var percurso = preload("res://scenes/percurso.tscn").instantiate()
+	var percurso = null
+	match GlobalScript.fase_selecionada:
+		1:
+			percurso = preload("res://scenes/percurso.tscn").instantiate()
+		2:
+			percurso = preload("res://scenes/percurso_fase_cond.tscn").instantiate()
+		3:
+			percurso = preload("res://scenes/percurso_fase_rep.tscn").instantiate()
+		4:
+			percurso = preload("res://scenes/percurso_fase_func.tscn").instantiate()
+	
 	sub_viewport.add_child(percurso)
 	
 	# Conecto o sinal para enviar os blocos ja montados

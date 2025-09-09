@@ -24,6 +24,15 @@ const PONTUACAO_3_ESTRELAS: int = 300 # 5 minutos em segundos
 const PONTUACAO_2_ESTRELAS: int = 120 # 2 minutos em segundos
 const PONTUACAO_1_ESTRELA: int = 1 # 1 segundo em segundos
 
+# Checkpoints para cada fase
+const FASE_1: int = 2
+const FASE_2: int = 3
+const FASE_3: int = 5
+const FASE_4: int = 7
+
+### vetor para armazenamento dos checkpoints de cada fase do jogo
+var quant_checkpoints_fases: Array = [FASE_1, FASE_2, FASE_3, FASE_4]
+
 ## Vetor de instrucoes para cada fase
 var texto_instrucoes_iniciais: Array = [
 	# Fase 1
