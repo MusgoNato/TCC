@@ -1,7 +1,9 @@
 extends Control
 
-@onready var som: HSlider = $MarginContainer/HBoxContainer/VBoxContainer/som
-@onready var brilho: HSlider = $MarginContainer/HBoxContainer/VBoxContainer/brilho
+@onready var brilho: HSlider = $MarginContainer/HBoxContainer/VBoxContainer/HBoxContainer2/brilho
+@onready var brilho_num: Label = $MarginContainer/HBoxContainer/VBoxContainer/HBoxContainer2/VBoxContainer/brilho_num
+@onready var som: HSlider = $MarginContainer/HBoxContainer/VBoxContainer/HBoxContainer/som
+@onready var som_num: Label = $MarginContainer/HBoxContainer/VBoxContainer/HBoxContainer/VBoxContainer/som_num
 
 func _ready() -> void:
 	# Setando valores minimos e maximos para as configurações
@@ -13,19 +15,24 @@ func _ready() -> void:
 	brilho.max_value = 10.0
 	brilho.step = 2.0
 	
+	brilho.value = GlobalScript.valor_brilho_init
+	som.value = GlobalScript.valor_som_init
+	brilho_num.text = str(GlobalScript.valor_brilho_init)
+	som_num.text = str(GlobalScript.valor_som_init)
+	
+	
 ## Sinal conectado para voltar ao menu inicial
 func _on_btn_voltar_config_pressed() -> void:
 	get_tree().change_scene_to_file("res://scenes/menu.tscn")
 
 ## Sinal conectado para mudança de brilho do jogo
 func _on_brilho_value_changed(value: float) -> void:
-	print("Valor do brilho sendo alterado: %d" % value)
+	brilho_num.text = str(value)
 
 ## Sinal conectado para mudança de volume do jogo
 func _on_som_value_changed(value: float) -> void:
-	print("Valor do som sendo alterado: %d" % value)
+	som_num.text = str(value)
 
 ## Sinal conectado para ativar e desativar dicas
 func _on_dicas_pressed() -> void:
 	GlobalScript.dicas_ativas = !GlobalScript.dicas_ativas
-	print("Dicas ativas? ", GlobalScript.dicas_ativas)

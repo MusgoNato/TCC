@@ -151,7 +151,7 @@
 		{
 			"name": "Bloco_Funcao",
 			"id": 7,
-			"image": "res://assets/blocos/repeticao/RepitaFim.png",
+			"image": "res://assets/blocos/funcao/blocoFuncao.png",
 			"tipo": "funcao"
 		}
 	]

@@ -6,17 +6,23 @@ const PONTUACAO_PATH = "user://pontuacoes.json"
 
 # Salva a última fase desbloqueada como um número inteiro.
 func salvar_progresso(last_unlocked_level: int):
-	var save_data = {
-		"last_unlocked_level": last_unlocked_level
-	}
-	var file = FileAccess.open(SAVE_PATH, FileAccess.WRITE)
-	if file == null:
-		print("Erro ao abrir arquivo para salvar!")
-		return
-	var json_string = JSON.stringify(save_data)
-	file.store_string(json_string)
-	file.close()
-	print("Progresso salvo: Fase ", last_unlocked_level)
+	var progresso_atual = carregar_progresso()
+	
+	if last_unlocked_level > progresso_atual:
+		
+		var save_data = {
+			"last_unlocked_level": last_unlocked_level
+		}
+		var file = FileAccess.open(SAVE_PATH, FileAccess.WRITE)
+		if file == null:
+			print("Erro ao abrir arquivo para salvar!")
+			return
+		var json_string = JSON.stringify(save_data)
+		file.store_string(json_string)
+		file.close()
+		print("Progresso salvo: Fase ", last_unlocked_level)
+	else:
+		print("Novo progresso não é maior que o atual, nada foi salvo!")
 
 # Carrega a última fase desbloqueada. Retorna 0 se não houver save.
 func carregar_progresso() -> int:

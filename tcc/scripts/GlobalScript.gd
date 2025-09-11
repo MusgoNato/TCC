@@ -5,6 +5,10 @@ var fase_selecionada: int = 0
 var dicas_ativas: bool = true
 var pontuacao_do_jogador: int = 0
 
+## Variavel global para tela de configuraçoes
+var valor_som_init: float = 5.0
+var valor_brilho_init: float = 5.0
+
 # Constantes para as cores da mensagem ao jogador
 const COR_ERRO: String = "red"
 const COR_DICA: String = "yellow"
