@@ -23,7 +23,7 @@ var linha_meio_inimigo: int = 0
 var direcao_inimigo: int = 1
 var existe_condicional: bool = false
 var quant_checkpoint: int = GlobalScript.quant_checkpoints_fases[GlobalScript.fase_selecionada - 1]
-
+var ultima_direcao: Vector2i = Vector2i.ZERO
 
 # O tamanho do tile é 32x32
 # Para que seja centralizado o movimento do jogador de acordo com o tile, y
@@ -91,33 +91,6 @@ func _ready():
 	
 	# Definicao dos checkpoints com base na fase
 	configurar_checkpoints(GlobalScript.fase_selecionada)
-	
-
-## Funcao responsavel pela movimentacao do inimigo (Em desenvolvimento)
-func movimenta_inimigo():	
-	if cont_movimento_inimigo >= MOV_MAX_INIMIGO and direcao_inimigo == DIRECAO_DIREITA_INICIAL_INIMIGO:
-		# Se chegou ao limite da direita, inverte a direção para a esquerda
-		direcao_inimigo = -DIRECAO_DIREITA_INICIAL_INIMIGO
-		
-	elif cont_movimento_inimigo <= 0 and direcao_inimigo == -DIRECAO_DIREITA_INICIAL_INIMIGO:
-		# Se chegou ao limite da esquerda, inverte a direção para a direita
-		direcao_inimigo = DIRECAO_DIREITA_INICIAL_INIMIGO
-	
-	# Atualiza o contador de movimento com base na direção atual
-	if direcao_inimigo == DIRECAO_DIREITA_INICIAL_INIMIGO:
-		cont_movimento_inimigo += DIRECAO_DIREITA_INICIAL_INIMIGO
-	elif direcao_inimigo == -DIRECAO_DIREITA_INICIAL_INIMIGO:
-		cont_movimento_inimigo -= DIRECAO_DIREITA_INICIAL_INIMIGO
-		
-	# Movimenta o inimigo
-	inimigo.position.x += direcao_inimigo * TAM_TILE_MUNDO
-	
-	if direcao_inimigo == DIRECAO_DIREITA_INICIAL_INIMIGO:
-		inimigo.animation_player.flip_h = false
-		inimigo.animation_player.play("dir")
-	else:
-		inimigo.animation_player.flip_h = true
-		inimigo.animation_player.play("esq")
 
 	
 ## Sinal conectado apos o envio dos blocos pelo botao de executar na interface da fase
@@ -127,11 +100,13 @@ func _on_envia_blocos_percurso(blocos, blocos_internos_funcao):
 		return
 		
 	processando_blocos = true
-	print(blocos_internos_funcao)
+	existe_condicional = false
+	
+	#print(blocos_internos_funcao)
 	# Faz uma copia dos blocos originais, para evitar que o jogador interfira na leitura dos blocos
 	# caso seja retirado algum bloco da montagem em tempo de execucao
 	var blocos_data = criar_estrutura_blocos(blocos, blocos_internos_funcao)
-	print(blocos_data)
+	#print(blocos_data)
 	await executar_blocos_recursivamente(blocos_data)
 	
 	# Terminou de processar os blocos
@@ -141,7 +116,7 @@ func _on_envia_blocos_percurso(blocos, blocos_internos_funcao):
 	var posicao_jogador_celula = tile_map_layer.local_to_map(player.position)
 	var novo_checkpoint_atingido = verificar_checkpoint_alcancado(posicao_jogador_celula)
 	if not novo_checkpoint_atingido:
-		print("Nenhum checkpoint alcançado, reiniciando...")
+		#print("Nenhum checkpoint alcançado, reiniciando...")
 		await get_tree().create_timer(0.5).timeout
 		reiniciar_para_ultimo_checkpoint()
 	
@@ -215,11 +190,17 @@ func executar_bloco_singular(bloco):
 					return false
 			return true
 		"condicional":
-			existe_condicional = true
-			if verificar_colisao_inimigo():
-				print("Jogador usou condicional e derrotou o inimigo!")
+			# Verifico se a proxima posicao do meu jogador e o inimigo, ao executar o bloco atual, no
+			# caso condicional, apago o inimigo se a condicao for satisfeita, caso contrario o jogador colide com o inimigo
+			# na verificacao final da funcao 
+			var posicao_atual_jogador = tile_map_layer.local_to_map(player.global_position)
+			var posicao_atual_inimigo = tile_map_layer.local_to_map(inimigo.global_position)
+			
+			var inimigo_a_frente = posicao_atual_jogador + ultima_direcao
+			if inimigo_a_frente == posicao_atual_inimigo:
 				inimigo.visible = false
 				inimigo.process_mode = Node.PROCESS_MODE_DISABLED
+			
 			return true
 		"esquerda":
 			direcao = Vector2i(-1, 0)
@@ -235,38 +216,37 @@ func executar_bloco_singular(bloco):
 		"baixo":
 			direcao = Vector2i(0, 1)
 			player.animation_player.play("down")
-
-	# movimentação (igual ao que já tinha)
-	var novo_tile = celula_tile + direcao
-	var bounds = tile_map_layer.get_used_rect()
-	var dentro = (novo_tile.x >= bounds.position.x and
-				  novo_tile.x < bounds.end.x and
-				  novo_tile.y >= bounds.position.y - 1 and
-				  novo_tile.y < bounds.end.y - 1)
-	if dentro:
-		var tile_data = tile_map_layer.get_cell_tile_data(Vector2i(novo_tile.x, novo_tile.y + DIFERENCA_RELATIVA_MUNDO))
-		if tile_data != null and tile_data.has_custom_data("valido") and not tile_data.get_custom_data("valido"):
-			print("PRÓXIMO CAMINHO INVÁLIDO")
-			return false
+	
+	if direcao != Vector2i.ZERO:
+		ultima_direcao = direcao
+	
+		# movimentação (igual ao que já tinha)
+		var novo_tile = celula_tile + direcao
+		var bounds = tile_map_layer.get_used_rect()
+		var dentro = (novo_tile.x >= bounds.position.x and
+					  novo_tile.x < bounds.end.x and
+					  novo_tile.y >= bounds.position.y - 1 and
+					  novo_tile.y < bounds.end.y - 1)
+		if dentro:
+			var tile_data = tile_map_layer.get_cell_tile_data(Vector2i(novo_tile.x, novo_tile.y + DIFERENCA_RELATIVA_MUNDO))
+			if tile_data != null and tile_data.has_custom_data("valido") and not tile_data.get_custom_data("valido"):
+				print("PRÓXIMO CAMINHO INVÁLIDO")
+				return false
+				
+			celula_tile = novo_tile
+			var nova_pos = tile_map_layer.map_to_local(celula_tile) + tile_size / 2
+			nova_pos.x -= OFFSET_TILE_CENTRALIZADO
+			nova_pos.y += OFFSET_TILE_CENTRALIZADO
+			var tween = create_tween()
+			tween.tween_property(player, "position", nova_pos, 0.2)
+			await tween.finished
 			
-		celula_tile = novo_tile
-		var nova_pos = tile_map_layer.map_to_local(celula_tile) + tile_size / 2
-		nova_pos.x -= OFFSET_TILE_CENTRALIZADO
-		nova_pos.y += OFFSET_TILE_CENTRALIZADO
-		var tween = create_tween()
-		tween.tween_property(player, "position", nova_pos, 0.2)
-		await tween.finished
-		
-		# Verifico se o jogador colocou um bloco de condicao na montagem
-		# Essa verificacao eh necessaria pois verificara se o jogador colidiu com a posicao do inimigo
-		if !existe_condicional:
 			if verificar_colisao_inimigo():
-				print("Colidiu com o inimigo")
 				GlobalScript.enviar_mensagem_ao_jogador(GlobalScript.MSG_COLIDIU_INIMIGO)
 				return false
-		
+			
 		return true
-
+	
 	return false
 
 
@@ -305,10 +285,6 @@ func configurar_checkpoints(fase: int):
 		_:
 			print("Fase sem configuração")
 
-func executar_blocos(blocos_a_executar):
-	for bloco in blocos_a_executar:
-		await executar_bloco_singular(bloco)
-		
 func encontrar_bloco_repita_fim(blocos, indice_inicio):
 	var contagem_loops = 0
 	for i in range(indice_inicio + 1, blocos.size()):
@@ -349,9 +325,3 @@ func reiniciar_para_ultimo_checkpoint():
 	player.position = pos
 	print("Reiniciado no checkpoint: ", celula_tile)
 	GlobalScript.enviar_mensagem_ao_jogador(GlobalScript.MSG_NENHUM_CHECKPOINT_ALCANCADO)
-	
-
-## Sinal para chamar a função responsavel por movimentar o inimigo (Em desenvolvimento)
-func _on_temporizador_mov_inimigo_timeout() -> void:
-	pass
-	#movimenta_inimigo()

@@ -5,6 +5,9 @@ extends Control
 func _ready() -> void:
 	# Caso nao haja save, desabilito o botao
 	var progresso = SaveManager.carregar_progresso()
+	
+	# Carrega os valores do save do disco para as variáveis globais.
+	SaveManager.carregar_config_utilitarios()
 	if progresso == 0:
 		carregar.disabled = true
 	else:

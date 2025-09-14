@@ -7,7 +7,7 @@ var blocos = null
 
 func _ready() -> void:
 	blocos = json_manager.get_dados_blocos()
-	print(blocos)
+	#print(blocos)
 
 func _input(event: InputEvent) -> void:
 	# Saida rapida

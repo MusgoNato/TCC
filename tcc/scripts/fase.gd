@@ -7,7 +7,6 @@ extends Control
 @onready var layer_funcao: CanvasLayer = $LayerFuncao
 
 var etapa_atual: int = 0
-const TEMPO_INSTRUCOES: int = 1
 const FASE_FUNCAO: int = 4
 
 # Intruções carregadas do script global (O json, dados para pre-carregamento dos blocos funciona de forma diferente o acesso por indices, sendo o inicial 1 e nao 0 (EM STR)
@@ -29,7 +28,7 @@ func mostrar_instrucao() -> void:
 		texto_instrucoes.show()
 	else:
 		texto_instrucoes.hide()
-	timer_instrucoes.start(TEMPO_INSTRUCOES)
+	timer_instrucoes.start(GlobalScript.TEMPO_INSTRUCOES_INICIAS)
 	etapa_atual += 1
 
 ## Sinal de timer conectado para controlar o tempo das instruções iniciais da fase na tela

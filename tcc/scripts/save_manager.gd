@@ -118,3 +118,60 @@ func resetar_salvamento():
 	if dir.file_exists("pontuacoes.json"):
 		dir.remove("pontuacoes.json")
 		print("Arquivo de pontuações resetado.")
+		
+
+# Salva as configurações de brilho, som e dicas em um arquivo JSON.
+func salvar_config_utilitarios():
+	# Cria um dicionário com os dados a serem salvos
+	var config_data = {
+		"brilho": GlobalScript.valor_brilho_config,
+		"som": GlobalScript.valor_som_config,
+		"dicas_ativas": GlobalScript.dicas_config
+	}
+
+	# Tenta abrir o arquivo para escrita
+	var file = FileAccess.open(SAVE_SETTINGS_PATH, FileAccess.WRITE)
+	if file == null:
+		print("Erro ao abrir arquivo para salvar as configurações!")
+		return
+
+	# Converte o dicionário para uma string JSON e salva no arquivo
+	var json_string = JSON.stringify(config_data)
+	file.store_string(json_string)
+	file.close()
+	print("Configurações salvas com sucesso!")
+
+# Carrega as configurações do arquivo JSON. Se o arquivo não existir, usa os valores padrão.
+func carregar_config_utilitarios():
+	# Verifica se o arquivo de save existe
+	if not FileAccess.file_exists(SAVE_SETTINGS_PATH):
+		print("Arquivo de configurações não encontrado. Usando valores padrão.")
+		return
+
+	# Tenta abrir o arquivo para leitura
+	var file = FileAccess.open(SAVE_SETTINGS_PATH, FileAccess.READ)
+	if file == null:
+		print("Erro ao abrir arquivo para carregar as configurações!")
+		return
+
+	# Lê o conteúdo do arquivo
+	var content = file.get_as_text()
+	file.close()
+
+	# Analisa a string JSON para converter em um dicionário
+	var json_result = JSON.parse_string(content)
+	if not json_result is Dictionary:
+		print("Erro ao analisar o arquivo de configurações JSON!")
+		return
+
+	var config_data = json_result as Dictionary
+	
+	# Atualiza as variáveis globais com os valores do arquivo, se existirem
+	if config_data.has("brilho"):
+		GlobalScript.valor_brilho_config = float(config_data["brilho"])
+	if config_data.has("som"):
+		GlobalScript.valor_som_config = float(config_data["som"])
+	if config_data.has("dicas_ativas"):
+		GlobalScript.dicas_config = bool(config_data["dicas_ativas"])
+
+	print("Configurações carregadas com sucesso.")
