@@ -1,8 +1,13 @@
-[gd_scene load_steps=3 format=3 uid="uid://dskfafe1j24gy"]
+[gd_scene load_steps=4 format=3 uid="uid://dskfafe1j24gy"]
 
 [ext_resource type="Script" uid="uid://bxm17xerd1omb" path="res://scripts/menu_inicial.gd" id="1_5euyt"]
 
-[sub_resource type="ViewportTexture" id="ViewportTexture_d1bn2"]
+[sub_resource type="Gradient" id="Gradient_yqeox"]
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_yqeox"]
+gradient = SubResource("Gradient_yqeox")
+fill_from = Vector2(0, 1)
+fill_to = Vector2(0.690265, 0.323009)
 
 [node name="Interface_Inicial" type="Control"]
 layout_mode = 3
@@ -14,14 +19,15 @@ grow_vertical = 2
 script = ExtResource("1_5euyt")
 
 [node name="background_interface" type="TextureRect" parent="."]
-modulate = Color(0, 0, 0, 1)
+modulate = Color(0.186814, 9.33737e-05, 0.619952, 1)
+self_modulate = Color(0.61339, 0.61339, 0.61339, 1)
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = SubResource("ViewportTexture_d1bn2")
+texture = SubResource("GradientTexture2D_yqeox")
 expand_mode = 2
 
 [node name="MarginContainer" type="MarginContainer" parent="."]

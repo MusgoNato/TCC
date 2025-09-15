@@ -10,6 +10,7 @@ extends Node
 var pausado : bool = false
 var FimDeJogo : bool = false
 var checkpoints_atingidos: bool = false
+var total_estrelas: int = 3
 
 # Inputs do teclado
 func _unhandled_input(event: InputEvent) -> void:
@@ -48,9 +49,15 @@ func _on_checkpoint_alcancado(qtd_checkpoint: int):
 	SaveManager.salvar_pontuacao_fase(GlobalScript.fase_selecionada, estrelas_ganhas)
 	SaveManager.salvar_progresso(GlobalScript.fase_selecionada + 1)
 	
+	var estrelas_txt: String = ""
+	for i in range(total_estrelas):
+		if i <  estrelas_ganhas:
+			estrelas_txt += "★"	
+		else:
+			estrelas_txt += "☆"
 	
-	texto.text = "Parabéns!, você completou a fase"
-	pontuacao.text += str(estrelas_ganhas)
+	texto.text = "Parabéns!, você completou a fase"		
+	pontuacao.text += estrelas_txt
 	get_tree().paused = true
 	
 # Sinais dos botoes da interface de pause

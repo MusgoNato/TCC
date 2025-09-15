@@ -36,4 +36,3 @@ func _on_executar_button_down() -> void:
 	
 	if !blocos.is_empty():
 		emit_signal("envia_blocos_percurso", blocos, blocos_internos_funcao)	
-		

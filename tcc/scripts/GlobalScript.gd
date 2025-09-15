@@ -1,5 +1,10 @@
 extends Node
 
+## Textura do mouse
+var textura_mouse_area_pra_soltar_bloco = preload("res://assets/mouse_asset/PNG/Basic/Default/hand_open.png")
+var textura_padrao_mouse_ponteiro = preload("res://assets/mouse_asset/PNG/Basic/Default/pointer_c.png")
+var textura_mouse_arrastando_bloco = preload("res://assets/mouse_asset/PNG/Basic/Default/hand_closed.png")
+
 ## Variável global para verificação de qual fase foi selecionada
 var fase_selecionada: int = 0
 var pontuacao_do_jogador: int = 0

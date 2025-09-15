@@ -8,10 +8,12 @@ var tipo: String = ""
 
 @export var blocoPadrao = preload("res://scenes/bloco.tscn") # padrão fallback
 
+
 func _ready() -> void:
 	
 	# Texto quando o mouse esta sobre o bloco
 	self.tooltip_text = self.tipo
+	
 
 func _get_drag_data(at_position: Vector2) -> Variant:
 	at_position = at_position

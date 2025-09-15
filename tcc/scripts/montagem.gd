@@ -8,8 +8,7 @@ func _ready() -> void:
 	self.add_theme_constant_override("separation", 32)
 
 # Retorna se pode ser solto ou nao o bloco (Aqui é a area da montagem como um todo)
-func _can_drop_data(at_position: Vector2, data: Variant) -> bool:
-	at_position = at_position
+func _can_drop_data(_at_position: Vector2, data: Variant) -> bool:
 	
 	if data is Bloco:
 		print(data.tipo)
@@ -20,7 +19,9 @@ func _can_drop_data(at_position: Vector2, data: Variant) -> bool:
 		if data.estaNaPaleta:
 			print("Esta na paleta? ", data.estaNaPaleta)
 		else: 
-			print("Esta na paleta? ", data.estaNaPaleta)		
+			print("Esta na paleta? ", data.estaNaPaleta)	
+		
+		Input.set_custom_mouse_cursor(GlobalScript.textura_mouse_area_pra_soltar_bloco, Input.CURSOR_CAN_DROP, Vector2(16, 16))	
 		return true
 	else:
 		print_debug("\n=>>Bloco nao e do tipo Bloco!!!!")
@@ -81,6 +82,3 @@ func _drop_data(at_position: Vector2, data: Variant) -> void:
 		print("NOME DO BLOCO: ", data.name, "\nID DO BLOCO: ", data.bloco_id, "\n", "\nTIPO DO BLOCO: ", data.tipo, "\n")
 	else:
 		print("Blocos não eh do tipo BLOCO")
-
-	# Em modo remoto, os blocos que sao colocados tem nomes diferentes do original,
-	# pela propria Godot criar nomes unicos e nao mesclar os nos entre si

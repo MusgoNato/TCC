@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://cphmefdh7pdgk"]
+[gd_scene load_steps=14 format=3 uid="uid://cphmefdh7pdgk"]
 
 [ext_resource type="Script" uid="uid://bak0dsf3rkvof" path="res://scripts/fase.gd" id="1_0tnpc"]
 [ext_resource type="Script" uid="uid://dti8vcdhy4bcj" path="res://scripts/json_manager.gd" id="1_nn3lx"]
@@ -6,10 +6,13 @@
 [ext_resource type="Script" uid="uid://bwxpvbvf86tte" path="res://scripts/descarte.gd" id="3_xdbv0"]
 [ext_resource type="PackedScene" uid="uid://cyq68263nl36g" path="res://scenes/msg_ao_jogador.tscn" id="4_0tnpc"]
 [ext_resource type="Script" uid="uid://chh41sctvmt1w" path="res://scripts/info_debug.gd" id="6_jkxey"]
+[ext_resource type="Script" uid="uid://1qdpxt4os8p5" path="res://scripts/paleta_blocos.gd" id="6_kvpfn"]
 [ext_resource type="Script" uid="uid://bkiifbfeg3guh" path="res://scripts/percurso_manager.gd" id="7_qtexj"]
+[ext_resource type="Script" uid="uid://benixb75nfuxs" path="res://scripts/subviewport_container.gd" id="10_dinhu"]
 [ext_resource type="Script" uid="uid://bv5d1nu82oc2y" path="res://scripts/montagem_funcao.gd" id="10_kvpfn"]
 [ext_resource type="Script" uid="uid://c6cew0ftwnxdr" path="res://scripts/temporizador_fase.gd" id="10_vtaks"]
 [ext_resource type="Script" uid="uid://c8vsdikofay10" path="res://scripts/pause_fim_jogo.gd" id="11_kvpfn"]
+[ext_resource type="Script" uid="uid://csbjx28egd0ln" path="res://scripts/btn_executar_blocos.gd" id="11_kvuet"]
 
 [node name="main" type="Control"]
 layout_mode = 3
@@ -105,6 +108,7 @@ grow_vertical = 2
 [node name="Paleta" type="GridContainer" parent="PaineisManager/LayerPaleta/PainelDisponivel/ScrollContainer"]
 layout_mode = 2
 columns = 3
+script = ExtResource("6_kvpfn")
 
 [node name="LayerMontagem" type="CanvasLayer" parent="PaineisManager"]
 
@@ -170,6 +174,7 @@ offset_bottom = 320.0
 grow_horizontal = 2
 stretch = true
 mouse_target = true
+script = ExtResource("10_dinhu")
 
 [node name="SubViewport" type="SubViewport" parent="PercursoManager/PercursoLayer/SubViewportContainer"]
 disable_3d = true
@@ -220,6 +225,7 @@ offset_bottom = 15.5
 grow_horizontal = 2
 grow_vertical = 2
 text = "Executar"
+script = ExtResource("11_kvuet")
 
 [node name="TemporizadorFase" type="Node" parent="."]
 script = ExtResource("10_vtaks")
