@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://cphmefdh7pdgk"]
+[gd_scene load_steps=16 format=3 uid="uid://cphmefdh7pdgk"]
 
 [ext_resource type="Script" uid="uid://bak0dsf3rkvof" path="res://scripts/fase.gd" id="1_0tnpc"]
 [ext_resource type="Script" uid="uid://dti8vcdhy4bcj" path="res://scripts/json_manager.gd" id="1_nn3lx"]
@@ -14,6 +14,13 @@
 [ext_resource type="Script" uid="uid://c8vsdikofay10" path="res://scripts/pause_fim_jogo.gd" id="11_kvpfn"]
 [ext_resource type="Script" uid="uid://csbjx28egd0ln" path="res://scripts/btn_executar_blocos.gd" id="11_kvuet"]
 
+[sub_resource type="Gradient" id="Gradient_kvuet"]
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_trtic"]
+gradient = SubResource("Gradient_kvuet")
+fill_from = Vector2(0, 1)
+fill_to = Vector2(0.566372, 0.451327)
+
 [node name="main" type="Control"]
 layout_mode = 3
 anchors_preset = 15
@@ -23,6 +30,17 @@ grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 4
 script = ExtResource("1_0tnpc")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+modulate = Color(0.188235, 0, 0.619608, 1)
+self_modulate = Color(0.611765, 0.611765, 0.611765, 1)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("GradientTexture2D_trtic")
 
 [node name="LayerInstrucoes" type="CanvasLayer" parent="."]
 layer = 2

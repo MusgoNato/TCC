@@ -15,3 +15,5 @@ offset_bottom = -0.0400009
 grow_horizontal = 0
 script = ExtResource("1_wefi5")
 metadata/_edit_use_anchors_ = true
+
+[node name="Timer" type="Timer" parent="."]
