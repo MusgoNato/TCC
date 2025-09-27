@@ -1,4 +1,31 @@
 {
+	"0":
+	[
+		{
+		"name": "Bloco_Cima",
+		"id": 0,
+		"image": "res://assets/blocos/movimento/mov_cima.png",
+		"tipo": "cima"
+		},
+		{
+			"name": "Bloco_Baixo",
+			"id": 1,
+			"image": "res://assets/blocos/movimento/mov_baixo.png",
+			"tipo": "baixo"
+		},
+		{
+			"name": "Bloco_Esquerda",
+			"id": 2,
+			"image": "res://assets/blocos/movimento/mov_esq.png",
+			"tipo": "esquerda"
+		},
+		{
+			"name": "Bloco_Direita",
+			"id": 3,
+			"image": "res://assets/blocos/movimento/mov_dir.png",
+			"tipo": "direita"
+		}
+	],
 	"1":
 	[
 		{

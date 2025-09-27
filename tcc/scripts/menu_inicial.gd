@@ -17,7 +17,7 @@ func _ready() -> void:
 func _on_play_pressed() -> void:
 	# Um novo save criado, volta com o valor inicial (Liberado somente a fase 1)
 	SaveManager.resetar_salvamento()
-	SaveManager.salvar_progresso(1)
+	SaveManager.salvar_progresso(0)
 	get_tree().change_scene_to_file("res://scenes/fases.tscn")
 
 # Carrega o jogo

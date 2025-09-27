@@ -11,6 +11,9 @@ extends Control
 @onready var btn_salvar: Button = $MarginContainer/HBoxContainer/VBoxContainer/HBoxContainer3/salvar_alteracoes
 @onready var btn_resetar: Button = $MarginContainer/HBoxContainer/VBoxContainer/HBoxContainer3/resetar_valores
 
+# Botao para aumentar ou diminuir tempo das instrucoes iniciais
+@onready var button: SpinBox = $MarginContainer/HBoxContainer/VBoxContainer/HBoxContainer4/Button
+
 # Variáveis para armazenar o estado original das configurações ao entrar na tela
 var brilho_original: float
 var som_original: float
@@ -35,6 +38,8 @@ func _ready() -> void:
 	brilho.min_value = 1.0
 	brilho.max_value = 10.0
 	brilho.step = 2.0
+	
+	button.value = GlobalScript.TEMPO_INSTRUCOES_INICIAS
 	
 	# 4. Atualiza os textos da UI.
 	brilho_num.text = str(brilho.value)
@@ -110,4 +115,8 @@ func _on_resetar_valores_pressed() -> void:
 	som_original = som.value
 	dicas_originais = dicas.button_pressed
 	
-	print("Configurações resetadas para o padrão!")
+	if GlobalScript.info_debug:
+		print("Configurações resetadas para o padrão!")
+
+func _on_button_value_changed(value: float) -> void:
+	GlobalScript.TEMPO_INSTRUCOES_INICIAS = value

@@ -4,7 +4,6 @@ extends Node2D
 @onready var tile_map_layer: TileMapLayer = $TileMapLayer
 @onready var player: Player = $player
 @onready var inimigo: Inimigo = $Inimigo
-@onready var temporizador_mov_inimigo: Timer = $TemporizadorMovInimigo
 
 
 var celula_tile := Vector2i(0, 0)
@@ -22,7 +21,7 @@ var linha_meio_jogador: int = 0
 var linha_meio_inimigo: int = 0
 var direcao_inimigo: int = 1
 var existe_condicional: bool = false
-var quant_checkpoint: int = GlobalScript.quant_checkpoints_fases[GlobalScript.fase_selecionada - 1]
+var quant_checkpoint: int = GlobalScript.quant_checkpoints_fases[GlobalScript.fase_selecionada]
 var ultima_direcao: Vector2i = Vector2i.ZERO
 
 # O tamanho do tile é 32x32
@@ -74,10 +73,6 @@ func _ready():
 	# Calcula a linha do meio do tile map layer (Posicao inicial do inimigo)
 	inimigo.position = Vector2.ZERO
 	
-	# Temporizador do inimigo sempre começa ao iniciar a cena
-	#temporizador_mov_inimigo.autostart = true
-	#temporizador_mov_inimigo.start(1.0)
-	
 	linha_meio_inimigo = used.position.y + int(used.size.y/2)
 	celula_tile_inimigo = Vector2i(POS_INICIAL_X_INIMIGO, linha_meio_inimigo - 1)
 	var pos_inicial_inimigo_mundo = tile_map_layer.map_to_local(celula_tile_inimigo)
@@ -96,17 +91,23 @@ func _ready():
 ## Sinal conectado apos o envio dos blocos pelo botao de executar na interface da fase
 func _on_envia_blocos_percurso(blocos, blocos_internos_funcao):
 	if blocos.is_empty() or processando_blocos:
-		print("Painel de montagem vazio!")
+		if GlobalScript.info_debug:
+			print("Painel de montagem vazio!")
 		return
 		
 	processando_blocos = true
 	existe_condicional = false
 	
-	#print(blocos_internos_funcao)
+	if GlobalScript.info_debug:
+		print(blocos_internos_funcao)
+		
 	# Faz uma copia dos blocos originais, para evitar que o jogador interfira na leitura dos blocos
 	# caso seja retirado algum bloco da montagem em tempo de execucao
 	var blocos_data = criar_estrutura_blocos(blocos, blocos_internos_funcao)
-	#print(blocos_data)
+	
+	if GlobalScript.info_debug:
+		print(blocos_data)
+		
 	await executar_blocos_recursivamente(blocos_data)
 	
 	# Terminou de processar os blocos
@@ -116,7 +117,8 @@ func _on_envia_blocos_percurso(blocos, blocos_internos_funcao):
 	var posicao_jogador_celula = tile_map_layer.local_to_map(player.position)
 	var novo_checkpoint_atingido = verificar_checkpoint_alcancado(posicao_jogador_celula)
 	if not novo_checkpoint_atingido:
-		#print("Nenhum checkpoint alcançado, reiniciando...")
+		if GlobalScript.info_debug:
+			print("Nenhum checkpoint alcançado, reiniciando...")
 		await get_tree().create_timer(0.5).timeout
 		reiniciar_para_ultimo_checkpoint()
 	
@@ -157,7 +159,8 @@ func executar_blocos_recursivamente(blocos_a_executar):
 			
 			if indice_final_loop == -1:
 				GlobalScript.enviar_mensagem_ao_jogador(GlobalScript.MSG_BLOCO_REPETICAO_SEM_FECHAMENTO)
-				print("Erro: Bloco de repetição sem fechamento correspondente")
+				if GlobalScript.info_debug:
+					print("Erro: Bloco de repetição sem fechamento correspondente")
 				break
 			
 			var blocos_do_loop = blocos_a_executar.slice(indice_atual + 1, indice_final_loop)
@@ -181,12 +184,14 @@ func executar_bloco_singular(bloco):
 	match bloco.tipo:
 		"funcao":
 			if not bloco.has("blocos_internos") or bloco.blocos_internos.is_empty():
-				print("A funcao nao possui nenhum bloco")
+				if GlobalScript.info_debug:
+					print("A funcao nao possui nenhum bloco")
 				return true
 			else:
 				var sucesso = await executar_blocos_recursivamente(bloco.blocos_internos)
 				if not sucesso:
-					print("Nao leu o bloco dentro da funcao")
+					if GlobalScript.info_debug:
+						print("Nao leu o bloco dentro da funcao")
 					return false
 			return true
 		"condicional":
@@ -230,7 +235,8 @@ func executar_bloco_singular(bloco):
 		if dentro:
 			var tile_data = tile_map_layer.get_cell_tile_data(Vector2i(novo_tile.x, novo_tile.y + DIFERENCA_RELATIVA_MUNDO))
 			if tile_data != null and tile_data.has_custom_data("valido") and not tile_data.get_custom_data("valido"):
-				print("PRÓXIMO CAMINHO INVÁLIDO")
+				if GlobalScript.info_debug:
+					print("PRÓXIMO CAMINHO INVÁLIDO")
 				return false
 				
 			celula_tile = novo_tile
@@ -265,6 +271,10 @@ func verificar_colisao_inimigo():
 func configurar_checkpoints(fase: int):
 	checkpoints.clear()
 	match fase:
+		0:
+			checkpoints.append(POS_INICIAL_JOGADOR)
+			inimigo.visible = false
+			inimigo.process_mode = Node.PROCESS_MODE_DISABLED
 		# Fase 1 (movimento)
 		1:
 			checkpoints.append(POS_INICIAL_JOGADOR)
@@ -283,7 +293,9 @@ func configurar_checkpoints(fase: int):
 			checkpoints.append(POS_INICIAL_JOGADOR)
 			inimigo.visible = true
 		_:
-			print("Fase sem configuração")
+			if GlobalScript.info_debug:
+				print("Fase sem configuração")
+			
 
 func encontrar_bloco_repita_fim(blocos, indice_inicio):
 	var contagem_loops = 0
@@ -307,7 +319,8 @@ func verificar_checkpoint_alcancado(tile: Vector2i) -> bool:
 		ultimo_checkpoint_tile.x = tile.x
 		ultimo_checkpoint_tile.y = tile.y - 1
 		cont_chekpoints += 1
-		print(cont_chekpoints, "a Checkpoint alcancado!!!")
+		if GlobalScript.info_debug:
+			print(cont_chekpoints, "a Checkpoint alcancado!!!")
 		GlobalScript.enviar_mensagem_ao_jogador(GlobalScript.MSG_CHECKPOINT_ALCANCADO)
 		if cont_chekpoints >= quant_checkpoint:
 			emit_signal("checkpoint_alcancado", cont_chekpoints)
@@ -318,10 +331,12 @@ func verificar_checkpoint_alcancado(tile: Vector2i) -> bool:
 ## Função responsável por reiniciar a posição do jogador para o último checkpoint alcançado
 func reiniciar_para_ultimo_checkpoint():
 	celula_tile = ultimo_checkpoint_tile
-	print(ultimo_checkpoint_tile)
+	if GlobalScript.info_debug:
+		print("Ultimo checkpoint alcancado : ", ultimo_checkpoint_tile)
 	var pos = tile_map_layer.map_to_local(celula_tile) + tile_size / 2
 	pos.x -= OFFSET_TILE_CENTRALIZADO
 	pos.y += OFFSET_TILE_CENTRALIZADO
 	player.position = pos
-	print("Reiniciado no checkpoint: ", celula_tile)
+	if GlobalScript.info_debug:
+		print("Reiniciado no checkpoint: ", celula_tile)
 	GlobalScript.enviar_mensagem_ao_jogador(GlobalScript.MSG_NENHUM_CHECKPOINT_ALCANCADO)

@@ -15,29 +15,35 @@ func salvar_progresso(last_unlocked_level: int):
 		}
 		var file = FileAccess.open(SAVE_PATH, FileAccess.WRITE)
 		if file == null:
-			print("Erro ao abrir arquivo para salvar!")
+			if GlobalScript.info_debug:
+				print("Erro ao abrir arquivo para salvar!")
 			return
 		var json_string = JSON.stringify(save_data)
 		file.store_string(json_string)
 		file.close()
-		print("Progresso salvo: Fase ", last_unlocked_level)
+		if GlobalScript.info_debug:
+			print("Progresso salvo: Fase ", last_unlocked_level)
 	else:
-		print("Novo progresso não é maior que o atual, nada foi salvo!")
+		if GlobalScript.info_debug:
+			print("Novo progresso não é maior que o atual, nada foi salvo!")
 
 # Carrega a última fase desbloqueada. Retorna 0 se não houver save.
 func carregar_progresso() -> int:
 	if not FileAccess.file_exists(SAVE_PATH):
-		print("Nenhum arquivo de progresso encontrado.")
+		if GlobalScript.info_debug:
+			print("Nenhum arquivo de progresso encontrado.")
 		return 0
 	var file = FileAccess.open(SAVE_PATH, FileAccess.READ)
 	if file == null:
-		print("Erro ao abrir arquivo para carregar!")
+		if GlobalScript.info_debug:
+			print("Erro ao abrir arquivo para carregar!")
 		return 0
 	var content = file.get_as_text()
 	file.close()
 	var json_result = JSON.parse_string(content)
 	if not json_result:
-		print("Erro ao analisar o arquivo de salvamento!")
+		if GlobalScript.info_debug:
+			print("Erro ao analisar o arquivo de salvamento!")
 		return 0
 	return int(json_result.get("last_unlocked_level", 0))
 
@@ -72,7 +78,8 @@ func salvar_pontuacao_fase(fase: int, pontuacao: int):
 		var json_string = JSON.stringify(data)
 		file.store_string(json_string)
 		file.close()
-		print("Pontuação da fase ", fase, " salva: ", pontuacao, " estrelas.")
+		if GlobalScript.info_debug:
+			print("Pontuação da fase ", fase, " salva: ", pontuacao, " estrelas.")
 
 # Carrega a pontuação de uma fase específica.
 func carregar_pontuacao_fase(fase: int) -> int:
@@ -106,18 +113,21 @@ func carregar_todas_pontuacoes() -> Dictionary:
 func resetar_salvamento():
 	var dir = DirAccess.open("user://")
 	if dir == null:
-		print("Erro ao abrir diretório do usuário para resetar o save.")
+		if GlobalScript.info_debug:
+			print("Erro ao abrir diretório do usuário para resetar o save.")
 		return
 		
 	# Apaga o arquivo de progresso
 	if dir.file_exists("progresso.json"):
 		dir.remove("progresso.json")
-		print("Arquivo de progresso resetado.")
+		if GlobalScript.info_debug:
+			print("Arquivo de progresso resetado.")
 	
 	# Apaga o arquivo de pontuações
 	if dir.file_exists("pontuacoes.json"):
 		dir.remove("pontuacoes.json")
-		print("Arquivo de pontuações resetado.")
+		if GlobalScript.info_debug:
+			print("Arquivo de pontuações resetado.")
 		
 
 # Salva as configurações de brilho, som e dicas em um arquivo JSON.
@@ -132,26 +142,30 @@ func salvar_config_utilitarios():
 	# Tenta abrir o arquivo para escrita
 	var file = FileAccess.open(SAVE_SETTINGS_PATH, FileAccess.WRITE)
 	if file == null:
-		print("Erro ao abrir arquivo para salvar as configurações!")
+		if GlobalScript.info_debug:
+			print("Erro ao abrir arquivo para salvar as configurações!")
 		return
 
 	# Converte o dicionário para uma string JSON e salva no arquivo
 	var json_string = JSON.stringify(config_data)
 	file.store_string(json_string)
 	file.close()
-	print("Configurações salvas com sucesso!")
+	if GlobalScript.info_debug:
+		print("Configurações salvas com sucesso!")
 
 # Carrega as configurações do arquivo JSON. Se o arquivo não existir, usa os valores padrão.
 func carregar_config_utilitarios():
 	# Verifica se o arquivo de save existe
 	if not FileAccess.file_exists(SAVE_SETTINGS_PATH):
-		print("Arquivo de configurações não encontrado. Usando valores padrão.")
+		if GlobalScript.info_debug:
+			print("Arquivo de configurações não encontrado. Usando valores padrão.")
 		return
 
 	# Tenta abrir o arquivo para leitura
 	var file = FileAccess.open(SAVE_SETTINGS_PATH, FileAccess.READ)
 	if file == null:
-		print("Erro ao abrir arquivo para carregar as configurações!")
+		if GlobalScript.info_debug:
+			print("Erro ao abrir arquivo para carregar as configurações!")
 		return
 
 	# Lê o conteúdo do arquivo
@@ -161,7 +175,8 @@ func carregar_config_utilitarios():
 	# Analisa a string JSON para converter em um dicionário
 	var json_result = JSON.parse_string(content)
 	if not json_result is Dictionary:
-		print("Erro ao analisar o arquivo de configurações JSON!")
+		if GlobalScript.info_debug:
+			print("Erro ao analisar o arquivo de configurações JSON!")
 		return
 
 	var config_data = json_result as Dictionary
@@ -173,5 +188,5 @@ func carregar_config_utilitarios():
 		GlobalScript.valor_som_config = float(config_data["som"])
 	if config_data.has("dicas_ativas"):
 		GlobalScript.dicas_config = bool(config_data["dicas_ativas"])
-
-	print("Configurações carregadas com sucesso.")
+	if GlobalScript.info_debug:
+		print("Configurações carregadas com sucesso.")

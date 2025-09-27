@@ -24,7 +24,6 @@ SaveManager="*res://scripts/save_manager.gd"
 
 window/size/viewport_width=1280
 window/size/viewport_height=720
-window/size/mode=3
 window/stretch/mode="viewport"
 mouse_cursor/custom_image="uid://1w5wt1q60c7w"
 

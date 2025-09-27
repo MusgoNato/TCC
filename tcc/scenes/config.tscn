@@ -93,6 +93,20 @@ layout_mode = 2
 layout_mode = 2
 text = "Desativar dicas"
 
+[node name="HBoxContainer4" type="HBoxContainer" parent="MarginContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/HBoxContainer/VBoxContainer/HBoxContainer4"]
+layout_mode = 2
+text = "Vel. instruções"
+
+[node name="Button" type="SpinBox" parent="MarginContainer/HBoxContainer/VBoxContainer/HBoxContainer4"]
+layout_mode = 2
+min_value = 1.0
+max_value = 5.0
+value = 1.0
+update_on_text_changed = true
+
 [node name="HBoxContainer3" type="HBoxContainer" parent="MarginContainer/HBoxContainer/VBoxContainer"]
 layout_mode = 2
 theme_override_constants/separation = 8
@@ -122,6 +136,7 @@ text = "voltar"
 [connection signal="value_changed" from="MarginContainer/HBoxContainer/VBoxContainer/HBoxContainer/som" to="." method="_on_som_value_changed"]
 [connection signal="value_changed" from="MarginContainer/HBoxContainer/VBoxContainer/HBoxContainer2/brilho" to="." method="_on_brilho_value_changed"]
 [connection signal="pressed" from="MarginContainer/HBoxContainer/VBoxContainer/dicas" to="." method="_on_dicas_pressed"]
+[connection signal="value_changed" from="MarginContainer/HBoxContainer/VBoxContainer/HBoxContainer4/Button" to="." method="_on_button_value_changed"]
 [connection signal="pressed" from="MarginContainer/HBoxContainer/VBoxContainer/HBoxContainer3/salvar_alteracoes" to="." method="_on_salvar_alteracoes_pressed"]
 [connection signal="pressed" from="MarginContainer/HBoxContainer/VBoxContainer/HBoxContainer3/resetar_valores" to="." method="_on_resetar_valores_pressed"]
 [connection signal="confirmed" from="MarginContainer/HBoxContainer/ConfirmationDialog" to="." method="_on_confirmation_dialog_confirmed"]

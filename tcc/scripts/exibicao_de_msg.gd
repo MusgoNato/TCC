@@ -7,6 +7,7 @@ const MAX_QUEUE_SIZE: int = 5
 
 # Fila de mensagens para evitar sobreposição
 var message_queue: Array = []
+
 # Flag para verificar se uma mensagem já está sendo exibida
 var is_displaying_message: bool = false
 
@@ -20,10 +21,12 @@ func _ready() -> void:
 	# Conecta sinal global para mensagens do jogo
 	GlobalScript.connect("mensagem_para_jogador", Callable(self, "_on_mensagem_para_jogador"))
 	
-	# Conecta o timeout do timer para exibir dicas
-	timer.wait_time = 15.0
-	timer.timeout.connect(add_tip_to_queue)
-	timer.start()
+	# Verificação para as dicas do jogo, somente se estiver ativa exibe dicas e mensagens
+	if GlobalScript.dicas_config:
+		# Conecta o timeout do timer para exibir dicas
+		timer.wait_time = GlobalScript.TIMEOUT_MSG
+		timer.timeout.connect(add_tip_to_queue)
+		timer.start()
 
 ## Adiciona uma mensagem global à fila com verificação de limite
 func _on_mensagem_para_jogador(texto: String):
@@ -73,7 +76,7 @@ func _show_and_fade_message(texto: String):
 	self.modulate.a = 0
 	tween.tween_property(self, "modulate:a", 1.0, 0.2)
 	
-	await get_tree().create_timer(3.5).timeout
+	await get_tree().create_timer(GlobalScript.TIME_FADE_MSG).timeout
 	
 	var fade_out := create_tween()
 	fade_out.tween_property(self, "modulate:a", 0.0, 0.3)

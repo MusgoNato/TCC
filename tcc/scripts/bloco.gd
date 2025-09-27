@@ -47,7 +47,9 @@ func _get_drag_data(at_position: Vector2) -> Variant:
 			var valor = self.get_node("VBoxContainer/SpinBox").value
 			novo_bloco.get_node("VBoxContainer/SpinBox").value = valor
 		
-		print("VINDO DA PALETA : PAI : ", novo_bloco.get_parent())
+		if GlobalScript.info_debug:
+			print("VINDO DA PALETA : PAI : ", novo_bloco.get_parent())
+			
 		return novo_bloco
 	else:
 		

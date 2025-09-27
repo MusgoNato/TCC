@@ -18,14 +18,15 @@ func _ready() -> void:
 	# 1. Carrega o progresso do jogador
 	last_unlocked_level = SaveManager.carregar_progresso()
 	
-	if last_unlocked_level == 0:
-		last_unlocked_level = 1
-	
+	# impressao para o ultimo nivel desbloqueado
+	if GlobalScript.info_debug:
+		print(last_unlocked_level)
 	atualizar_botoes()
 	
 	# 2. Carrega as pontuações da fase DENTRO do _ready()
 	var pontuacoes = SaveManager.carregar_todas_pontuacoes()
-	print(pontuacoes)
+	if GlobalScript.info_debug:
+		print("Pontuacoes do jogador : ", pontuacoes)
 	# 3. Atualiza as pontuações na tela
 	atualizar_pontuacoes(pontuacoes)
 	
@@ -64,6 +65,7 @@ func atualizar_pontuacoes(pontuacoes):
 			richt_text_alvo.text = ""
 			
 func atualizar_botoes():
+	btn_fase_1.disabled = (last_unlocked_level < 1)
 	btn_condições.disabled = (last_unlocked_level < 2)
 	btn_repetições.disabled = (last_unlocked_level < 3)
 	btn_funções.disabled = (last_unlocked_level < 4)
@@ -71,6 +73,11 @@ func atualizar_botoes():
 # Volta ao menu inicial
 func _on_label_pressed() -> void:
 	get_tree().change_scene_to_file("res://scenes/menu.tscn")
+
+# Entra na fase de tutorial
+func _on_btn_fase_tutorial_pressed() -> void:
+	GlobalScript.fase_selecionada = 0
+	get_tree().change_scene_to_file("res://scenes/game.tscn")
 
 # Entra na fase de movimento
 func _on_btn_fase_1_pressed() -> void:

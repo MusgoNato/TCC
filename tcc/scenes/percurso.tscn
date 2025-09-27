@@ -1787,7 +1787,3 @@ tile_set = SubResource("TileSet_dqsfb")
 
 [node name="Inimigo" parent="." instance=ExtResource("10_t44x2")]
 visible = false
-
-[node name="TemporizadorMovInimigo" type="Timer" parent="."]
-
-[connection signal="timeout" from="TemporizadorMovInimigo" to="." method="_on_temporizador_mov_inimigo_timeout"]

@@ -1,9 +1,8 @@
-[gd_scene load_steps=17 format=3 uid="uid://cphmefdh7pdgk"]
+[gd_scene load_steps=16 format=3 uid="uid://cphmefdh7pdgk"]
 
 [ext_resource type="Script" uid="uid://bak0dsf3rkvof" path="res://scripts/fase.gd" id="1_0tnpc"]
 [ext_resource type="Script" uid="uid://dti8vcdhy4bcj" path="res://scripts/json_manager.gd" id="1_nn3lx"]
 [ext_resource type="Script" uid="uid://y3i0glttfn6q" path="res://scripts/montagem.gd" id="2_jmnhl"]
-[ext_resource type="StyleBox" uid="uid://b0h3w3pt0o3ka" path="res://utils/TurorialBorda.tres" id="2_trtic"]
 [ext_resource type="Script" uid="uid://bwxpvbvf86tte" path="res://scripts/descarte.gd" id="3_xdbv0"]
 [ext_resource type="PackedScene" uid="uid://cyq68263nl36g" path="res://scenes/msg_ao_jogador.tscn" id="4_0tnpc"]
 [ext_resource type="Script" uid="uid://chh41sctvmt1w" path="res://scripts/info_debug.gd" id="6_jkxey"]
@@ -41,36 +40,32 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-mouse_filter = 2
 texture = SubResource("GradientTexture2D_trtic")
 
 [node name="LayerTutorial" type="CanvasLayer" parent="."]
-layer = 2
 
-[node name="Paleta" type="Panel" parent="LayerTutorial"]
+[node name="Paleta" type="ColorRect" parent="LayerTutorial"]
 visible = false
 anchors_preset = -1
 anchor_right = 0.159
 anchor_bottom = 0.269
 offset_right = -0.52002
 offset_bottom = 0.319977
-mouse_filter = 2
-theme_override_styles/panel = ExtResource("2_trtic")
+color = Color(1, 0.843137, 0, 1)
 metadata/_edit_use_anchors_ = true
 
-[node name="Lixeira" type="Panel" parent="LayerTutorial"]
+[node name="Lixeira" type="ColorRect" parent="LayerTutorial"]
 visible = false
 anchors_preset = -1
 anchor_top = 0.403722
 anchor_right = 0.096375
 anchor_bottom = 0.5515
-offset_top = 0.320007
+offset_top = 0.319992
 offset_right = -0.360001
 offset_bottom = -0.0800171
-theme_override_styles/panel = ExtResource("2_trtic")
 metadata/_edit_use_anchors_ = true
 
-[node name="Percurso" type="Panel" parent="LayerTutorial"]
+[node name="Percurso" type="ColorRect" parent="LayerTutorial"]
 visible = false
 anchors_preset = -1
 anchor_left = 0.25
@@ -80,9 +75,8 @@ offset_right = -6.10352e-05
 offset_bottom = 0.319977
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_styles/panel = ExtResource("2_trtic")
 
-[node name="Dicas" type="Panel" parent="LayerTutorial"]
+[node name="Dicas" type="ColorRect" parent="LayerTutorial"]
 visible = false
 anchors_preset = -1
 anchor_left = 0.764
@@ -93,10 +87,9 @@ offset_left = 0.0799561
 offset_top = -1.0
 offset_bottom = -0.240021
 grow_horizontal = 0
-theme_override_styles/panel = ExtResource("2_trtic")
 metadata/_edit_use_anchors_ = true
 
-[node name="Montagem" type="Panel" parent="LayerTutorial"]
+[node name="Montagem" type="ColorRect" parent="LayerTutorial"]
 visible = false
 anchors_preset = -1
 anchor_top = 0.619
@@ -106,10 +99,9 @@ offset_top = 0.319977
 offset_right = -0.560059
 offset_bottom = 0.35199
 grow_horizontal = 0
-theme_override_styles/panel = ExtResource("2_trtic")
 metadata/_edit_use_anchors_ = true
 
-[node name="Executar" type="Panel" parent="LayerTutorial"]
+[node name="Executar" type="ColorRect" parent="LayerTutorial"]
 visible = false
 anchors_preset = 8
 anchor_left = 0.5
@@ -122,20 +114,8 @@ offset_right = 38.0
 offset_bottom = 15.5
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_styles/panel = ExtResource("2_trtic")
 
-[node name="TextoTutorial" type="RichTextLabel" parent="LayerTutorial"]
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -270.0
-offset_top = -160.0
-offset_right = 270.0
-offset_bottom = -39.0
-grow_horizontal = 2
-grow_vertical = 2
+[node name="Popup" type="Popup" parent="LayerTutorial"]
 
 [node name="LayerInstrucoes" type="CanvasLayer" parent="."]
 layer = 2

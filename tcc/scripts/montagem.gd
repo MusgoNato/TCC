@@ -11,20 +11,25 @@ func _ready() -> void:
 func _can_drop_data(_at_position: Vector2, data: Variant) -> bool:
 	
 	if data is Bloco:
-		print(data.tipo)
+		if GlobalScript.info_debug:
+			print("Tipo do bloco: ", data.tipo)
 		if not montagem_principal and data.tipo == "funcao":
-			print("nao e possivel soltar blocos funcao na area de funcao")
+			if GlobalScript.info_debug:
+				print("nao e possivel soltar blocos funcao na area de funcao")
 			return false
 			
 		if data.estaNaPaleta:
-			print("Esta na paleta? ", data.estaNaPaleta)
+			if GlobalScript.info_debug:
+				print("Esta na paleta? ", data.estaNaPaleta)
 		else: 
-			print("Esta na paleta? ", data.estaNaPaleta)	
+			if GlobalScript.info_debug:
+				print("Esta na paleta? ", data.estaNaPaleta)	
 		
 		Input.set_custom_mouse_cursor(GlobalScript.textura_mouse_area_pra_soltar_bloco, Input.CURSOR_CAN_DROP, Vector2(16, 16))	
 		return true
 	else:
-		print_debug("\n=>>Bloco nao e do tipo Bloco!!!!")
+		if GlobalScript.info_debug:
+			print_debug("\n=>>Bloco nao e do tipo Bloco!!!!")
 		return false
 
 # Drop data somente acontece uma vez, quando é dropado
@@ -43,10 +48,12 @@ func _drop_data(at_position: Vector2, data: Variant) -> void:
 			
 		# Se o bloco estiver vindo da area de blocos disponiveis, adiciono a montagem		
 		if data.get_parent() != self:
-			print("O pai do bloco eh este : ", data.get_parent())
+			if GlobalScript.info_debug:
+				print("O pai do bloco eh este : ", data.get_parent())
 			add_child(data)
 		else:
-			print("O pai do bloco eh este : ", data.get_parent())
+			if GlobalScript.info_debug:
+				print("O pai do bloco eh este : ", data.get_parent())
 
 		var global_pos = get_global_mouse_position()
 		var lista_filhos = get_children()
@@ -75,10 +82,12 @@ func _drop_data(at_position: Vector2, data: Variant) -> void:
 		# Area de montagem agora
 		data.estaNaPaleta = false
 		
-		print("Esta na paleta? ", data.estaNaPaleta)
+		if GlobalScript.info_debug:
+			print("Esta na paleta? ", data.estaNaPaleta)
 		
-		# Debug do bloco
-		print("\n\n-----INFO DO BLOCO-----\n\n")
-		print("NOME DO BLOCO: ", data.name, "\nID DO BLOCO: ", data.bloco_id, "\n", "\nTIPO DO BLOCO: ", data.tipo, "\n")
+			# Debug do bloco
+			print("\n\n-----INFO DO BLOCO-----\n\n")
+			print("NOME DO BLOCO: ", data.name, "\nID DO BLOCO: ", data.bloco_id, "\n", "\nTIPO DO BLOCO: ", data.tipo, "\n")
 	else:
-		print("Blocos não eh do tipo BLOCO")
+		if GlobalScript.info_debug:
+			print("Blocos não eh do tipo BLOCO")
