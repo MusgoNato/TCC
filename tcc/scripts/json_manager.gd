@@ -9,10 +9,14 @@ var bloco_repita_fim_modelo = preload("res://scenes/bloco_repita_fim.tscn")
 var bloco_condicao_modelo = preload("res://scenes/bloco_condicao.tscn")
 var bloco_funcao_modelo = preload("res://scenes/bloco_funcao.tscn")
 
+# Valor padrao para fase selecionada
 var fase_selecao: String = "0"
+
+# Paleta de blocos disponiveis
 @onready var paleta: GridContainer = $"../PaineisManager/LayerPaleta/PainelDisponivel/ScrollContainer/Paleta"
 
 func _ready() -> void:
+	# Insercao dos blocos de acordo com a fase selecionada
 	data = get_dados_blocos()
 	fase_selecao = str(GlobalScript.fase_selecionada)
 	inserirBlocosEmAreaDisponivel(data, fase_selecao)

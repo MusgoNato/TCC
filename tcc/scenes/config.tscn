@@ -58,15 +58,18 @@ horizontal_alignment = 1
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="som" type="HSlider" parent="MarginContainer/HBoxContainer/VBoxContainer/HBoxContainer"]
+[node name="brilho" type="HSlider" parent="MarginContainer/HBoxContainer/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
+min_value = 0.5
+max_value = 1.0
+step = 0.05
 value = 1.0
 
 [node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/HBoxContainer/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 
-[node name="som_num" type="Label" parent="MarginContainer/HBoxContainer/VBoxContainer/HBoxContainer/VBoxContainer"]
+[node name="brilho_num" type="Label" parent="MarginContainer/HBoxContainer/VBoxContainer/HBoxContainer/VBoxContainer"]
 layout_mode = 2
 
 [node name="Label2" type="Label" parent="MarginContainer/HBoxContainer/VBoxContainer"]
@@ -77,16 +80,18 @@ horizontal_alignment = 1
 [node name="HBoxContainer2" type="HBoxContainer" parent="MarginContainer/HBoxContainer/VBoxContainer"]
 layout_mode = 2
 
-[node name="brilho" type="HSlider" parent="MarginContainer/HBoxContainer/VBoxContainer/HBoxContainer2"]
+[node name="som" type="HSlider" parent="MarginContainer/HBoxContainer/VBoxContainer/HBoxContainer2"]
 layout_mode = 2
 size_flags_horizontal = 3
 tooltip_text = "Brilho"
+min_value = 1.0
+max_value = 4.0
 value = 1.0
 
 [node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/HBoxContainer/VBoxContainer/HBoxContainer2"]
 layout_mode = 2
 
-[node name="brilho_num" type="Label" parent="MarginContainer/HBoxContainer/VBoxContainer/HBoxContainer2/VBoxContainer"]
+[node name="som_num" type="Label" parent="MarginContainer/HBoxContainer/VBoxContainer/HBoxContainer2/VBoxContainer"]
 layout_mode = 2
 
 [node name="dicas" type="CheckButton" parent="MarginContainer/HBoxContainer/VBoxContainer"]
@@ -126,15 +131,15 @@ text = "Resetar"
 
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
 layout_mode = 0
-offset_right = 40.0
+offset_right = 54.0
 offset_bottom = 40.0
 
 [node name="btn_voltar_config" type="Button" parent="HBoxContainer"]
 layout_mode = 2
 text = "voltar"
 
-[connection signal="value_changed" from="MarginContainer/HBoxContainer/VBoxContainer/HBoxContainer/som" to="." method="_on_som_value_changed"]
-[connection signal="value_changed" from="MarginContainer/HBoxContainer/VBoxContainer/HBoxContainer2/brilho" to="." method="_on_brilho_value_changed"]
+[connection signal="value_changed" from="MarginContainer/HBoxContainer/VBoxContainer/HBoxContainer/brilho" to="." method="_on_brilho_value_changed"]
+[connection signal="value_changed" from="MarginContainer/HBoxContainer/VBoxContainer/HBoxContainer2/som" to="." method="_on_som_value_changed"]
 [connection signal="pressed" from="MarginContainer/HBoxContainer/VBoxContainer/dicas" to="." method="_on_dicas_pressed"]
 [connection signal="value_changed" from="MarginContainer/HBoxContainer/VBoxContainer/HBoxContainer4/Button" to="." method="_on_button_value_changed"]
 [connection signal="pressed" from="MarginContainer/HBoxContainer/VBoxContainer/HBoxContainer3/salvar_alteracoes" to="." method="_on_salvar_alteracoes_pressed"]

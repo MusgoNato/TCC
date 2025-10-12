@@ -1,12 +1,14 @@
 class_name Bloco
 extends Control
 
+# Variaveis de controle
 var estaNaPaleta: bool = true
 var arrastando: bool = false
 var bloco_id: int = -1
 var tipo: String = ""
 
-@export var blocoPadrao = preload("res://scenes/bloco.tscn") # padrão fallback
+# Bloco padrao para modelo
+@export var blocoPadrao = preload("res://scenes/bloco.tscn")
 
 
 func _ready() -> void:
@@ -14,7 +16,7 @@ func _ready() -> void:
 	# Texto quando o mouse esta sobre o bloco
 	self.tooltip_text = self.tipo
 	
-
+## Sinal responsavel por capturar um determinado objeto
 func _get_drag_data(at_position: Vector2) -> Variant:
 	at_position = at_position
 	

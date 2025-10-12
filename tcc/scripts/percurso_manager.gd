@@ -10,6 +10,8 @@ signal envia_blocos_percurso(blocos, blocos_internos_funcao)
 
 func _ready() -> void:
 	var percurso = null
+	
+	# Instanciacao do percurso para cada fase selecionada
 	match GlobalScript.fase_selecionada:
 		0:
 			percurso = preload("res://scenes/percurso_tutorial.tscn").instantiate()

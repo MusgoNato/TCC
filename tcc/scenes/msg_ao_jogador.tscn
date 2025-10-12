@@ -5,6 +5,8 @@
 [node name="LayerMsgAoJogador" type="CanvasLayer"]
 layer = 0
 
+[node name="canvas_msg_jogador" type="CanvasModulate" parent="."]
+
 [node name="Mensagem" type="RichTextLabel" parent="."]
 anchors_preset = -1
 anchor_left = 0.763687

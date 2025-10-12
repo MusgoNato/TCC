@@ -16,7 +16,7 @@ func _input(event: InputEvent) -> void:
 	if GlobalScript.info_debug:
 		if event.is_action_pressed("sair"):
 			get_tree().quit()
-		
+	
 func _process(delta: float) -> void:	
 	delta = delta
 	

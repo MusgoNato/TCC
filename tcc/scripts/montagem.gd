@@ -1,10 +1,11 @@
 class_name Montagem extends HBoxContainer
 
-# Para nao quebrar a area de montagem no maximo podem ser 13 blocos colocados
+# Quantidade maxima de blocos a serem colocados
 const MAX_BLOCOS = 13
 var montagem_principal: bool = true
 
 func _ready() -> void:
+	# Separacao da montagem entre os blocos dentro dela
 	self.add_theme_constant_override("separation", 32)
 
 # Retorna se pode ser solto ou nao o bloco (Aqui é a area da montagem como um todo)
@@ -32,7 +33,7 @@ func _can_drop_data(_at_position: Vector2, data: Variant) -> bool:
 			print_debug("\n=>>Bloco nao e do tipo Bloco!!!!")
 		return false
 
-# Drop data somente acontece uma vez, quando é dropado
+# Funcao responsavel por capturar o drop do objeto dentro de uma area
 func _drop_data(at_position: Vector2, data: Variant) -> void:
 	# Evitar warnings	
 	at_position = at_position

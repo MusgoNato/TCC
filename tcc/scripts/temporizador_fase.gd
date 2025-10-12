@@ -1,6 +1,7 @@
 class_name TemporizadorFase
 extends Node
 
+# Temporizador e o texto para o mesmo
 @onready var timer: Timer = $Timer
 @onready var label: Label = $Label
 
@@ -10,7 +11,8 @@ extends Node
 @onready var texto: Label = $Pause_FimJogo/LayerPause_FimJogo/Pause_Fim_de_Jogo/VBoxContainer/HBoxContainer/Texto
 
 # Tempo de cada fase (8 = 8 segundos, 300 = 5 minutos), valor esta em segundos
-@export var tempo_restante: int = 480
+# 10 minutos a duracao de cada fase (1m a mais para o tempo das instrucoes)
+@export var tempo_restante: int = 660
 
 func _ready():
 	# Inicia o timer para contar a cada 1 segundo

@@ -1,26 +1,26 @@
 extends Node
 
-## Dev
-var info_debug: bool = false
-var liberar_todas_fases: bool = false
+# Dev
+var info_debug: bool = true
+var liberar_todas_fases: bool = true
 
-## Textura do mouse
+# Textura do mouse
 var textura_mouse_area_pra_soltar_bloco = preload("res://assets/mouse_asset/PNG/Basic/Default/hand_open.png")
 var textura_padrao_mouse_ponteiro = preload("res://assets/mouse_asset/PNG/Basic/Default/pointer_c.png")
 var textura_mouse_arrastando_bloco = preload("res://assets/mouse_asset/PNG/Basic/Default/hand_closed.png")
 
-## Variável global para verificação de qual fase foi selecionada
+# Variável global para verificação de qual fase foi selecionada
 var fase_selecionada: int = 0
 var pontuacao_do_jogador: int = 0
 
-## Variavel global para tela de configuraçoes
-var valor_som_config: float = 5.0
-var valor_brilho_config: float = 5.0
+# Variavel global para tela de configuraçoes
+var valor_som_config: float = 2.0
+var valor_brilho_config: float = 1.0
 var dicas_config: bool = true
 
-## Constantes para os valores padrao das configuracoes
-const CONFIG_SOM: float = 5.0
-const CONFIG_BRILHO: float = 5.0
+# Constantes para os valores padrao das configuracoes
+const CONFIG_SOM: float = 2.0
+const CONFIG_BRILHO: float = 1.0
 const CONFIG_DICAS: bool = true
 
 # Constantes para as cores da mensagem ao jogador
@@ -44,9 +44,9 @@ const MSG_COLIDIU_INIMIGO: String = "[color=%s]Colisão[/color]  com o inimigo" 
 const MSG_INIMIGO_DERROTADO: String = "[color=%s]SUCESSO: Inimigo derrotado!" % self.COR_SUCESSO
 
 # Estrelas do jogador
-const PONTUACAO_3_ESTRELAS: int = 300 # 5 minutos em segundos
-const PONTUACAO_2_ESTRELAS: int = 120 # 2 minutos em segundos
-const PONTUACAO_1_ESTRELA: int = 1 # 1 segundo em segundos
+const PONTUACAO_3_ESTRELAS: int = 420 # 3 minutos
+const PONTUACAO_2_ESTRELAS: int = 240 # 6 minutos
+const PONTUACAO_1_ESTRELA: int = 60 # 9 minutos
 
 # Checkpoints para cada fase
 const FASE_1: int = 2
@@ -55,24 +55,24 @@ const FASE_3: int = 5
 const FASE_4: int = 7
 const FASE_TUTORIAL: int = 1
 
-### vetor para armazenamento dos checkpoints de cada fase do jogo
+# vetor para armazenamento dos checkpoints de cada fase do jogo
 var quant_checkpoints_fases: Array = [FASE_TUTORIAL, FASE_1, FASE_2, FASE_3, FASE_4]
 
-## Tempo de cada instrução na tela
+# Tempo de cada instrução na tela
 var TEMPO_INSTRUCOES_INICIAS: float = 5
 
-## Mensagens do tutorial para cada area
+# Mensagens do tutorial para cada area
 var msg_tutorial: Array = [
-	"Esta é a [b][color=#FFAA00]paleta de blocos[/color][/b], a cada fase será adicionado um ou mais blocos com [b]funcionalidades diferentes[/b].",
-	"Esta é a [b][color=#FF5555]lixeira[/color][/b], é aqui que você irá [b]descartar os blocos[/b].",
-	"Aqui é onde você poderá ver seu [b][color=#00CCFF]personagem[/color][/b] se movimentar e o que cada bloco fará ao posicioná-lo na [b]área de montagem[/b].",
-	"Esta é uma [b][color=#FFAA00]área de dicas e mensagens[/color][/b] que aparecerá à medida que avança no jogo, preste atenção às mensagens, pois elas indicam algum [b][color=#FF5555]erro[/color][/b] que está cometendo ou informações importantes sobre como utilizar alguns blocos.",
-	"Esta é a [b][color=#00CCFF]área da montagem[/color][/b], é aqui que você soltará os blocos da paleta e montará sua [b]lógica[/b] para refletir no percurso do personagem.",
+	"Esta é a [b][color=#FFAA00]paleta de blocos[/color][/b], a cada fase será adicionado um ou mais blocos com [b]funcionalidades diferentes[/b]. [b][color=#FFAA00]ENTER[/color][/b] >> Avançar",
+	"Esta é a [b][color=#FF5555]lixeira[/color][/b], é aqui que você irá [b]descartar os blocos[/b]. [b][color=#FFAA00]ENTER[/color][/b] >> Avançar",
+	"Aqui é onde você poderá ver seu [b][color=#00CCFF]personagem[/color][/b] se movimentar e o que cada bloco fará ao posicioná-lo na [b]área de montagem[/b]. [b][color=#FFAA00]ENTER[/color][/b] >> Avançar",
+	"Esta é uma [b][color=#FFAA00]área de dicas e mensagens[/color][/b] que aparecerá à medida que avança no jogo, preste atenção às mensagens, pois elas indicam algum [b][color=#FF5555]erro[/color][/b] que está cometendo ou informações importantes sobre como utilizar alguns blocos. [b][color=#FFAA00]ENTER[/color][/b] >> Avançar",
+	"Esta é a [b][color=#00CCFF]área da montagem[/color][/b], é aqui que você soltará os blocos da paleta e montará sua [b]lógica[/b] para refletir no percurso do personagem. [b][color=#FFAA00]ENTER[/color][/b] >> Avançar",
 	"Este é o [b][color=#FFAA00]botão de execução[/color][/b] de toda a sua lógica feita dentro da área de montagem. Após terminar de montar os blocos, aperte no botão para ver a [b]execução[/b] da sua lógica."
 ]
 
 
-## Instrucoes inicias de cada fase para o jogador
+# Instrucoes inicias de cada fase para o jogador
 var texto_instrucoes_iniciais: Array = [
 	
 	# Tutorial
@@ -143,6 +143,20 @@ var dicas_ao_jogador: PackedStringArray = [
 ## Sinal global para exibicao das dicas, avisos e erros para o jogador
 signal mensagem_para_jogador(mensagem)
 
+func _ready() -> void:
+	SaveManager.carregar_config_utilitarios()
+
 ## Funcao responsavel por enviar o sinal da mensagem a cena correspondente
 func enviar_mensagem_ao_jogador(mensagem: String):
 	emit_signal("mensagem_para_jogador", mensagem)
+	
+## Funcao responsavel por aplicar brilho a cena (Esta funcao eh referente a cena global carregada pelo autoload GlobalEffects)
+func aplicar_brilho_a_cena(_canvas_modulate_node: CanvasModulate = null) -> void:
+	# Aplica o brilho global da configuração usando o GlobalEffects autoload
+	if Engine.has_singleton("GlobalEffects"):
+		GlobalEffects.set_brilho(valor_brilho_config)
+
+## Funcao responsavel por aplicar vrilho a uma cena especifica
+func aplicar_brilho_em_cena_especifica(_canvas_modulate_node: CanvasModulate = null) -> void:
+	var v = clamp(GlobalScript.valor_brilho_config, 0.0, 1.0)
+	_canvas_modulate_node.color = Color(v, v, v, 1.0)

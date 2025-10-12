@@ -32,6 +32,8 @@ expand_mode = 2
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
+[node name="CanvasModulate" type="CanvasModulate" parent="CanvasLayer"]
+
 [node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer"]
 anchors_preset = 5
 anchor_left = 0.5

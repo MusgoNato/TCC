@@ -1,6 +1,7 @@
 extends RichTextLabel
 
 @onready var timer: Timer = $"../Timer"
+@onready var canvas_msg_jogador: CanvasModulate = $"../canvas_msg_jogador"
 
 # Limite máximo de mensagens na fila
 const MAX_QUEUE_SIZE: int = 5
@@ -12,6 +13,9 @@ var message_queue: Array = []
 var is_displaying_message: bool = false
 
 func _ready() -> void:
+	# Define o brilho inicial
+	GlobalScript.aplicar_brilho_em_cena_especifica(canvas_msg_jogador)
+	
 	# Inicializa o gerador de números aleatórios
 	randomize()
 	
@@ -28,7 +32,7 @@ func _ready() -> void:
 		timer.timeout.connect(add_tip_to_queue)
 		timer.start()
 
-## Adiciona uma mensagem global à fila com verificação de limite
+## Funcao responsavel por adicionar uma mensagem global à fila com verificação de limite
 func _on_mensagem_para_jogador(texto: String):
 	if GlobalScript.dicas_config:
 		# Verifica se a fila atingiu o limite
@@ -40,7 +44,7 @@ func _on_mensagem_para_jogador(texto: String):
 		
 		process_message_queue()
 
-## Adiciona uma dica aleatória à fila com verificação de limite
+## Funcao responsavel por adicionar uma dica aleatória à fila com verificação de limite
 func add_tip_to_queue():
 	if not GlobalScript.dicas_ao_jogador:
 		return
@@ -56,7 +60,7 @@ func add_tip_to_queue():
 	
 	process_message_queue()
 
-## Processa a fila de mensagens
+## Funcao responsavel por processar a fila de mensagens
 func process_message_queue():
 	if is_displaying_message or message_queue.is_empty():
 		return
@@ -65,7 +69,7 @@ func process_message_queue():
 	
 	_show_and_fade_message(next_message)
 
-## Função que lida com a exibição e o efeito de fade
+## Funcao que lida com a exibição e o efeito de fade
 func _show_and_fade_message(texto: String):
 	is_displaying_message = true
 	

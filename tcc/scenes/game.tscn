@@ -47,6 +47,8 @@ texture = SubResource("GradientTexture2D_trtic")
 [node name="LayerTutorial" type="CanvasLayer" parent="."]
 layer = 2
 
+[node name="canvas_tutorial" type="CanvasModulate" parent="LayerTutorial"]
+
 [node name="Paleta" type="Panel" parent="LayerTutorial"]
 visible = false
 anchors_preset = -1
@@ -140,6 +142,8 @@ grow_vertical = 2
 [node name="LayerInstrucoes" type="CanvasLayer" parent="."]
 layer = 2
 
+[node name="canvas_intrucoes" type="CanvasModulate" parent="LayerInstrucoes"]
+
 [node name="Panel" type="Panel" parent="LayerInstrucoes"]
 anchors_preset = 15
 anchor_right = 1.0
@@ -194,17 +198,19 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -34.5
-offset_top = -11.5
-offset_right = 34.5
-offset_bottom = 11.5
+offset_left = -44.0
+offset_top = -42.5
+offset_right = 44.0
+offset_bottom = 45.5
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_font_sizes/font_size = 64
-text = "X"
+text = "🗑️"
 horizontal_alignment = 1
 
 [node name="LayerPaleta" type="CanvasLayer" parent="PaineisManager"]
+
+[node name="canvas_paleta" type="CanvasModulate" parent="PaineisManager/LayerPaleta"]
 
 [node name="PainelDisponivel" type="Panel" parent="PaineisManager/LayerPaleta"]
 offset_right = 200.0
@@ -224,6 +230,8 @@ columns = 3
 script = ExtResource("6_kvpfn")
 
 [node name="LayerMontagem" type="CanvasLayer" parent="PaineisManager"]
+
+[node name="canvas_montagem" type="CanvasModulate" parent="PaineisManager/LayerMontagem"]
 
 [node name="MontagemBackground" type="Panel" parent="PaineisManager/LayerMontagem"]
 anchors_preset = -1
@@ -251,6 +259,8 @@ script = ExtResource("2_jmnhl")
 [node name="LayerFuncao" type="CanvasLayer" parent="."]
 visible = false
 
+[node name="canvas_funcao" type="CanvasModulate" parent="LayerFuncao"]
+
 [node name="MontagemFuncaoBackground" type="Panel" parent="LayerFuncao"]
 anchors_preset = -1
 anchor_left = 0.001
@@ -277,6 +287,8 @@ script = ExtResource("7_qtexj")
 
 [node name="PercursoLayer" type="CanvasLayer" parent="PercursoManager"]
 
+[node name="canvas_percurso" type="CanvasModulate" parent="PercursoManager/PercursoLayer"]
+
 [node name="SubViewportContainer" type="SubViewportContainer" parent="PercursoManager/PercursoLayer"]
 anchors_preset = 5
 anchor_left = 0.5
@@ -297,6 +309,8 @@ size = Vector2i(640, 320)
 render_target_update_mode = 4
 
 [node name="FPSLayer" type="CanvasLayer" parent="."]
+
+[node name="canvas_fps" type="CanvasModulate" parent="FPSLayer"]
 
 [node name="FPS" type="Label" parent="FPSLayer"]
 anchors_preset = 7
@@ -351,6 +365,8 @@ script = ExtResource("11_kvpfn")
 process_mode = 3
 layer = 3
 visible = false
+
+[node name="canvas_fimDeJogo" type="CanvasModulate" parent="TemporizadorFase/Pause_FimJogo/LayerPause_FimJogo"]
 
 [node name="Pause_Fim_de_Jogo" type="Panel" parent="TemporizadorFase/Pause_FimJogo/LayerPause_FimJogo"]
 self_modulate = Color(0, 0, 0, 1)

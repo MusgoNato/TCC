@@ -12,7 +12,7 @@ var FimDeJogo : bool = false
 var checkpoints_atingidos: bool = false
 var total_estrelas: int = 3
 
-# Inputs do teclado
+## Sinal para capturar os inputs do teclado
 func _unhandled_input(event: InputEvent) -> void:
 	
 	# Bloquia pause do teclado caso o jogador tenha perdido ou ganho a partida, 
@@ -22,7 +22,7 @@ func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("pausar"):
 		alternar_pause()
 
-# Alternar entre o pause
+## Funcao responsavel por alternar entre o pause
 func alternar_pause():
 	pausado = !pausado
 	get_tree().paused = pausado
@@ -30,12 +30,14 @@ func alternar_pause():
 	if pausado:
 		texto.text = "Jogo Pausado"
 		
-# Funcao para tornar visivel a tela de fim de jogo ao alcancar o checkpoint
+## Sinal responsavel para tornar visivel a tela de fim de jogo ao alcancar o checkpoint
 func _on_checkpoint_alcancado(qtd_checkpoint: int):
 	qtd_checkpoint = qtd_checkpoint
 	checkpoints_atingidos = true
 	layer_pause_fim_jogo.visible = true
 	var estrelas_ganhas: int = 0
+	
+	# Calculo da pontuacao do jogador
 	if temporizador_fase.tempo_restante >= GlobalScript.PONTUACAO_3_ESTRELAS:
 		estrelas_ganhas = 3
 	elif temporizador_fase.tempo_restante >= GlobalScript.PONTUACAO_2_ESTRELAS:
@@ -60,11 +62,12 @@ func _on_checkpoint_alcancado(qtd_checkpoint: int):
 	pontuacao.text += estrelas_txt
 	get_tree().paused = true
 	
-# Sinais dos botoes da interface de pause
+## Sinail do botao para reiniciar a fase
 func _on_btn_reiniciar_fase_button_down() -> void:
 	get_tree().paused = false
 	get_tree().reload_current_scene()
 
+## Sinal do botao da interface de voltar ao menu principal
 func _on_btn_menu_principal_button_down() -> void:
 	get_tree().paused = false
 	get_tree().change_scene_to_file("res://scenes/fases.tscn")

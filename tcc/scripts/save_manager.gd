@@ -1,10 +1,11 @@
 extends Node
 
+# Caminhos para o save no disco
 const SAVE_PATH = "user://progresso.json"
 const SAVE_SETTINGS_PATH = "user://settings.json"
 const PONTUACAO_PATH = "user://pontuacoes.json"
 
-# Salva a última fase desbloqueada como um número inteiro.
+## Funcao responsavel por salvar o progresso do jogador.
 func salvar_progresso(last_unlocked_level: int):
 	var progresso_atual = carregar_progresso()
 	
@@ -27,7 +28,7 @@ func salvar_progresso(last_unlocked_level: int):
 		if GlobalScript.info_debug:
 			print("Novo progresso não é maior que o atual, nada foi salvo!")
 
-# Carrega a última fase desbloqueada. Retorna 0 se não houver save.
+## Funcao responsavel por carregar a última fase desbloqueada. Retorna 0 se não houver save.
 func carregar_progresso() -> int:
 	if not FileAccess.file_exists(SAVE_PATH):
 		if GlobalScript.info_debug:
@@ -49,8 +50,8 @@ func carregar_progresso() -> int:
 
 # --- Novas funções para salvar e carregar a pontuação ---
 
-# Salva a pontuação (estrelas) para uma fase específica.
-# Só salva se a nova pontuação for maior que a anterior.
+## Funcao responsavel por salvar a pontuação (estrelas) para uma fase específica.
+## Só salva se a nova pontuação for maior que a anterior.
 func salvar_pontuacao_fase(fase: int, pontuacao: int):
 	var data: Dictionary = {}
 	
@@ -81,7 +82,7 @@ func salvar_pontuacao_fase(fase: int, pontuacao: int):
 		if GlobalScript.info_debug:
 			print("Pontuação da fase ", fase, " salva: ", pontuacao, " estrelas.")
 
-# Carrega a pontuação de uma fase específica.
+## Funcao responsavel por carregar a pontuação de uma fase específica.
 func carregar_pontuacao_fase(fase: int) -> int:
 	if not FileAccess.file_exists(PONTUACAO_PATH):
 		return 0
@@ -94,7 +95,8 @@ func carregar_pontuacao_fase(fase: int) -> int:
 	
 	# Retorna a pontuação da fase, ou 0 se a fase não tiver pontuação salva.
 	return int(json_result.get(str(fase), 0))
-	
+
+## Funcao responsavel por carregar todas as pontuacoes do jogador
 func carregar_todas_pontuacoes() -> Dictionary:
 	if not FileAccess.file_exists(PONTUACAO_PATH):
 		return {} # Retorna um dicionário vazio se o arquivo não existir.
@@ -109,7 +111,7 @@ func carregar_todas_pontuacoes() -> Dictionary:
 	
 	return json_result
 	
-
+## Funcao responsavel por resetar todos os saves para seus respectivos valores inciais
 func resetar_salvamento():
 	var dir = DirAccess.open("user://")
 	if dir == null:
@@ -130,7 +132,7 @@ func resetar_salvamento():
 			print("Arquivo de pontuações resetado.")
 		
 
-# Salva as configurações de brilho, som e dicas em um arquivo JSON.
+## Funcao responsavel por salvar as configurações de brilho, som e dicas em um arquivo JSON.
 func salvar_config_utilitarios():
 	# Cria um dicionário com os dados a serem salvos
 	var config_data = {
@@ -153,7 +155,7 @@ func salvar_config_utilitarios():
 	if GlobalScript.info_debug:
 		print("Configurações salvas com sucesso!")
 
-# Carrega as configurações do arquivo JSON. Se o arquivo não existir, usa os valores padrão.
+## Funcao responsavel por carregar as configurações do arquivo JSON. Se o arquivo não existir, usa os valores padrão.
 func carregar_config_utilitarios():
 	# Verifica se o arquivo de save existe
 	if not FileAccess.file_exists(SAVE_SETTINGS_PATH):
@@ -180,7 +182,7 @@ func carregar_config_utilitarios():
 		return
 
 	var config_data = json_result as Dictionary
-	
+
 	# Atualiza as variáveis globais com os valores do arquivo, se existirem
 	if config_data.has("brilho"):
 		GlobalScript.valor_brilho_config = float(config_data["brilho"])

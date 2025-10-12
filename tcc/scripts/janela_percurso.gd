@@ -25,7 +25,7 @@ var quant_checkpoint: int = GlobalScript.quant_checkpoints_fases[GlobalScript.fa
 var ultima_direcao: Vector2i = Vector2i.ZERO
 
 # O tamanho do tile é 32x32
-# Para que seja centralizado o movimento do jogador de acordo com o tile, y
+# Para que seja centralizado o movimento do jogador de acordo com o tile y
 const OFFSET_TILE_CENTRALIZADO: int = 16
 const TAM_TILE_MUNDO: int = 32
 const POSICAO_X_INICIAL_JOGADOR: int = TAM_TILE_MUNDO * 6
@@ -178,7 +178,7 @@ func executar_blocos_recursivamente(blocos_a_executar):
 			indice_atual += 1
 	return true
 
-# Executa cada bloco
+## Funcao responsavel por executar cada bloco de forma singular
 func executar_bloco_singular(bloco):
 	var direcao = Vector2i.ZERO
 	match bloco.tipo:
@@ -195,7 +195,7 @@ func executar_bloco_singular(bloco):
 					return false
 			return true
 		"condicional":
-			# Verifico se a proxima posicao do meu jogador e o inimigo, ao executar o bloco atual, no
+			# Verifico se a proxima posicao do meu jogador eh o inimigo, ao executar o bloco atual, no
 			# caso condicional, apago o inimigo se a condicao for satisfeita, caso contrario o jogador colide com o inimigo
 			# na verificacao final da funcao 
 			var posicao_atual_jogador = tile_map_layer.local_to_map(player.global_position)
@@ -271,6 +271,7 @@ func verificar_colisao_inimigo():
 func configurar_checkpoints(fase: int):
 	checkpoints.clear()
 	match fase:
+		# Fase 0 (Tutorial)
 		0:
 			checkpoints.append(POS_INICIAL_JOGADOR)
 			inimigo.visible = false
@@ -297,6 +298,7 @@ func configurar_checkpoints(fase: int):
 				print("Fase sem configuração")
 			
 
+## Funcao responsavel por encontrar um bloco repita_fim
 func encontrar_bloco_repita_fim(blocos, indice_inicio):
 	var contagem_loops = 0
 	for i in range(indice_inicio + 1, blocos.size()):

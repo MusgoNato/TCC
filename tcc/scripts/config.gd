@@ -1,9 +1,9 @@
 extends Control
 
-@onready var brilho: HSlider = $MarginContainer/HBoxContainer/VBoxContainer/HBoxContainer2/brilho
-@onready var brilho_num: Label = $MarginContainer/HBoxContainer/VBoxContainer/HBoxContainer2/VBoxContainer/brilho_num
-@onready var som: HSlider = $MarginContainer/HBoxContainer/VBoxContainer/HBoxContainer/som
-@onready var som_num: Label = $MarginContainer/HBoxContainer/VBoxContainer/HBoxContainer/VBoxContainer/som_num
+@onready var brilho: HSlider = $MarginContainer/HBoxContainer/VBoxContainer/HBoxContainer/brilho
+@onready var brilho_num: Label = $MarginContainer/HBoxContainer/VBoxContainer/HBoxContainer/VBoxContainer/brilho_num
+@onready var som: HSlider = $MarginContainer/HBoxContainer/VBoxContainer/HBoxContainer2/som
+@onready var som_num: Label = $MarginContainer/HBoxContainer/VBoxContainer/HBoxContainer2/VBoxContainer/som_num
 @onready var dicas: CheckButton = $MarginContainer/HBoxContainer/VBoxContainer/dicas
 @onready var confirmation_dialog: ConfirmationDialog = $MarginContainer/HBoxContainer/ConfirmationDialog
 
@@ -29,16 +29,8 @@ func _ready() -> void:
 	brilho_original = brilho.value
 	som_original = som.value
 	dicas_originais = dicas.button_pressed
-
-	# 3. Configura os limites e passo dos sliders.
-	som.min_value = 1.0
-	som.max_value = 10.0
-	som.step = 2.0
 	
-	brilho.min_value = 1.0
-	brilho.max_value = 10.0
-	brilho.step = 2.0
-	
+	# Para debug mais rapido das informacoes
 	button.value = GlobalScript.TEMPO_INSTRUCOES_INICIAS
 	
 	# 4. Atualiza os textos da UI.
@@ -50,52 +42,55 @@ func _ready() -> void:
 	confirmation_dialog.title = "Sair sem salvar?"
 	confirmation_dialog.ok_button_text = "Sair sem salvar"
 	confirmation_dialog.cancel_button_text = "Cancelar"
-
-## Sinal conectado para voltar ao menu inicial
+	
+## Sinal responsavel para voltar ao menu inicial
 func _on_btn_voltar_config_pressed() -> void:
+	
 	# A verificação agora compara os valores atuais da UI com os valores originais
 	if brilho.value != brilho_original or som.value != som_original or dicas.button_pressed != dicas_originais:
 		confirmation_dialog.popup_centered()
 	else:
+		GlobalEffects.set_brilho(GlobalScript.valor_brilho_config)
 		get_tree().change_scene_to_file("res://scenes/menu.tscn")
 
-## Sinal conectado para mudança de brilho do jogo
+## Sinal responsavel pela mudança de brilho do jogo
 func _on_brilho_value_changed(value: float) -> void:
 	brilho_num.text = str(value)
-	# Atualiza a variável global em tempo real
 	GlobalScript.valor_brilho_config = value
+	
+	# Chama o autoload para aplicar globalmente
+	GlobalEffects.set_brilho(value)
 
-## Sinal conectado para mudança de volume do jogo
-func _on_som_value_changed(value: float) -> void:
-	som_num.text = str(value)
-	# Atualiza a variável global em tempo real
-	GlobalScript.valor_som_config = value
-
-## Sinal conectado para ativar e desativar dicas
+## Sinal responsavel para ativar/desativar dicas
 func _on_dicas_pressed() -> void:
+	
 	# Atualiza a variável global quando o botão é pressionado
 	GlobalScript.dicas_config = dicas.button_pressed
 
-## Sinal do diálogo de confirmação quando o botão OK (Sair sem salvar) é clicado
+## Sinal responsavel pelo diálogo de confirmação quando o botão OK (Sair sem salvar) é clicado
 func _on_confirmation_dialog_confirmed() -> void:
+	
 	# Reverte as alterações para os valores originais antes de sair
 	GlobalScript.valor_brilho_config = brilho_original
 	GlobalScript.valor_som_config = som_original
 	GlobalScript.dicas_config = dicas_originais
 	
+	GlobalEffects.set_brilho(GlobalScript.valor_brilho_config)
+	
 	# Mude a cena, mas não salve nada
 	get_tree().change_scene_to_file("res://scenes/menu.tscn")
 
-## Salvar alterações
+## Sinal responsavel por salvar alterações
 func _on_salvar_alteracoes_pressed() -> void:
 	# Chama a função de salvamento no SaveManager
 	SaveManager.salvar_config_utilitarios()
+
 	# Atualiza as variáveis 'originais' para que o botão 'Voltar' saiba que as mudanças foram salvas
 	brilho_original = brilho.value
 	som_original = som.value
 	dicas_originais = dicas.button_pressed
 
-## Resetar configuracoes para o padrao
+## Funcao resposavel por resetar configuracoes para o padrao
 func _on_resetar_valores_pressed() -> void:
 	# Atualiza os valores globais para os valores padrão
 	GlobalScript.valor_brilho_config = GlobalScript.CONFIG_BRILHO
@@ -118,5 +113,13 @@ func _on_resetar_valores_pressed() -> void:
 	if GlobalScript.info_debug:
 		print("Configurações resetadas para o padrão!")
 
+## Sinal responsavel pela mudanca da quantidade de tempo para cada intrucao aparecer na tela
 func _on_button_value_changed(value: float) -> void:
 	GlobalScript.TEMPO_INSTRUCOES_INICIAS = value
+
+## Sinal responsavel pela modificacao do som do jogo
+func _on_som_value_changed(value: float) -> void:
+	som_num.text = str(value)
+	
+	# Atualiza a variável global em tempo real
+	GlobalScript.valor_som_config = value

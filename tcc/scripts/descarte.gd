@@ -19,5 +19,6 @@ func _drop_data(at_position: Vector2, data: Variant) -> void:
 		if not data.estaNaPaleta:
 			if GlobalScript.info_debug:
 				print("BLOCO EXCLUIDO: ", data.name, "\nNOME: ", data.name, "\nID : ", data.bloco_id, "\nTIPO DO BLOCO : ", data.tipo)
+			
+			# Libero o bloco apos o descarte
 			data.queue_free()
-			GlobalScript.enviar_mensagem_ao_jogador(GlobalScript.MSG_BLOCO_DESCARTE)
