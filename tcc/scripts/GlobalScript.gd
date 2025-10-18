@@ -1,7 +1,7 @@
 extends Node
 
 # Dev
-var info_debug: bool = true
+var info_debug: bool = false
 var liberar_todas_fases: bool = true
 
 # Textura do mouse

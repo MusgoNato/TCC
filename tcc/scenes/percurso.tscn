@@ -1,26 +1,31 @@
 [gd_scene load_steps=19 format=4 uid="uid://b644360tqy7y0"]
 
-[ext_resource type="Texture2D" uid="uid://c6nkpatyorwqo" path="res://assets/0x72_DungeonTilesetII_v1.7/frames/floor_1.png" id="1_bgrgv"]
 [ext_resource type="Script" uid="uid://depvfdns0nwhr" path="res://scripts/janela_percurso.gd" id="1_m6etg"]
-[ext_resource type="Texture2D" uid="uid://dg5bvq65kow8v" path="res://assets/0x72_DungeonTilesetII_v1.7/frames/wall_banner_yellow.png" id="3_8xxoj"]
-[ext_resource type="Texture2D" uid="uid://i3iw57bwlgo7" path="res://assets/0x72_DungeonTilesetII_v1.7/frames/button_blue_down.png" id="3_ebpfi"]
 [ext_resource type="PackedScene" uid="uid://nj7nqkgjt3e7" path="res://scenes/personagem.tscn" id="5_2rbpy"]
 [ext_resource type="Texture2D" uid="uid://0dfg456ib8sh" path="res://assets/Pixel Art Top Down - Basic v1.2.0/Scene Overview.png" id="5_e6wol"]
-[ext_resource type="Texture2D" uid="uid://blvke07hanpye" path="res://assets/basic_tileset_and_assets_standard/terrain_tiles_v2.png" id="5_ih4mb"]
 [ext_resource type="Texture2D" uid="uid://cvafwnf7cgla0" path="res://assets/Pixel Art Top Down - Basic v1.2.0/Texture/TX Tileset Grass.png" id="7_11do8"]
 [ext_resource type="Texture2D" uid="uid://tnvfnjrpdu56" path="res://assets/Pixel Art Top Down - Basic v1.2.0/Texture/TX Props.png" id="8_11do8"]
 [ext_resource type="PackedScene" uid="uid://cdu7je7sapwn5" path="res://scenes/inimigo.tscn" id="10_t44x2"]
 
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_ih4mb"]
+load_path = "res://.godot/imported/floor_1.png-9f969781ddaf3ce0fa8160067224602d.ctex"
+
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_gh4wn"]
-texture = ExtResource("1_bgrgv")
+texture = SubResource("CompressedTexture2D_ih4mb")
 0:0/0 = 0
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_8fqjo"]
+load_path = "res://.godot/imported/button_blue_down.png-62e9f97b5971ca84b719a73cf10279bc.ctex"
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_2rbpy"]
-texture = ExtResource("3_ebpfi")
+texture = SubResource("CompressedTexture2D_8fqjo")
 0:0/0 = 0
 
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_e6wol"]
+load_path = "res://.godot/imported/wall_banner_yellow.png-e74e0592d57623ff71dd2273d5e8208b.ctex"
+
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_uwjpx"]
-texture = ExtResource("3_8xxoj")
+texture = SubResource("CompressedTexture2D_e6wol")
 0:0/0 = 0
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_t44x2"]
@@ -1396,8 +1401,11 @@ texture_region_size = Vector2i(32, 32)
 35:36/0 = 0
 36:36/0 = 0
 
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_11do8"]
+load_path = "res://.godot/imported/terrain_tiles_v2.png-566e589223f9a949f5dd5362160aca64.ctex"
+
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ih4mb"]
-texture = ExtResource("5_ih4mb")
+texture = SubResource("CompressedTexture2D_11do8")
 texture_region_size = Vector2i(32, 32)
 0:0/0 = 0
 1:0/0 = 0
