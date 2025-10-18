@@ -7,13 +7,13 @@
 [ext_resource type="Script" uid="uid://bwxpvbvf86tte" path="res://scripts/descarte.gd" id="3_xdbv0"]
 [ext_resource type="PackedScene" uid="uid://cyq68263nl36g" path="res://scenes/msg_ao_jogador.tscn" id="4_0tnpc"]
 [ext_resource type="Script" uid="uid://chh41sctvmt1w" path="res://scripts/info_debug.gd" id="6_jkxey"]
-[ext_resource type="Script" uid="uid://1qdpxt4os8p5" path="res://scripts/paleta_blocos.gd" id="6_kvpfn"]
+[ext_resource type="Script" path="res://scripts/paleta_blocos.gd" id="6_kvpfn"]
 [ext_resource type="Script" uid="uid://bkiifbfeg3guh" path="res://scripts/percurso_manager.gd" id="7_qtexj"]
-[ext_resource type="Script" uid="uid://benixb75nfuxs" path="res://scripts/subviewport_container.gd" id="10_dinhu"]
-[ext_resource type="Script" uid="uid://bv5d1nu82oc2y" path="res://scripts/montagem_funcao.gd" id="10_kvpfn"]
+[ext_resource type="Script" path="res://scripts/subviewport_container.gd" id="10_dinhu"]
+[ext_resource type="Script" path="res://scripts/montagem_funcao.gd" id="10_kvpfn"]
 [ext_resource type="Script" uid="uid://c6cew0ftwnxdr" path="res://scripts/temporizador_fase.gd" id="10_vtaks"]
 [ext_resource type="Script" uid="uid://c8vsdikofay10" path="res://scripts/pause_fim_jogo.gd" id="11_kvpfn"]
-[ext_resource type="Script" uid="uid://csbjx28egd0ln" path="res://scripts/btn_executar_blocos.gd" id="11_kvuet"]
+[ext_resource type="Script" path="res://scripts/btn_executar_blocos.gd" id="11_kvuet"]
 
 [sub_resource type="Gradient" id="Gradient_kvuet"]
 
