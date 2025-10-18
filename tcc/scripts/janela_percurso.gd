@@ -132,11 +132,11 @@ func criar_estrutura_blocos(blocos_a_serem_copiados, blocos_internos_funcao = []
 		if bloco_node.tipo == "repita_inicio":
 			data["repeticoes"] = bloco_node.get_node("VBoxContainer/SpinBox").value
 		
-		# Se for um bloco de função, associe os blocos internos que foram passados
+		# Se for um bloco de função, associo os blocos internos que foram passados
 		elif bloco_node.tipo == "funcao":
 			if !blocos_internos_funcao.is_empty():
 				
-				# Aqui, você usa a lista de blocos_internos_funcao que chegou como argumento
+				# Uso a lista de blocos_internos_funcao que chegou como argumento
 				data["blocos_internos"] = criar_estrutura_blocos(blocos_internos_funcao)
 			else:
 				data["blocos_internos"] = []
@@ -225,7 +225,7 @@ func executar_bloco_singular(bloco):
 	if direcao != Vector2i.ZERO:
 		ultima_direcao = direcao
 	
-		# movimentação (igual ao que já tinha)
+		# movimentação
 		var novo_tile = celula_tile + direcao
 		var bounds = tile_map_layer.get_used_rect()
 		var dentro = (novo_tile.x >= bounds.position.x and

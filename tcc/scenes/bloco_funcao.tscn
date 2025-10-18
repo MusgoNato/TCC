@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://1wvyfveaop2x"]
 
-[ext_resource type="Script" path="res://scripts/bloco_funcao.gd" id="1_ohos1"]
+[ext_resource type="Script" uid="uid://dgv52dfmrvyaq" path="res://scripts/bloco_funcao.gd" id="1_ohos1"]
 
 [node name="Bloco_funcao" type="Control"]
 layout_mode = 3
