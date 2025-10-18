@@ -190,8 +190,8 @@ text = "FUNÇÕES"
 
 [connection signal="pressed" from="CanvasLayer/HBoxContainer/VBoxContainer/btnFaseTutorial" to="." method="_on_btn_fase_tutorial_pressed"]
 [connection signal="pressed" from="Container_maior/Container_vertical/Container_horizontal/btn_voltar_view_fases" to="." method="_on_label_pressed"]
-[connection signal="pressed" from="Container_fases/HBoxContainer/VBoxContainer/btnFase1" to="." method="_on_btn_fase_1_pressed"]
 [connection signal="pressed" from="Container_fases/HBoxContainer/VBoxContainer/btnFase1" to="." method="_on_btn_movimento_pressed"]
+[connection signal="pressed" from="Container_fases/HBoxContainer/VBoxContainer/btnFase1" to="." method="_on_btn_fase_1_pressed"]
 [connection signal="button_down" from="Container_fases/HBoxContainer2/VBoxContainer/btn_condições" to="." method="_on_btn_condições_button_down"]
 [connection signal="pressed" from="Container_fases/HBoxContainer3/VBoxContainer/btn_repetições" to="." method="_on_btn_repetições_pressed"]
 [connection signal="button_down" from="Container_fases/HBoxContainer4/VBoxContainer/btn_funções" to="." method="_on_btn_funções_button_down"]
