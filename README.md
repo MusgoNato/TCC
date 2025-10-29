@@ -30,17 +30,18 @@ Arraste os blocos de comando (ex: esquerda, direita, condicional) da Paleta de B
 ## Execução:
 Clique no botão "Executar" para que o personagem comece a seguir as instruções do seu código.
 
-5. Estrutura do Projeto
+## Estrutura do Projeto
+```bash
+"res://:" Pasta principal contendo todos os recursos.
 
-        "res://:" Pasta principal contendo todos os recursos.
+"res://assets/:" Contém as imagens, sprites e sons do jogo.
 
-        "res://assets/:" Contém as imagens, sprites e sons do jogo.
-        
-        "res://scenes/:" Contém as cenas (.tscn) de cada fase e da interface principal.
+"res://scenes/:" Contém as cenas (.tscn) de cada fase e da interface principal.
 
-        "res://scripts/:" Contém os códigos GDScript (.gd) para a lógica do jogo (personagem, blocos, gerenciador de fases).
+"res://scripts/:" Contém os códigos GDScript (.gd) para a lógica do jogo (personagem, blocos, gerenciador de fases).
 
-        "res://utils/:" Contém o arquivo dados.json, um dicionário em json para carregar as informações dos blocos de código e TutorialBorda.tres, um node visual global para marcação das bordas de algumas interfaces exclusivamente na fase de tutorial .
+"res://utils/:" Contém o arquivo dados.json, um dicionário em json para carregar as informações dos blocos de código e TutorialBorda.tres, um node visual global para marcação das bordas de algumas interfaces exclusivamente na fase de tutorial .
+```
 
 ## Desenvolvido por:
 Programador: Hugo josue lema das neves
